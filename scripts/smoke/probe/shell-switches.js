@@ -12,13 +12,14 @@
   probe.step(async function () {
     await probe.onlyFor(['switches', 'switches-off'], async function () {
       // The host surfaces the three sidebar and header features take over:
-      // the brand row (search), the workspace section with its tree
+      // the fixed Search action below New Session, the Workspace section with its tree
       // (workspace view) and the conversation's view-tab strip.
       var switchSidebar = document.createElement('div')
       switchSidebar.setAttribute('data-slot', 'sidebar')
       switchSidebar.innerHTML = '<div class="_n_root_1"><div class="_n_logoRow_1" data-window-drag="true">' +
         '<button type="button" class="_n_brand_1 _n_wide_1" aria-label="New session">brand</button>' +
         '<button type="button" class="_n_iconButton_1 _n_toggle_1" aria-label="Collapse sidebar">toggle</button></div>' +
+        '<button type="button" class="_n_newSession_1">New session</button>' +
         // One hash prefix for the section, its header, its label and its list
         // area, the way the host's CSS modules name them (the skin finds the
         // workspace section by that shared prefix, never by the label text).
@@ -34,12 +35,12 @@
       var switchMarks = function () {
         return {
           // The permission control and the context statistics switch together.
-          permissionsControl: document.querySelectorAll('.dsh-claude-perm-container').length +
-            (document.body.hasAttribute('data-dsh-claude-permissions') ? 1 : 0) +
-            (document.body.hasAttribute('data-dsh-claude-session-stats') ? 1 : 0),
-          workspaceView: document.querySelectorAll('.dsh-claude-ws-segments').length,
-          sidebarSearch: document.querySelectorAll('[data-dsh-claude-search-row], .dsh-claude-search-trigger').length,
-          turnStatus: document.querySelectorAll('[data-dsh-claude-turn-status], [style*="--dsh-claude-turn-order"]').length,
+          permissionsControl: document.querySelectorAll('.dsh-claude-style-plus-perm-container').length +
+            (document.body.hasAttribute('data-dsh-claude-style-plus-permissions') ? 1 : 0) +
+            (document.body.hasAttribute('data-dsh-claude-style-plus-session-stats') ? 1 : 0),
+          workspaceView: document.querySelectorAll('.dsh-claude-style-plus-ws-segments').length,
+          sidebarSearch: document.querySelectorAll('.dsh-claude-style-plus-search-trigger').length,
+          turnStatus: document.querySelectorAll('[data-dsh-claude-style-plus-turn-status], [style*="--dsh-claude-style-plus-turn-order"]').length,
           viewTabs: document.querySelectorAll('[data-dsh-view-tabs]').length,
         }
       }

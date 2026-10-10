@@ -32,7 +32,7 @@ export interface FooterHandle extends FeatureHandle {
  */
 export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
   /** The marker the stylesheet hangs the host account row's Claude shape on. */
-  const HOST_ROW_ATTR = 'data-dsh-claude-account-host-row'
+  const HOST_ROW_ATTR = 'data-dsh-claude-style-plus-account-host-row'
   const profile = createAccountProfile(ctx, () => {
     if (typeof ui.schedule === 'function') ui.schedule()
   })
@@ -53,10 +53,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
    */
   const hostRowBindingToken = {}
   // Whether the popover is up because it was CLICKED (rather than hovered).
-  // Clicking the account row opens the ban-screen easter egg and leaves the
-  // pointer inside the popover, so without this the row's own mouseleave
-  // would tear the popover down behind the overlay; a click-opened popover
-  // instead stays until the pointer leaves the whole footer.
+  // A click-opened popover stays until the pointer leaves the whole footer.
   let popoverOpenedByClick = false
 
   function isPopoverOpen() {
@@ -145,12 +142,12 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     onChange() {
       if (typeof ui.schedule === 'function') ui.schedule()
     },
-    openBan() {
-      // Leave the surface up: the overlay is a full-window surface, so what
-      // is behind it does not matter, and the footer is left as the user
-      // had it once the screen is dismissed.
-      popoverOpenedByClick = true
-      if (ui.ban) ui.ban.open()
+    openProfile(trigger: HTMLElement) {
+      popoverHoverIntent.cancel()
+      hostHoverIntent.cancel()
+      const returnFocus = surface.mode() === 'host' ? hostMenu.trigger() : accountBtn
+      closeSurface()
+      if (ui.profile) ui.profile.open(returnFocus ?? trigger)
     }
   })
   const surface = createAccountSurface({
@@ -188,23 +185,23 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
    */
   function ensureSynthetic(footArea: Element) {
     const username = getUsername()
-    removeStrayNodes(footArea, '.dsh-claude-account-btn', [accountBtn])
-    removeStrayNodes(document, '.dsh-claude-account-popover', [accountPopover])
+    removeStrayNodes(footArea, '.dsh-claude-style-plus-account-btn', [accountBtn])
+    removeStrayNodes(document, '.dsh-claude-style-plus-account-popover', [accountPopover])
 
     if (accountBtn === null || !footArea.contains(accountBtn)) {
       if (accountBtn && accountBtn.parentElement) accountBtn.parentElement.removeChild(accountBtn)
       accountBtn = document.createElement('div')
-      accountBtn.className = 'dsh-claude-account-btn'
+      accountBtn.className = 'dsh-claude-style-plus-account-btn'
       accountBtn.setAttribute('role', 'button')
       accountBtn.setAttribute('tabindex', '0')
       accountBtn.setAttribute('aria-haspopup', 'menu')
       accountBtn.setAttribute('aria-expanded', 'false')
       accountBtn.innerHTML =
-        '<span class="dsh-claude-account-avatar"></span>' +
-        '<span class="dsh-claude-account-label">' +
-          '<span class="dsh-claude-account-user"></span>' +
+        '<span class="dsh-claude-style-plus-account-avatar"></span>' +
+        '<span class="dsh-claude-style-plus-account-label">' +
+          '<span class="dsh-claude-style-plus-account-user"></span>' +
         '</span>' +
-        '<span class="dsh-claude-account-chevron"></span>'
+        '<span class="dsh-claude-style-plus-account-chevron"></span>'
 
       // Hover is the default way in; the "Open popovers on hover"
       // preference turns it off, leaving the click handler below as the only
@@ -227,32 +224,28 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     // OS user, the account profile), so they are written as text and as an
     // image source, never spliced into markup — and synced on every pass, so a
     // profile that lands after the row was built still shows up.
-    const userEl = accountBtn.querySelector('.dsh-claude-account-user')
+    const userEl = accountBtn.querySelector('.dsh-claude-style-plus-account-user')
     if (userEl && userEl.textContent !== username) userEl.textContent = username
-    rows.syncAvatar(accountBtn.querySelector('.dsh-claude-account-avatar'))
+    rows.syncAvatar(accountBtn.querySelector('.dsh-claude-style-plus-account-avatar'))
 
     if (accountPopover === null || !footArea.contains(accountPopover)) {
       if (accountPopover && accountPopover.parentElement) accountPopover.parentElement.removeChild(accountPopover)
       accountPopover = document.createElement('div')
-      accountPopover.id = 'dsh-claude-account-popover'
-      accountPopover.className = 'dsh-claude-popover-card dsh-claude-account-popover'
+      accountPopover.id = 'dsh-claude-style-plus-account-popover'
+      accountPopover.className = 'dsh-claude-style-plus-popover-card dsh-claude-style-plus-account-popover'
       accountPopover.setAttribute('data-open', 'false')
 
       accountPopover.addEventListener('mouseenter', () => {
         cancelClosePopover()
       })
       accountPopover.addEventListener('mouseleave', () => {
-        // The hold screen takes the window, so its opening "leaves" the
-        // card without the pointer moving; that leave must not fold the
-        // drawer behind the page (openBan leaves the footer as it was).
-        if (ui.ban?.isOpen() === true) return
         scheduleClosePopover()
       })
 
       accountPopover.appendChild(rows.buildHeader(username))
 
       popoverBody = document.createElement('div')
-      popoverBody.className = 'dsh-claude-account-popover-body'
+      popoverBody.className = 'dsh-claude-style-plus-account-popover-body'
       accountPopover.appendChild(popoverBody)
 
       settingsItem = null
@@ -272,7 +265,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
   /** Remove the self-built trigger and popover (the host path's shape). */
   function dropSynthetic() {
     cancelClosePopover()
-    removeStrayNodes(document, '.dsh-claude-account-btn, .dsh-claude-account-popover', [])
+    removeStrayNodes(document, '.dsh-claude-style-plus-account-btn, .dsh-claude-style-plus-account-popover', [])
     accountBtn = null
     accountPopover = null
     popoverBody = null
@@ -337,20 +330,9 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
   }
 
   /**
-   * Close the host's menu for the hover preference.
-   *
-   * The host renders the row and portals the card, and the card moves over
-   * its first placement frames, so a leave can arrive while the pointer is
-   * still on the row or on the card. Only a pointer that is genuinely
-   * elsewhere dismisses the menu; the next leave closes it.
-   *
-   * The hold-screen overlay covers the whole window, so opening it "leaves"
-   * the row and the card without the pointer moving: that leave stands down
-   * — the surface the reader had behind the page stays up and the footer is
-   * handed back as it was once the screen is dismissed.
+   * Close the host's menu when the pointer has genuinely left both its trigger and card.
    */
   function closeHostMenuForHover() {
-    if (ui.ban?.isOpen() === true) return
     const row = hostMenu.trigger()
     if (row !== null && row.matches(':hover')) return
     const menu = hostMenu.findMenu()
@@ -422,19 +404,19 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     disarmAccountMenu()
     if (accountWidth !== 0) {
       accountWidth = 0
-      document.body.style.removeProperty('--dsh-claude-account-width')
+      document.body.style.removeProperty('--dsh-claude-style-plus-account-width')
     }
     if (accountInsetLeft !== -1 || accountInsetRight !== -1) {
       accountInsetLeft = -1
       accountInsetRight = -1
-      document.body.style.removeProperty('--dsh-claude-account-inset-left')
-      document.body.style.removeProperty('--dsh-claude-account-inset-right')
+      document.body.style.removeProperty('--dsh-claude-style-plus-account-inset-left')
+      document.body.style.removeProperty('--dsh-claude-style-plus-account-inset-right')
     }
     dropSynthetic()
     // The menu marker goes with the takeover: an open host menu must not
     // keep the skin's card styling after the footer is handed back.
     surface.clearMenu()
-    const injected = document.querySelectorAll('.dsh-claude-account-inject')
+    const injected = document.querySelectorAll('.dsh-claude-style-plus-account-inject')
     for (let i = 0; i < injected.length; i++) injected[i].remove()
     const marked = document.querySelectorAll(`[${HOST_ROW_ATTR}]`)
     for (let m = 0; m < marked.length; m++) marked[m].removeAttribute(HOST_ROW_ATTR)
@@ -446,7 +428,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
    *
    * The host's account menu is portalled outside the sidebar, so it cannot
    * inherit the row's width: the card reads the measured width from
-   * --dsh-claude-account-width. The self-built drawer is a child of the
+   * --dsh-claude-style-plus-account-width. The self-built drawer is a child of the
    * footer instead, but the footer's padding box is wider than the row, so
    * its left and right are the measured distances from the footer's edges.
    * Every value is written only on a change.
@@ -457,7 +439,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     const rowWidth = Math.round(rowRect.width)
     if (rowWidth > 0 && rowWidth !== accountWidth) {
       accountWidth = rowWidth
-      document.body.style.setProperty('--dsh-claude-account-width', `${rowWidth}px`)
+      document.body.style.setProperty('--dsh-claude-style-plus-account-width', `${rowWidth}px`)
     }
     if (surface.mode() !== 'synthetic') return
     const footRect = footArea.getBoundingClientRect()
@@ -465,11 +447,11 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     const right = Math.round(footRect.right - rowRect.right)
     if (left !== accountInsetLeft) {
       accountInsetLeft = left
-      document.body.style.setProperty('--dsh-claude-account-inset-left', `${left}px`)
+      document.body.style.setProperty('--dsh-claude-style-plus-account-inset-left', `${left}px`)
     }
     if (right !== accountInsetRight) {
       accountInsetRight = right
-      document.body.style.setProperty('--dsh-claude-account-inset-right', `${right}px`)
+      document.body.style.setProperty('--dsh-claude-style-plus-account-inset-right', `${right}px`)
     }
   }
 

@@ -76,7 +76,7 @@ export interface MascotCharacter {
  * @param ui - shared handle table (`ui.composer`).
  * @param character - `{ name, sheets, frameMs, gutter, extras, createSheets }`:
  *     `name` prefixes the class names, the custom properties and the anchor
- *     mark (`dsh-claude-<name>`); `sheets` is the animation table
+ *     mark (`dsh-claude-style-plus-<name>`); `sheets` is the animation table
  *     (`{ frames, box, still }` per key, every key the signals, moments,
  *     sleep, extras and reactions name); `gutter` the transparent margin
  *     each frame cell carries in the character's sheets, in logical pixels
@@ -90,7 +90,7 @@ export function createMascotPlayer(ctx: HostContext, ui: FeatureUi<typeof manife
   const TICKLE_CLICKS = 4
   /** How far a press travels before it lifts the mascot. */
   const LIFT_PX = 4
-  const PREFIX = `dsh-claude-${character.name}`
+  const PREFIX = `dsh-claude-style-plus-${character.name}`
   /** The transparent margin each frame cell carries in this character's sheets (DEEPY_GUTTER), in logical pixels. */
   const GUTTER = character.gutter ?? 0
   /** A marker on the host element the mascot stands on, which makes it the mascot's containing block. */

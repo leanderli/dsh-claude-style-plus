@@ -3,7 +3,7 @@
    zeroes the containers that host them) and exists only because the skin
    replaces that footer with its account row. The "Collapse the sidebar settings
    area" preference turns the whole takeover off, so each rule below carries
-   data-dsh-claude-footer-takeover — the skin sets it on <body> only while the takeover is on,
+   data-dsh-claude-style-plus-footer-takeover — the skin sets it on <body> only while the takeover is on,
    and with it absent the host footer renders exactly as shipped. */
 /* Hide the controls beside the account row while keeping containers intact for
    modals. The trigger row is not settingsArea's child: it renders inside the
@@ -13,10 +13,10 @@
    stays and only the controls next to it — the connection pill, the update pill
    ("Retry update") — go. The account menu and its sign-in dialog are portals and
    the settings panel is the row's sibling, so all three still open. */
-body[data-dsh-claude-style][data-dsh-claude-footer-takeover] [class*="footArea"] > [class*="footerActions"] :is([class*="footerButtons"], > button) {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-footer-takeover] [class*="footArea"] > [class*="footerActions"] :is([class*="footerButtons"], > button) {
   display: none !important;
 }
-body[data-dsh-claude-style][data-dsh-claude-footer-takeover] [class*="footArea"] [class*="triggerRow"] :is(button, [role="button"], a):not([data-dsh-claude-account-host-row]) {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-footer-takeover] [class*="footArea"] [class*="triggerRow"] :is(button, [role="button"], a):not([data-dsh-claude-style-plus-account-host-row]) {
   display: none;
 }
 /* Both containers stay mounted at zero size so the overlays they host keep
@@ -31,7 +31,7 @@ body[data-dsh-claude-style][data-dsh-claude-footer-takeover] [class*="footArea"]
    hands real inherited metrics down; footerActions still hosts plain plugin
    entries whose stray in-flow text only the zeroing keeps invisible, so the
    full collapse stays there. */
-body[data-dsh-claude-style][data-dsh-claude-footer-takeover] [class*="footArea"] > [class*="settingsArea"] {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-footer-takeover] [class*="footArea"] > [class*="settingsArea"] {
   position: static;
   width: 0;
   height: 0;
@@ -42,11 +42,11 @@ body[data-dsh-claude-style][data-dsh-claude-footer-takeover] [class*="footArea"]
 /* A settingsArea that holds the host's account row gets its box back: that row
    has to paint in the footer, not inside a zero-sized cell. Everything else
    keeps the geometric collapse. */
-body[data-dsh-claude-style][data-dsh-claude-footer-takeover] [class*="footArea"] > [class*="settingsArea"]:has([data-dsh-claude-account-host-row]) {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-footer-takeover] [class*="footArea"] > [class*="settingsArea"]:has([data-dsh-claude-style-plus-account-host-row]) {
   width: 100% !important;
   height: auto !important;
 }
-body[data-dsh-claude-style][data-dsh-claude-footer-takeover] [class*="footArea"] > [class*="footerActions"] {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-footer-takeover] [class*="footArea"] > [class*="footerActions"] {
   position: static;
   width: 0;
   height: 0;
@@ -59,16 +59,16 @@ body[data-dsh-claude-style][data-dsh-claude-footer-takeover] [class*="footArea"]
 
 /* Generic footer-action redirection. The `sidebar.footer.action` slot accepts
    arbitrary plugin controls, not just buttons; overrides.js marks every
-   mirrored entry (`data-dsh-claude-footer-entry`) and hides it in place
-   (`data-dsh-claude-footer-hidden`) once it is redirected into the account
+   mirrored entry (`data-dsh-claude-style-plus-footer-entry`) and hides it in place
+   (`data-dsh-claude-style-plus-footer-hidden`) once it is redirected into the account
    popover. Entries that host a floating overlay (a fixed panel or dialog)
    keep their subtree visible — the overlay must stay reachable after the
    mirrored popover item opens it — but the entry box itself collapses so it
    never paints inside the zero-sized footerActions container. */
-body[data-dsh-claude-style][data-dsh-claude-footer-takeover] [class*="footArea"] [data-dsh-claude-footer-hidden] {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-footer-takeover] [class*="footArea"] [data-dsh-claude-style-plus-footer-hidden] {
   display: none !important;
 }
-body[data-dsh-claude-style][data-dsh-claude-footer-takeover] [class*="footArea"] [data-dsh-claude-footer-entry] {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-footer-takeover] [class*="footArea"] [data-dsh-claude-style-plus-footer-entry] {
   width: 0 !important;
   height: 0 !important;
   min-width: 0 !important;
@@ -82,16 +82,16 @@ body[data-dsh-claude-style][data-dsh-claude-footer-takeover] [class*="footArea"]
 }
 
 /* Collapsed rail mode adaptations */
-body[data-dsh-claude-style] [class*="_root"][class*="_collapsed"] .dsh-claude-account-btn {
+body[data-dsh-claude-style-plus] [class*="_root"][class*="_collapsed"] .dsh-claude-style-plus-account-btn {
   width: 36px !important;
   height: 36px !important;
   padding: 0 !important;
   justify-content: center !important;
 }
-body[data-dsh-claude-style] [class*="_root"][class*="_collapsed"] .dsh-claude-account-avatar {
+body[data-dsh-claude-style-plus] [class*="_root"][class*="_collapsed"] .dsh-claude-style-plus-account-avatar {
   margin-right: 0 !important;
 }
-body[data-dsh-claude-style] [class*="_root"][class*="_collapsed"] :is(.dsh-claude-account-label, .dsh-claude-account-chevron) {
+body[data-dsh-claude-style-plus] [class*="_root"][class*="_collapsed"] :is(.dsh-claude-style-plus-account-label, .dsh-claude-style-plus-account-chevron) {
   display: none !important;
 }
 /* The rail's popover cannot stay an absolutely positioned child of the footer.
@@ -102,7 +102,7 @@ body[data-dsh-claude-style] [class*="_root"][class*="_collapsed"] :is(.dsh-claud
    for it), and overrides.js anchors it to the trigger from there. left/right/
    bottom are reset so the base rule's own `!important` anchors cannot fight the
    resolved coordinates. */
-body[data-dsh-claude-style] [class*="_root"][class*="_collapsed"] .dsh-claude-account-popover {
+body[data-dsh-claude-style-plus] [class*="_root"][class*="_collapsed"] .dsh-claude-style-plus-account-popover {
   position: fixed !important;
   left: auto !important;
   right: auto !important;
@@ -115,14 +115,14 @@ body[data-dsh-claude-style] [class*="_root"][class*="_collapsed"] .dsh-claude-ac
 /* The host's own account menu in the rail: the card's width follows the account
    row, which is a 36px icon there, so the measured width would leave a 36px
    card. The drawer's rail width above is the floor for both. */
-body[data-dsh-claude-style] [class*="_root"][class*="_collapsed"] [data-dsh-claude-account-menu] {
+body[data-dsh-claude-style-plus] [class*="_root"][class*="_collapsed"] [data-dsh-claude-style-plus-account-menu] {
   width: 220px !important;
   max-width: min(220px, calc(100vw - 16px)) !important;
 }
 /* The rail opens the panel beside the trigger, not above it, so the hover bridge
    has to span the horizontal gap: the base rule's downward strip would sit under
    the panel and leave the pointer's 8px crossing uncovered. */
-body[data-dsh-claude-style] [class*="_root"][class*="_collapsed"] .dsh-claude-account-popover::after {
+body[data-dsh-claude-style-plus] [class*="_root"][class*="_collapsed"] .dsh-claude-style-plus-account-popover::after {
   top: 0 !important;
   bottom: 0 !important;
   left: auto !important;
@@ -139,19 +139,19 @@ body[data-dsh-claude-style] [class*="_root"][class*="_collapsed"] .dsh-claude-ac
    in the rail. Reachability is unaffected — the popover's settings item opens
    the real trigger programmatically (`realTrigger.click()`), which
    display:none does not block. */
-body[data-dsh-claude-style][data-dsh-claude-footer-takeover] [class*="_root"][class*="_collapsed"] [class*="footArea"] [class*="settingsArea"] :is(button, [class*="triggerRow"]):not([data-dsh-claude-account-host-row]):not(:has([data-dsh-claude-account-host-row])) {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-footer-takeover] [class*="_root"][class*="_collapsed"] [class*="footArea"] [class*="settingsArea"] :is(button, [class*="triggerRow"]):not([data-dsh-claude-style-plus-account-host-row]):not(:has([data-dsh-claude-style-plus-account-host-row])) {
   display: none !important;
 }
 /* The rail's host account row is a 36px square with neither label nor chevron,
    matching the self-built trigger's rail shape. */
-body[data-dsh-claude-style] [class*="_root"][class*="_collapsed"] [data-dsh-claude-account-host-row] {
+body[data-dsh-claude-style-plus] [class*="_root"][class*="_collapsed"] [data-dsh-claude-style-plus-account-host-row] {
   width: 36px !important;
   height: 36px !important;
   padding: 0 !important;
   justify-content: center !important;
   font-size: 0 !important;
 }
-body[data-dsh-claude-style] [class*="_root"][class*="_collapsed"] [data-dsh-claude-account-host-row]::after {
+body[data-dsh-claude-style-plus] [class*="_root"][class*="_collapsed"] [data-dsh-claude-style-plus-account-host-row]::after {
   display: none !important;
 }
 
@@ -161,22 +161,22 @@ body[data-dsh-claude-style] [class*="_root"][class*="_collapsed"] [data-dsh-clau
    of the entry into the popover. The embed sits above the action items with
    a hairline separator; the cloned plugin markup keeps its own classes, so
    the plugin's own stylesheet styles the content. */
-body[data-dsh-claude-style] .dsh-claude-popover-embed {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-embed {
   padding: 2px 2px 6px;
   margin-bottom: 4px;
   border-bottom: 1px solid var(--dsw-alias-border-l2, #2e2c29);
   border-radius: 7px;
 }
 
-body[data-dsh-claude-style] .dsh-claude-popover-embed[data-clickable] {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-embed[data-clickable] {
   cursor: pointer;
 }
 
-body[data-dsh-claude-style] .dsh-claude-popover-embed[data-clickable]:hover {
-  background: var(--dsh-claude-hover-bg, rgba(0, 0, 0, 0.08));
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-embed[data-clickable]:hover {
+  background: var(--dsh-claude-style-plus-hover-bg, rgba(0, 0, 0, 0.08));
 }
 
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) .dsh-claude-popover-embed {
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) .dsh-claude-style-plus-popover-embed {
   border-bottom-color: var(--dsw-alias-border-l1);
 }
 

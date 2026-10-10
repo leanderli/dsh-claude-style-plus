@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-09",
+  "group": "new",
+  "order": 0,
+  "external": true,
+  "zh": "Plus fork 使用独立的包、设置、路由、DOM/CSS 与用户数据命名空间，可与原版并行安装。账号行现在打开真实的 Profile 活动页，提供 All/30d/7d、52 周 Token 热图、活跃 streak、模型排行，以及按当前 Workspace 展开的 Token 和 Skill 明细；显式 Skill 注入与模型 skill 工具调用分开计数。无法读取日志或 Workspace registry 不可用时，不会吞掉可计算的全局报告，并会说明 partial/unknown 归属。General 设置新增裁切/缩放和按 DSH Profile 私有保存的自定义头像；Fake account-hold 彩蛋及 banLocale 设置已移除。",
+  "en": "The Plus fork now has separate package, settings, route, DOM/CSS, and user-data namespaces, so it can remain installed alongside the original. The account row opens a real Profile activity page with All/30d/7d ranges, a 52-week Token heatmap, streaks, model rankings, and expandable current-Workspace Token and Skill details. Explicit Skill injections and model skill-tool calls are counted separately. Unreadable logs or an unavailable Workspace registry do not suppress the computable global report; the UI discloses partial results and unknown Workspace attribution. General settings adds a crop/zoom avatar uploader stored privately per DSH Profile; the Fake account-hold page and banLocale setting are removed."
+}

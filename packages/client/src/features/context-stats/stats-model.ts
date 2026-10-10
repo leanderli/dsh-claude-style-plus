@@ -1,7 +1,7 @@
 import { copyLabel } from '../../core/i18n'
 import { sessionStatsCacheHit, sessionStatsDuration, sessionStatsSpeed, sessionStatsTokens } from './stats-format'
 import type { HostText } from '../../core/host'
-import type { HostSessionStatsProjection, HostTokenUsageProjection } from '@dsh-claude-style/contracts/services'
+import type { HostSessionStatsProjection, HostTokenUsageProjection } from '@dsh-claude-style-plus/contracts/services'
 
 /**
  * The block's rows and sections: the host's own row rules

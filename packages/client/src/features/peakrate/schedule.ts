@@ -1,4 +1,4 @@
-import type { RateOverride, RatePeriod, RateProfile, RateSchedule, RateState, RateWindow } from '@dsh-claude-style/contracts/peakrate'
+import type { RateOverride, RatePeriod, RateProfile, RateSchedule, RateState, RateWindow } from '@dsh-claude-style-plus/contracts/peakrate'
 
 /**
  * Which rate is in force, judged against the clock (D54).

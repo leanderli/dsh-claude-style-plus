@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom/client'
-import { PHASE_ATTRIBUTE } from '@dsh-claude-style/contracts/dom'
-import { HOME_HERO_ATTR, HOME_LAYOUT_ATTR, HOME_LAYOUT_STUDIO, PREF_DEFAULTS } from '../../constants'
+import { PHASE_ATTRIBUTE } from '@dsh-claude-style-plus/contracts/dom'
+import { HOME_HERO_ATTR, HOME_LAYOUT_ATTR, HOME_LAYOUT_STUDIO, HOME_USAGE_SLOT_ID, PREF_DEFAULTS } from '../../constants'
 import { COMPOSER_STACK } from '../../core/host'
 import { copyLabel } from '../../core/i18n'
 import { readPrefs } from '../../core/prefs'
@@ -137,7 +137,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
       return React.createElement('button', {
         key: id,
         type: 'button',
-        className: 'dsh-claude-home-tab',
+        className: 'dsh-claude-style-plus-home-tab',
         'data-active': tab === id ? '' : undefined,
         'aria-pressed': tab === id,
         onClick() { setTab(id) },
@@ -147,30 +147,30 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     return React.createElement(
       'section',
       {
-        className: 'dsh-claude-home-panel',
-        'data-dsh-claude-home-panel': '',
+        className: 'dsh-claude-style-plus-home-panel',
+        'data-dsh-claude-style-plus-home-panel': '',
         'data-computing': state.computing ? '' : undefined,
         'aria-busy': state.computing || !data.known ? 'true' : 'false',
       },
       React.createElement(
         'div',
-        { className: 'dsh-claude-home-panel-head' },
+        { className: 'dsh-claude-style-plus-home-panel-head' },
         React.createElement(
           'div',
-          { className: 'dsh-claude-home-tabs' },
+          { className: 'dsh-claude-style-plus-home-tabs' },
           tabButton('overview', copyLabel('homeTabOverview', 'Overview')),
           tabButton('models', copyLabel('homeTabModels', 'Models')),
         ),
         React.createElement(
           'div',
-          { className: 'dsh-claude-home-panel-side' },
+          { className: 'dsh-claude-style-plus-home-panel-side' },
           React.createElement(
             'div',
-            { className: 'dsh-claude-home-ranges' },
+            { className: 'dsh-claude-style-plus-home-ranges' },
             HOME_RANGES.map(item => React.createElement('button', {
               key: item.id,
               type: 'button',
-              className: 'dsh-claude-home-range',
+              className: 'dsh-claude-style-plus-home-range',
               'data-active': range === item.id ? '' : undefined,
               'aria-pressed': range === item.id,
               onClick() { setRange(item.id) },
@@ -198,7 +198,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
       scope.effect(() => slots.inject(DOCK_SLOT, () => // A list seat keys its entries by id; the dock also carries the
       // host's todo, queue and goal bars, so the id is what keeps this
       // panel's slot stable across their re-renders.
-      slots.register({ name: DOCK_SLOT, id: 'claude-style-usage', order: 40 }, HomeUsagePanel)), 'dsh-claude-style: home usage panel')
+      slots.register({ name: DOCK_SLOT, id: HOME_USAGE_SLOT_ID, order: 40 }, HomeUsagePanel)), 'dsh-claude-style-plus: home usage panel')
     })
   }
 
@@ -226,7 +226,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     }
     if (coldSeat !== null && coldSeat.stack === stack && coldSeat.element.parentElement === stack) return
     unmountColdSeat()
-    const element = buildElement('div', 'dsh-claude-home-seat')
+    const element = buildElement('div', 'dsh-claude-style-plus-home-seat')
     stack.appendChild(element)
     const root = ReactDOM.createRoot(element)
     root.render(React.createElement(HomeUsagePanel))

@@ -159,7 +159,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     if (effortBtn.style.display !== 'inline-flex') effortBtn.style.display = 'inline-flex'
     // The trigger's size follows its label: re-measure only when it moved
     // (offsetWidth/offsetHeight force a layout the pass would rather not pay).
-    const labelEl = effortBtn.querySelector('.dsh-claude-effort-btn-label')
+    const labelEl = effortBtn.querySelector('.dsh-claude-style-plus-effort-btn-label')
     const label = labelEl === null ? '' : labelEl.textContent
     if (label !== effortPlace.widthLabel) {
       effortPlace.widthLabel = label
@@ -218,11 +218,11 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
    */
   function ensureEffortChrome() {
     const slot = seat()
-    if (slot !== null) removeStrayNodes(slot, '.dsh-claude-effort-btn', [effortBtn])
-    removeStrayNodes(document, 'body > .dsh-claude-effort-popover', [effortPop])
+    if (slot !== null) removeStrayNodes(slot, '.dsh-claude-style-plus-effort-btn', [effortBtn])
+    removeStrayNodes(document, 'body > .dsh-claude-style-plus-effort-popover', [effortPop])
     if (effortPop === null || effortPop.parentElement === null) {
       effortPop = document.createElement('div')
-      effortPop.className = 'dsh-claude-popover-card dsh-claude-effort-popover'
+      effortPop.className = 'dsh-claude-style-plus-popover-card dsh-claude-style-plus-effort-popover'
       setMenuPopoverOpen(effortPop, false)
       effortPop.addEventListener('mouseenter', cancelCloseEffort)
       effortPop.addEventListener('mouseleave', () => {
@@ -299,9 +299,9 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
       if (effortBtn !== null && effortBtn.parentElement !== null) effortBtn.parentElement.removeChild(effortBtn)
       effortBtn = document.createElement('button')
       effortBtn.type = 'button'
-      effortBtn.className = 'dsh-claude-effort-btn'
+      effortBtn.className = 'dsh-claude-style-plus-effort-btn'
       effortBtn.setAttribute('aria-haspopup', 'menu')
-      effortBtn.innerHTML = '<span class="dsh-claude-effort-btn-label"></span>'
+      effortBtn.innerHTML = '<span class="dsh-claude-style-plus-effort-btn-label"></span>'
       // Same contract as the model trigger: hover under the "All" scope,
       // click-only otherwise.
       effortBtn.addEventListener('mouseenter', () => {
@@ -323,7 +323,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     // Same-value guards: sync runs on every scheduler pass, and an identical
     // write still mutates the DOM (textContent replaces the text node;
     // setAttribute queues a record the scheduler's observer sees).
-    const labelEl = effortBtn.querySelector('.dsh-claude-effort-btn-label')
+    const labelEl = effortBtn.querySelector('.dsh-claude-style-plus-effort-btn-label')
     if (labelEl !== null && labelEl.textContent !== info.label) labelEl.textContent = info.label
     const aria = `${copyLabel('effortLabel', MODEL_EFFORT_LABEL)} ${info.label}`
     setAttributeIfChanged(effortBtn, 'aria-label', aria)

@@ -25,9 +25,9 @@
       var hostNodes = {
         sidebar: hostProbe('<div data-pane="sidebar">s</div>'),
         conversation: hostProbe('<div data-pane="conversation">c</div>'),
-        popover: hostProbe('<div class="dsh-claude-popover-card" data-open="true">p</div>'),
-        search: hostProbe('<div class="dsh-claude-search-dialog">q</div>'),
-        group: hostProbe('<span class="dsh-claude-model-group">g</span>'),
+        popover: hostProbe('<div class="dsh-claude-style-plus-popover-card" data-open="true">p</div>'),
+        search: hostProbe('<div class="dsh-claude-style-plus-search-dialog">q</div>'),
+        group: hostProbe('<span class="dsh-claude-style-plus-model-group">g</span>'),
         heading: hostProbe('<h1>h</h1>'),
         code: hostProbe('<pre><code>c</code></pre>'),
       }
@@ -47,7 +47,7 @@
           popover: getComputedStyle(hostNodes.popover).backgroundColor,
           popoverBlur: getComputedStyle(hostNodes.popover).backdropFilter,
           // The account drawer the footer feature built (it sweeps any other copy).
-          account: getComputedStyle(document.querySelector('.dsh-claude-account-popover')).backgroundColor,
+          account: getComputedStyle(document.querySelector('.dsh-claude-style-plus-account-popover')).backgroundColor,
           search: getComputedStyle(hostNodes.search).backgroundColor,
           group: getComputedStyle(hostNodes.group).backgroundColor,
           groupInk: getComputedStyle(hostNodes.group).color,
@@ -68,7 +68,7 @@
     // out while their parent is off. A tab is opened by standing the tab state
     // in for a click (the stand-in's `states`).
     await probe.onlyFor(['settings'], async function () {
-      var Section = (window.__slotComponents || {})['claude-style']
+      var Section = (window.__slotComponents || {})['claude-style-plus']
       var walk = function (node, visit) {
         if (node === null || node === undefined || typeof node !== 'object') return
         if (Array.isArray(node)) { node.forEach(function (child) { walk(child, visit) }); return }
@@ -89,7 +89,7 @@
             out.tabs.push(props.key)
             if (props['aria-selected'] === 'true') out.selected = props.key
           }
-          if (typeof props.className === 'string' && /(^| )dsh-claude-settings-row( |$)/.test(props.className)) {
+          if (typeof props.className === 'string' && /(^| )dsh-claude-style-plus-settings-row( |$)/.test(props.className)) {
             out.rows.push(props.key)
             if (props['data-disabled'] === '') out.disabled.push(props.key)
           }

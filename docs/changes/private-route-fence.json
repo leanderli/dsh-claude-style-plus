@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-09",
+  "group": "security",
+  "order": 0,
+  "external": true,
+  "zh": "Plus 的头像、用量等私有 Host 路由优先使用 DSH Connection fence；缺少该服务时，fallback 只接受实际 loopback peer、明确的 loopback Host 与同源浏览器证据，远程 peer 和缺少来源证据的请求会被拒绝。",
+  "en": "Private Plus Host routes such as avatar and usage now prefer the DSH Connection fence. Without that service, the fallback accepts only a direct loopback peer with an explicit loopback Host and same-origin browser evidence; remote peers and requests missing that evidence are refused."
+}

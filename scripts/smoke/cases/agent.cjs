@@ -101,9 +101,8 @@ module.exports = {
     check('no injected markup executed', r.pwned === 0, `${r.pwned} executions`)
     check('account name rendered as text', r.accountUser === MARKUP, JSON.stringify(r.accountUser))
     check('mirrored plugin label and badge rendered as text', r.mirroredText === MARKUP && r.mirroredBadge === MARKUP, JSON.stringify([r.mirroredText, r.mirroredBadge]))
-    check('account-hold toast renders the username as text', r.banToast === MARKUP + ': account_banned', JSON.stringify(r.banToast))
-    check('avatar URL adds no attribute to the page',
-      r.avatarAttrs !== null && r.avatarAttrs.every((a) => a === 'class' || a === 'data-dsh-claude-photo') &&
+    check('avatar URL adds only the package-owned photo state attributes and no event handlers',
+      r.avatarAttrs !== null && r.avatarAttrs.every((a) => a === 'class' || a === 'data-dsh-claude-style-plus-photo' || a === 'data-dsh-claude-style-plus-photo-failed') &&
       (r.photo === null || r.photo.attrs.every((a) => !/^on/i.test(a))), JSON.stringify([r.avatarAttrs, r.photo]))
     commonChecks(r)
   },
@@ -118,7 +117,7 @@ module.exports = {
     const switchedOff = r.errors.map((line) => (/"([A-Za-z]+)" failed and was switched off/.exec(line) || [])[1]).sort()
     check('apply() completes although no feature chunk loads', r.applyError === null, r.applyError)
     check('each deferred feature was switched off once, and nothing else', same(switchedOff, [...DEFERRED_FEATURES].sort()), r.errors.join(' | '))
-    check('each report names the chunk that did not load', r.errors.every((line) => line.includes('/dsh-claude-style/assets/') && line.includes('failed to load')), r.errors.join(' | '))
+    check('each report names the chunk that did not load', r.errors.every((line) => line.includes('/dsh-claude-style-plus/assets/') && line.includes('failed to load')), r.errors.join(' | '))
     check('the features in the bundle keep running', r.composerRestyle === true && r.accountUser === 'Tester', JSON.stringify({ restyle: r.composerRestyle, account: r.accountUser }))
     commonChecks(r)
   },
@@ -175,6 +174,11 @@ module.exports = {
     check('the injected header names the same user as the host account row',
       r.injectName !== null && r.injectName === r.hostRowText,
       JSON.stringify({ header: r.injectName, row: r.hostRowText }))
+    check('the username row keeps its full-width flex layout and centered content',
+      !!r.profileRowLayout && r.profileRowLayout.display === 'flex' && r.profileRowLayout.alignItems === 'center' &&
+        r.profileRowLayout.boxSizing === 'border-box' && parseFloat(r.profileRowLayout.width) > 0 &&
+        r.profileRowLayout.marginTop === '0px' && r.profileRowLayout.marginBottom === '0px',
+      JSON.stringify(r.profileRowLayout))
     check('the account width variable is the account row box width',
       r.accountWidthVar === Math.round(r.hostRowWidth) + 'px',
       JSON.stringify({ variable: r.accountWidthVar, row: r.hostRowWidth }))
@@ -197,12 +201,12 @@ module.exports = {
       JSON.stringify({ first: r.injectHealedFirst, same: r.injectHealedSame }))
     check("the host's keyboard walk reaches our injected button",
       r.focusInInjected === true, JSON.stringify(r.focusInInjected))
-    check('the hold screen opens over the menu and survives the leaves its overlay causes',
-      r.banOpened === 1 && r.banSurvivesLeave === 1,
-      JSON.stringify({ opened: r.banOpened, survived: r.banSurvivesLeave }))
-    check('the host menu stays up behind the hold screen and the screen leaves by its own control',
-      r.menuBehindBan === true && r.banAfterDismiss === 0,
-      JSON.stringify({ menu: r.menuBehindBan, dismissed: r.banAfterDismiss }))
+    check('the Profile click closes the account surface and uses the package-owned overlay slot',
+      r.profileMenuClosed === true && r.profileOverlayRegistered === true,
+      JSON.stringify({ menuClosed: r.profileMenuClosed, overlayRegistered: r.profileOverlayRegistered }))
+    check('the Profile overlay renders an accessible dialog and Escape restores focus to the host account trigger',
+      r.profileDialogRendered === true && r.profileTitleHasText === true && r.profileEscapeCloses === true && r.profileFocusRestored === true,
+      JSON.stringify({ dialog: r.profileDialogRendered, title: r.profileTitleHasText, closed: r.profileEscapeCloses, focus: r.profileFocusRestored }))
     check('closing the host menu leaves no injected container behind',
       r.injectAfterClose === 0 && r.hostMenuAfterClose === 0,
       JSON.stringify({ containers: r.injectAfterClose, menus: r.hostMenuAfterClose }))
@@ -227,7 +231,7 @@ module.exports = {
       JSON.stringify(status.seen))
     check('the running line reads elapsed time · output tokens · what the model is doing, with a turning spark, in place of the host label',
       live.state === 'live' && /^1m [5-9]s · 1\.2k tokens · \S/.test(live.text || '') &&
-        live.drawn === JSON.stringify(live.text) && live.label === 'none' && live.turning === 'dsh-claude-turn-spark',
+        live.drawn === JSON.stringify(live.text) && live.label === 'none' && live.turning === 'dsh-claude-style-plus-turn-spark',
       JSON.stringify(live))
     check('the failed line reads the host\'s word · how long it ran · output tokens, with a still spark',
       failed.state === 'failed' && failed.text === 'Failed · 12s · 300 tokens' &&

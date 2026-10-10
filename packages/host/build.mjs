@@ -5,7 +5,7 @@
  * build output, so the packaged layout holds one `lib/` and no source tree.
  * Each module is built on its own: the half is ESM and the module loader
  * imports it by file, so the relative specifiers stay as they are. The values
- * of `@dsh-claude-style/contracts` are inlined into each module that reads
+ * of `@dsh-claude-style-plus/contracts` are inlined into each module that reads
  * them — the contracts package is not among the published files, so a bare
  * specifier left in the output would not resolve at runtime — and every other
  * import (relative paths, `cordis`, `schemastery`, `node:*`) stays external.
@@ -22,7 +22,7 @@ const PACKAGE = path.resolve(import.meta.dirname)
 const ROOT = path.resolve(PACKAGE, '..', '..')
 const SOURCE = path.join(PACKAGE, 'src')
 /** The shared contract's package name: the one specifier a module's build resolves and inlines. */
-const CONTRACTS_PREFIX = '@dsh-claude-style/contracts/'
+const CONTRACTS_PREFIX = '@dsh-claude-style-plus/contracts/'
 
 /**
  * Keep every import but the shared contract's external: marking a specifier

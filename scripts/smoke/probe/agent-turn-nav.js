@@ -46,9 +46,9 @@
         return event.defaultPrevented
       }
       await sleep(150)
-      var skinRail = navPhase.querySelector('.dsh-claude-turn-rail')
-      var skinMarks = skinRail === null ? [] : Array.prototype.slice.call(skinRail.querySelectorAll('.dsh-claude-turn-rail-mark'))
-      var skinCurrent = skinRail === null ? null : skinRail.querySelector('.dsh-claude-turn-rail-mark[data-current]')
+      var skinRail = navPhase.querySelector('.dsh-claude-style-plus-turn-rail')
+      var skinMarks = skinRail === null ? [] : Array.prototype.slice.call(skinRail.querySelectorAll('.dsh-claude-style-plus-turn-rail-mark'))
+      var skinCurrent = skinRail === null ? null : skinRail.querySelector('.dsh-claude-style-plus-turn-rail-mark[data-current]')
       var navOut = {
         rail: {
           hostHidden: getComputedStyle(navRail).visibility,
@@ -62,31 +62,31 @@
       var skinRect = skinRail.getBoundingClientRect()
       var markTop = skinCurrent === null ? null : skinCurrent.getBoundingClientRect().top
       skinRail.dispatchEvent(new PointerEvent('pointerenter'))
-      var navCard = document.querySelector('.dsh-claude-turn-nav')
+      var navCard = document.querySelector('.dsh-claude-style-plus-turn-nav')
       navOut.openAtOnce = navCard === null ? null : navCard.getAttribute('data-open')
       await sleep(250)
-      var navRows = navCard === null ? [] : Array.prototype.slice.call(navCard.querySelectorAll('.dsh-claude-turn-nav-row'))
+      var navRows = navCard === null ? [] : Array.prototype.slice.call(navCard.querySelectorAll('.dsh-claude-style-plus-turn-nav-row'))
       var navCurrent = navCard === null ? null : navCard.querySelector('[data-current]')
       navOut.open = {
         open: navCard === null ? null : navCard.getAttribute('data-open'),
         // In the rail's slot, inside the conversation pane: a pointer on the card is on the pane.
         inSlot: navCard !== null && navCard.parentElement === navRail.parentElement,
-        railMarked: skinRail.hasAttribute('data-dsh-claude-turn-nav-open'),
-        marksFaded: getComputedStyle(skinRail.querySelector('.dsh-claude-turn-rail-track')).opacity,
+        railMarked: skinRail.hasAttribute('data-dsh-claude-style-plus-turn-nav-open'),
+        marksFaded: getComputedStyle(skinRail.querySelector('.dsh-claude-style-plus-turn-rail-track')).opacity,
         rows: navRows.map(function (row) { return row.textContent }),
         labels: navRows.map(function (row) { return row.getAttribute('aria-label') }),
         current: navCurrent === null ? null : navCurrent.dataset.index,
         rowGap: navCurrent === null || markTop === null ? null : Math.round(navCurrent.getBoundingClientRect().top - markTop),
-        dashGap: navCurrent === null ? null : Math.round(navCurrent.querySelector('.dsh-claude-turn-nav-dash').getBoundingClientRect().right - skinRect.right),
+        dashGap: navCurrent === null ? null : Math.round(navCurrent.querySelector('.dsh-claude-style-plus-turn-nav-dash').getBoundingClientRect().right - skinRect.right),
       }
       navRows[3].click()
       await sleep(100)
       navOut.rowPress = navPresses.slice()
-      var landed = document.querySelector('[data-dsh-claude-turn-nav-landed]')
+      var landed = document.querySelector('[data-dsh-claude-style-plus-turn-nav-landed]')
       navOut.rowLanding = landed === null ? null : landed.textContent
       navCard.dispatchEvent(new MouseEvent('mouseleave'))
       await sleep(250)
-      navOut.closed = { open: navCard.getAttribute('data-open'), railMarked: skinRail.hasAttribute('data-dsh-claude-turn-nav-open') }
+      navOut.closed = { open: navCard.getAttribute('data-open'), railMarked: skinRail.hasAttribute('data-dsh-claude-style-plus-turn-nav-open') }
       navPresses.length = 0
       navOut.keys = {
         // From the current mark (the fifth turn) one up is the fourth, whose rows are loaded.
@@ -98,7 +98,7 @@
       }
       await sleep(100)
       navOut.keys.presses = navPresses.slice()
-      var landedByKey = document.querySelector('[data-dsh-claude-turn-nav-landed]')
+      var landedByKey = document.querySelector('[data-dsh-claude-style-plus-turn-nav-landed]')
       navOut.keys.landing = landedByKey === null ? null : landedByKey.textContent
       // A draft in the composer keeps the arrow keys.
       var navDraft = document.createElement('textarea')
@@ -116,8 +116,8 @@
         document.body.appendChild(document.createElement('i'))
         await sleep(300)
         return {
-          rail: navPhase.querySelectorAll('.dsh-claude-turn-rail').length,
-          hostReplaced: navRail.hasAttribute('data-dsh-claude-turn-nav-replaced'),
+          rail: navPhase.querySelectorAll('.dsh-claude-style-plus-turn-rail').length,
+          hostReplaced: navRail.hasAttribute('data-dsh-claude-style-plus-turn-nav-replaced'),
           hostShown: getComputedStyle(navRail).visibility,
         }
       }

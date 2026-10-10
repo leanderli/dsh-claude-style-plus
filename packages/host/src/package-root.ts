@@ -30,5 +30,5 @@ export function packageRoot() {
     }
     at = dirname(at)
   }
-  throw new Error('dsh-claude-style: no package.json with a dsh field above the host half')
+  throw new Error('dsh-claude-style-plus: no package.json with a dsh field above the host half')
 }

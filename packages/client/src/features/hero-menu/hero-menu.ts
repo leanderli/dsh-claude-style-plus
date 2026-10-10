@@ -1,5 +1,5 @@
 import { AUTO_POPOVER_ALL, HERO_MENU_ATTR } from '../../constants'
-import { MENU_ROLE_SELECTOR } from '@dsh-claude-style/contracts/dom'
+import { MENU_ROLE_SELECTOR } from '@dsh-claude-style-plus/contracts/dom'
 import { readPrefs } from '../../core/prefs'
 import { closestFrom, createStamp } from '../../shared/dom'
 import { POPOVER_CLOSE_DELAY, POPOVER_OPEN_DELAY, closeOtherPopovers, createHoverIntent, registerPopover, resolveAnchoredPosition, unregisterPopover } from '../../shared/popover'
@@ -238,8 +238,8 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     // properties the host's own per-frame style writes never touch (see
     // the header note).
     const { x, y } = resolveAnchoredPosition(rect, width, height, { gap: GAP })
-    card.style.setProperty('--dsh-claude-hero-menu-x', `${Math.round(x)}px`)
-    card.style.setProperty('--dsh-claude-hero-menu-y', `${Math.round(y)}px`)
+    card.style.setProperty('--dsh-claude-style-plus-hero-menu-x', `${Math.round(x)}px`)
+    card.style.setProperty('--dsh-claude-style-plus-hero-menu-y', `${Math.round(y)}px`)
   }
 
   /** Re-place an open card after a scroll or a resize moved its anchor. */

@@ -6,7 +6,6 @@ import { observeSize, subscribeMutations } from './bus'
 import { requestFrame } from './frame'
 import { closestFrom } from '../shared/dom'
 import type { FooterHandle } from '../features/account/account-footer'
-import type { BanHandle } from '../features/ban-screen/ban-screen'
 import type { ChatFoldHandle } from '../features/chat-fold/chat-fold'
 import type { ComposerHandle } from '../features/composer/composer'
 import type { ModelHandle } from '../features/model/model-picker'
@@ -44,6 +43,12 @@ export interface FeatureHandle {
   teardown?(): void
 }
 
+export interface ProfilePageHandle extends FeatureHandle {
+  open(trigger?: HTMLElement): void
+  isOpen(): boolean
+  onCopyChange(): void
+}
+
 /**
  * Every feature's handle, under the name it registers on `ui` (its manifest's
  * `handle`, or its `id`). A feature that other features read publishes a
@@ -63,7 +68,7 @@ export interface Handles {
   heroMenu: FeatureHandle
   quickProviders: QuickProvidersHandle
   footer: FooterHandle
-  ban: BanHandle
+  profile: ProfilePageHandle
   themeFlip: FeatureHandle
   workspace: FeatureHandle
   search: FeatureHandle
@@ -99,7 +104,7 @@ export interface UiCalls {
 export type Ui = UiCalls & { [K in HandleName]?: Handles[K] }
 /** Say once, loudly, that a feature was switched off: the console line is its only trace. */
 export function reportFeatureFailure(name: string, error: unknown) {
-  console.error(`[dsh-claude-style] "${name}" failed and was switched off:`, error)
+  console.error(`[dsh-claude-style-plus] "${name}" failed and was switched off:`, error)
 }
 
 /**

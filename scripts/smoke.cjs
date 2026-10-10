@@ -198,7 +198,7 @@ async function browserHalf(planned) {
     if (name === 'client.js') {
       res.writeHead(200, { 'content-type': 'text/javascript; charset=utf-8' })
       res.end(fs.readFileSync(CLIENT))
-    } else if (name === 'dsh-claude-style/hdsl-skin.png') {
+    } else if (name === 'dsh-claude-style-plus/hdsl-skin.png') {
       // The launcher's atlas, which the skin loads outside `fetch`, so the
       // page-side stand-in cannot answer it. `hdsl-broken` models a file the
       // player removed after the launcher wrote the contract.
@@ -209,11 +209,11 @@ async function browserHalf(planned) {
       }
       res.writeHead(200, { 'content-type': 'image/png' })
       res.end(fs.readFileSync(SKIN_FIXTURE))
-    } else if (name.startsWith('dsh-claude-style/assets/')) {
+    } else if (name.startsWith('dsh-claude-style-plus/assets/')) {
       // The routed assets, from the build output the host half serves them from
       // (D38). The manifest is the same gate here: a name the build did not
       // produce answers 404.
-      const file = name.slice('dsh-claude-style/assets/'.length)
+      const file = name.slice('dsh-claude-style-plus/assets/'.length)
       const asset = ASSETS[file]
       // The chunk-fault case's route carries none of the feature chunks, the
       // way a host still serving the bundle it read before an update answers (D39).

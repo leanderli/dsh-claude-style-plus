@@ -3,7 +3,7 @@
  * probe.cjs — headless UI regression probe for the composer invariants.
  *
  * Drives a headless Chrome over CDP against a running DSH web GUI and asserts:
- *   1. the skin is applied (body[data-dsh-claude-style])
+ *   1. the skin is applied (body[data-dsh-claude-style-plus])
  *   2. a session page reaches phase "active"
  *   3. the composer seat is pinned to the viewport bottom (sticky contract)
  *   4. the composer field starts at one line (24px)
@@ -64,7 +64,7 @@ async function probe(port) {
   await send('Page.navigate', { url: `${BASE}/?token=${TOKEN}` })
   await sleep(12000)
 
-  check('skin applied', await evalJs(`!!document.body.hasAttribute('data-dsh-claude-style')`))
+  check('skin applied', await evalJs(`!!document.body.hasAttribute('data-dsh-claude-style-plus')`))
 
   // Open the most recent existing session. The sidebar's "new session" row
   // opens the hero, which has no session composer, and sessions can sit under
@@ -136,7 +136,7 @@ async function probe(port) {
   const clearance = () => evalJs(`(() => {
     const card = document.querySelector('[data-composer-card]')
     const trailing = card === null ? null : card.querySelector('[class*="_row"] > [class*="_trailing"]')
-    const meter = document.querySelector('[data-dsh-claude-context-meter]')
+    const meter = document.querySelector('[data-dsh-claude-style-plus-context-meter]')
     if (trailing === null || meter === null) return null
     const t = trailing.getBoundingClientRect()
     const m = meter.getBoundingClientRect()
@@ -144,7 +144,7 @@ async function probe(port) {
       clear: t.right <= m.left + 1,
       trailingRight: Math.round(t.right),
       meterLeft: Math.round(m.left),
-      room: document.body.style.getPropertyValue('--dsh-claude-meter-room') || '(unset)',
+      room: document.body.style.getPropertyValue('--dsh-claude-style-plus-meter-room') || '(unset)',
     }
   })()`)
 

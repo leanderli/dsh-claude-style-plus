@@ -19,17 +19,17 @@
       var mascotName = window.SMOKE_CASE === 'deepy' ? 'deepy' : 'crab'
       var driver = window.__deepy
       var whaleNow = function () {
-        var node = document.querySelector('.dsh-claude-' + mascotName)
+        var node = document.querySelector('.dsh-claude-style-plus-' + mascotName)
         if (node === null) return null
         // The frame is the strip's translation: read the computed matrix (a
         // running WAAPI animation has no inline style) as "Xpx Ypx".
-        var strip = node.querySelector('.dsh-claude-' + mascotName + '-strip')
+        var strip = node.querySelector('.dsh-claude-style-plus-' + mascotName + '-strip')
         var matrix = getComputedStyle(strip).transform
         var offsets = matrix === 'none' ? null : matrix.match(/matrix\([^,]+,[^,]+,[^,]+,[^,]+,\s*(-?[\d.]+),\s*(-?[\d.]+)\)/)
         return {
           animation: node.getAttribute('data-animation'),
           ready: node.hasAttribute('data-ready'),
-          place: node.parentElement === null ? null : node.parentElement.getAttribute('data-dsh-claude-' + mascotName + '-anchor'),
+          place: node.parentElement === null ? null : node.parentElement.getAttribute('data-dsh-claude-style-plus-' + mascotName + '-anchor'),
           frame: offsets === null ? '0px 0px' : offsets[1] + 'px ' + offsets[2] + 'px',
           sheet: getComputedStyle(strip).backgroundImage,
         }
@@ -41,7 +41,7 @@
       }
       var bodyStyle = getComputedStyle(document.body)
       r.states = {
-        brand: document.body.getAttribute('data-dsh-claude-brand'),
+        brand: document.body.getAttribute('data-dsh-claude-style-plus-brand'),
         canvas: bodyStyle.backgroundColor,
         accent: bodyStyle.getPropertyValue('--dsw-alias-brand-primary').trim(),
         link: bodyStyle.getPropertyValue('--dsw-alias-link').trim(),
@@ -52,7 +52,7 @@
       r.states.dark = {
         canvas: darkStyle.backgroundColor,
         accent: darkStyle.getPropertyValue('--dsw-alias-brand-primary').trim(),
-        raised: darkStyle.getPropertyValue('--dsh-claude-raised').trim(),
+        raised: darkStyle.getPropertyValue('--dsh-claude-style-plus-raised').trim(),
       }
       document.body.removeAttribute('data-ds-dark-theme')
       var deepyHero = document.createElement('div')
@@ -60,7 +60,7 @@
       document.body.appendChild(deepyHero)
       await sleep(500)
       r.states.home = whaleNow()
-      r.states.crab = document.querySelector('.dsh-claude-crab') !== null
+      r.states.crab = document.querySelector('.dsh-claude-style-plus-crab') !== null
       // Frames change on the whale's own node, and no frame wakes a pass. The
       // caret motion's own frames are settled first (see the crab case).
       if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
@@ -73,16 +73,16 @@
         // animation stops advancing, while a one-shot (the poke below) plays out.
         window.__pushForm({ motion: 'reduced' })
         await sleep(150)
-        r.states.stillAttr = document.body.getAttribute('data-dsh-claude-motion')
+        r.states.stillAttr = document.body.getAttribute('data-dsh-claude-style-plus-motion')
         var whaleStill = whaleNow().frame
         await sleep(400)
         r.states.still = { before: whaleStill, after: whaleNow().frame }
         window.__pushForm({ motion: 'full' })
         await sleep(150)
-        r.states.alwaysAttr = document.body.getAttribute('data-dsh-claude-motion')
+        r.states.alwaysAttr = document.body.getAttribute('data-dsh-claude-style-plus-motion')
       }
       // A click on its face pokes it.
-      var hit = document.querySelector('.dsh-claude-' + mascotName + '-hit')
+      var hit = document.querySelector('.dsh-claude-style-plus-' + mascotName + '-hit')
       var hitBox = hit.getBoundingClientRect()
       var press = { pointerId: 1, pointerType: 'mouse', isPrimary: true, button: 0, clientX: hitBox.left + 6, clientY: hitBox.top + hitBox.height / 2, bubbles: true }
       hit.dispatchEvent(new PointerEvent('pointerdown', Object.assign({ buttons: 1 }, press)))
@@ -94,7 +94,7 @@
         // one this state change switches to. It leaves with the page.
         deepyHero.remove()
         await sleep(200)
-        r.states.gone = whaleNow() === null && document.querySelectorAll('[data-dsh-claude-deepy-anchor]').length === 0
+        r.states.gone = whaleNow() === null && document.querySelectorAll('[data-dsh-claude-style-plus-deepy-anchor]').length === 0
         return
       }
       // The crab plays every state on the conversation page, and stands where
@@ -168,13 +168,13 @@
       // <body> (packages/client/src/core/prefs.ts) and the whale holds the state's still frame.
       window.__pushForm({ motion: 'reduced' })
       await sleep(150)
-      r.states.stillAttr = document.body.getAttribute('data-dsh-claude-motion')
+      r.states.stillAttr = document.body.getAttribute('data-dsh-claude-style-plus-motion')
       var stillBefore = whaleNow().frame
       await sleep(400)
       r.states.still = { before: stillBefore, after: whaleNow().frame }
       window.__pushForm({ motion: 'full' })
       await sleep(150)
-      r.states.alwaysAttr = document.body.getAttribute('data-dsh-claude-motion')
+      r.states.alwaysAttr = document.body.getAttribute('data-dsh-claude-style-plus-motion')
       // A compaction starts; the connection drops and the feed comes back
       // whole with the compaction's end in it. The shake above holds 4.8s.
       driver.emit({ type: 'compaction/start', seq: 4, time: Date.now(), data: { compactionId: 'c2', turn: null } })
@@ -212,7 +212,7 @@
       Date.now = deepyClock
       deepyConversation.remove()
       await sleep(200)
-      r.states.gone = whaleNow() === null && document.querySelectorAll('[data-dsh-claude-' + mascotName + '-anchor]').length === 0
+      r.states.gone = whaleNow() === null && document.querySelectorAll('[data-dsh-claude-style-plus-' + mascotName + '-anchor]').length === 0
       if (mascotName === 'crab') {
         // Where it appears: kept to the home page, the crab stays off the
         // conversation; with the mascot off it leaves the home card as well.
@@ -233,7 +233,7 @@
         r.states.off = whaleNow()
         window.__pushForm({ mascot: 'deepy' })
         await sleep(300)
-        r.states.deepyPicked = document.querySelector('.dsh-claude-deepy') !== null && document.querySelector('.dsh-claude-crab') === null
+        r.states.deepyPicked = document.querySelector('.dsh-claude-style-plus-deepy') !== null && document.querySelector('.dsh-claude-style-plus-crab') === null
         window.__pushForm({ mascot: 'crab', mascotScope: 'all' })
         scopeHero.remove()
         await sleep(200)

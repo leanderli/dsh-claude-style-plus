@@ -57,7 +57,7 @@ function fakeHost(mod, options = {}) {
     },
   }
   const ctx = {
-    fiber: { entry: { id: 'include:ui-skin-claude-style' } },
+    fiber: { entry: { id: 'include:ui-skin-claude-style-plus' } },
     logger: { warn() {} },
     get: (name) => {
       if (name === 'connection' && fenced) return connection
@@ -89,7 +89,7 @@ function fakeHost(mod, options = {}) {
  */
 function request(host, route, method, body, headers) {
   const req = Readable.from(body ? [Buffer.from(body)] : [])
-  Object.assign(req, { method, url: route, headers })
+  Object.assign(req, { method, url: route, headers, socket: { remoteAddress: '127.0.0.1' } })
   return new Promise((resolve) => {
     const res = {
       status: 0,
@@ -105,8 +105,8 @@ function request(host, route, method, body, headers) {
 
 async function hostHalf() {
   const mod = await import(pathToFileURL(HOST).href)
-  const PREFS = '/dsh-claude-style/prefs'
-  const USER = '/dsh-claude-style/username'
+  const PREFS = '/dsh-claude-style-plus/prefs'
+  const USER = '/dsh-claude-style-plus/username'
   const browser = { host: '127.0.0.1:43120', origin: 'http://127.0.0.1:43120', 'sec-fetch-site': 'same-origin', cookie: 'dsh-auth-x=1' }
   const crossSite = { host: '127.0.0.1:43120', origin: 'https://attacker.example', 'sec-fetch-site': 'cross-site' }
   const lanPeer = { host: '192.168.1.23:43120' }
@@ -114,7 +114,7 @@ async function hostHalf() {
 
   // Session deletion: the route removes one stored session directory. The root
   // is a scratch harness home under .debug/, never the user's own.
-  const DELETE = '/dsh-claude-style/session-delete'
+  const DELETE = '/dsh-claude-style-plus/session-delete'
   const scratchHome = path.join(ROOT, '.debug', 'smoke-home')
   const scratchCwd = path.join(scratchHome, 'sessions', '--D-smoke--')
   const scratchId = 'session-smoke-delete-0001'
@@ -133,8 +133,8 @@ async function hostHalf() {
 
     // The launcher's account contract. Its two layers are the only ones allowed
     // to say who the player is, and the picture's absolute path stays here.
-    const HDSL = '/dsh-claude-style/hdsl'
-    const SKIN = '/dsh-claude-style/hdsl-skin.png'
+    const HDSL = '/dsh-claude-style-plus/hdsl'
+    const SKIN = '/dsh-claude-style-plus/hdsl-skin.png'
     const contract = {
       HDSL_ACCOUNT_CONTRACT: '1',
       HDSL_ACCOUNT_NAME: 'HDSLPlayer',
@@ -254,7 +254,7 @@ async function hostHalf() {
   // it is not added); today, past the ledger's newest day, is the fold's whole
   // day, with its model split, its session and its hours.
   console.log('\nhost half — usage roll-up from the cost-meter ledger and the fold')
-  const USAGE = '/dsh-claude-style/usage'
+  const USAGE = '/dsh-claude-style-plus/usage'
   const now = new Date()
   const at = (dayOffset, hour) => new Date(now.getFullYear(), now.getMonth(), now.getDate() + dayOffset, hour, 10)
   const localDay = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
@@ -332,7 +332,7 @@ async function hostHalf() {
   // tool-call arguments and subagent children stay out, and a session is read
   // again only when its persistence revision moves.
   console.log('\nhost half — message content search')
-  const SEARCH = '/dsh-claude-style/session-search'
+  const SEARCH = '/dsh-claude-style-plus/session-search'
   const said = (seq, time, text) => ({ seq, time, type: 'user/message', data: { content: [{ type: 'text', text }] } })
   const answered = (seq, time, content) => ({ seq, time, type: 'assistant/message', data: { message: { content } } })
   const searchEvents = {
@@ -392,17 +392,17 @@ async function hostHalf() {
   // answer is the shipped copy rather than whatever this machine has cached.
   console.log('\nhost half — the peak rate catalog')
   const rate = fakeHost(mod, { fenced: true, home: scratchHome })
-  const refusedRate = await request(rate, '/dsh-claude-style/peakrate', 'GET', '', crossSite)
+  const refusedRate = await request(rate, '/dsh-claude-style-plus/peakrate', 'GET', '', crossSite)
   check('cross-site page: the rate catalog is refused',
     refusedRate.status === 401 || refusedRate.status === 403, `HTTP ${refusedRate.status}`)
-  const rateAnswer = await request(rate, '/dsh-claude-style/peakrate', 'GET', '', browser)
+  const rateAnswer = await request(rate, '/dsh-claude-style-plus/peakrate', 'GET', '', browser)
   const rateBody = rateAnswer.status === 200 ? JSON.parse(rateAnswer.body) : null
   check('the rate catalog answers the copy the package ships, with its profiles already parsed',
     rateBody !== null && rateBody.ok === true && rateBody.origin === 'bundled' &&
       Array.isArray(rateBody.profiles) && rateBody.profiles.some((profile) => profile.id === 'deepseek-v4') &&
       rateBody.profiles.every((profile) => typeof profile.schedule?.timeZone === 'string'),
     JSON.stringify({ status: rateAnswer.status, origin: rateBody?.origin ?? null, profiles: rateBody?.profiles?.length ?? null }))
-  const wrongMethod = await request(rate, '/dsh-claude-style/peakrate', 'DELETE', '', browser)
+  const wrongMethod = await request(rate, '/dsh-claude-style-plus/peakrate', 'DELETE', '', browser)
   check('a method the rate route does not take is turned away', wrongMethod.status === 405, `HTTP ${wrongMethod.status}`)
 
   // The routed assets, on the public prefix route (D38): the manifest the
@@ -414,19 +414,19 @@ async function hostHalf() {
   if (assetName === undefined) throw new Error('no routed assets in lib/assets/manifest.json; run npm run build')
   const storedPath = path.join(ROOT, 'lib', 'assets', asset.encoding === 'br' ? `${assetName}.br` : assetName)
   const assets = fakeHost(mod, {})
-  const compressed = await requestAsset(assets, `/dsh-claude-style/assets/${assetName}`, { 'accept-encoding': 'gzip, br' })
+  const compressed = await requestAsset(assets, `/dsh-claude-style-plus/assets/${assetName}`, { 'accept-encoding': 'gzip, br' })
   check('a routed asset is served as it is stored, under its content hash and its own type, cached for good',
     compressed.status === 200 && compressed.headers['content-type'] === asset.type && /immutable/.test(compressed.headers['cache-control']) &&
       compressed.headers['content-encoding'] === 'br' && compressed.raw !== null &&
       Buffer.compare(compressed.raw, fs.readFileSync(storedPath)) === 0,
     `HTTP ${compressed.status} ${JSON.stringify(compressed.headers)}`)
-  const plain = await requestAsset(assets, `/dsh-claude-style/assets/${assetName}`)
+  const plain = await requestAsset(assets, `/dsh-claude-style-plus/assets/${assetName}`)
   check('a client that does not take brotli gets the same asset decompressed, so nothing is missing',
     plain.status === 200 && plain.headers['content-encoding'] === undefined &&
       plain.raw !== null && plain.raw.toString('utf8') === brotliDecompressSync(fs.readFileSync(storedPath)).toString('utf8'),
     `HTTP ${plain.status} ${JSON.stringify(plain.headers)}`)
-  for (const url of ['/dsh-claude-style/assets/missing.svg', '/dsh-claude-style/assets/..%2fclient.js',
-    '/dsh-claude-style/assets/../../package.json', '/dsh-claude-style/assets/', `/dsh-claude-style/assets/${assetName}/x`]) {
+  for (const url of ['/dsh-claude-style-plus/assets/missing.svg', '/dsh-claude-style-plus/assets/..%2fclient.js',
+    '/dsh-claude-style-plus/assets/../../package.json', '/dsh-claude-style-plus/assets/', `/dsh-claude-style-plus/assets/${assetName}/x`]) {
     const answer = await requestAsset(assets, url)
     check(`nothing but a name the build wrote answers under the assets route: ${url}`, answer.status === 404, `HTTP ${answer.status}`)
   }
@@ -435,37 +435,37 @@ async function hostHalf() {
   // package.json carries, and the route answers it byte for byte under its own
   // content type.
   //
-  // The user's own drop point is `$DSH_HOME/dsh-claude-style/fonts/` (D11): a
+  // The user's own drop point is `$DSH_HOME/dsh-claude-style-plus/fonts/` (D11): a
   // copy there answers a name the package does not carry, and wins over a
   // bundled face of the same name. Both halves run against a scratch harness
   // home, so the answer says nothing about what the machine running this has
   // installed.
   console.log('\nhost half — the fonts route and the drop point')
   const fontHome = path.join(ROOT, '.debug', 'smoke-font-home')
-  const droppedDir = path.join(fontHome, 'dsh-claude-style', 'fonts')
+  const droppedDir = path.join(fontHome, 'dsh-claude-style-plus', 'fonts')
   fs.rmSync(fontHome, { recursive: true, force: true })
   const fontHost = fakeHost(mod, { home: fontHome })
   const packaged = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8')).files
   const fontSource = path.join(ROOT, 'packages', 'assets', 'src', 'fonts')
   for (const [name, type] of [['JetBrainsMonoVariable.ttf', 'font/ttf'], ['InterVariable.woff2', 'font/woff2'], ['NotoSerifVariable.woff2', 'font/woff2']]) {
-    const face = await requestAsset(fontHost, `/dsh-claude-style/fonts/${name}`)
+    const face = await requestAsset(fontHost, `/dsh-claude-style-plus/fonts/${name}`)
     check(`the packaged face ${name} ships in the package and is served as ${type}`,
       packaged.includes('lib') && face.status === 200 && face.headers['content-type'] === type &&
         face.raw !== null && Buffer.compare(face.raw, fs.readFileSync(path.join(fontSource, name))) === 0,
       `HTTP ${face.status} ${JSON.stringify(face.headers)}`)
   }
-  const absent = await requestAsset(fontHost, '/dsh-claude-style/fonts/AnthropicSansWebText.ttf')
+  const absent = await requestAsset(fontHost, '/dsh-claude-style-plus/fonts/AnthropicSansWebText.ttf')
   check('a face the package does not carry is a 404 until the user drops one in',
     absent.status === 404, `HTTP ${absent.status}`)
   fs.mkdirSync(droppedDir, { recursive: true })
   fs.writeFileSync(path.join(droppedDir, 'AnthropicSansWebText.ttf'), Buffer.from('dropped-anthropic'))
   fs.writeFileSync(path.join(droppedDir, 'JetBrainsMonoVariable.ttf'), Buffer.from('dropped-mono'))
-  const dropped = await requestAsset(fontHost, '/dsh-claude-style/fonts/AnthropicSansWebText.ttf')
+  const dropped = await requestAsset(fontHost, '/dsh-claude-style-plus/fonts/AnthropicSansWebText.ttf')
   check('a face dropped under the harness home is served from there',
     dropped.status === 200 && dropped.headers['content-type'] === 'font/ttf' &&
       dropped.raw !== null && dropped.raw.toString('utf8') === 'dropped-anthropic',
     `HTTP ${dropped.status} ${JSON.stringify(dropped.headers)}`)
-  const overridden = await requestAsset(fontHost, '/dsh-claude-style/fonts/JetBrainsMonoVariable.ttf')
+  const overridden = await requestAsset(fontHost, '/dsh-claude-style-plus/fonts/JetBrainsMonoVariable.ttf')
   check("the user's own copy wins over the bundled face of the same name",
     overridden.status === 200 && overridden.raw !== null && overridden.raw.toString('utf8') === 'dropped-mono',
     `HTTP ${overridden.status} ${JSON.stringify(overridden.headers)}`)
@@ -492,7 +492,7 @@ function requestAsset(host, url, headers = {}) {
       },
       end(chunk) { resolve({ status: this.status, headers: this.headers, raw: chunk === undefined ? null : chunk }) },
     }
-    host.routes['/dsh-claude-style'].handler({ method: 'GET', url, headers }, res)
+    host.routes['/dsh-claude-style-plus'].handler({ method: 'GET', url, headers }, res)
   })
 }
 

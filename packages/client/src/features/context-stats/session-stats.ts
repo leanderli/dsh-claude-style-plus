@@ -3,7 +3,7 @@ import { createContextStatsBinding } from './stats-binding'
 import { createStatsBlock } from './stats-block'
 import { CONTEXT_PANEL_ATTR, CONTEXT_STATS_ATTR, clearStrayContextNodes, contextPanel, findContextMeter } from './stats-panel'
 import type { HostContext, HostText } from '../../core/host'
-import type { HostSnapshotSource } from '@dsh-claude-style/contracts/services'
+import type { HostSnapshotSource } from '@dsh-claude-style-plus/contracts/services'
 
 /**
  * The session's numbers, read from the host's own projections and shown in

@@ -11,10 +11,10 @@
    composerStack carrying no hero variant holds the inline card. Before the
    first pass lands, only the second form matches, so dropping it would leave
    those frames unstyled. New rules keep both forms. */
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"],
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"]:focus-within,
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card]:focus-within {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"],
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"]:focus-within,
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card]:focus-within {
   background: transparent;
   border: none !important;
   /* No canvas wash here: the seat behind the composer paints the opaque bar and
@@ -41,7 +41,7 @@ body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant
    composer seat near the TOP of the scroll content — sticky bottom:0
    cannot pull an element down past its normal position, so the composer
    appeared mid-scroll and never followed message growth. */
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) {
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) {
   flex: 0 0 auto;
   overflow: visible;
   height: auto;
@@ -59,13 +59,13 @@ body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant
    `--dsh-composer-fade-h` is the single knob: it is the band's height AND the
    transcript's bottom clearance below, so the last turn always comes to rest
    exactly at the band's top edge. */
-body[data-dsh-claude-style] {
+body[data-dsh-claude-style-plus] {
   --dsh-composer-fade-h: 40px;
 }
-body[data-dsh-claude-style] :is([data-phase="active"], [data-content-phase="active"]) [data-composer-seat] {
+body[data-dsh-claude-style-plus] :is([data-phase="active"], [data-content-phase="active"]) [data-composer-seat] {
   background: var(--dsw-alias-bg-base);
 }
-body[data-dsh-claude-style] :is([data-phase="active"], [data-content-phase="active"]) [data-composer-seat]::before {
+body[data-dsh-claude-style-plus] :is([data-phase="active"], [data-content-phase="active"]) [data-composer-seat]::before {
   content: "";
   position: absolute;
   left: 0;
@@ -87,7 +87,7 @@ body[data-dsh-claude-style] :is([data-phase="active"], [data-content-phase="acti
 /* Message body clearance: the transcript ends where the fade band begins (same
    token as the band's height), so the last turn's action buttons (copy, retry,
    …) rest clear of the fade instead of being washed by it. */
-body[data-dsh-claude-style] [class*="viewArea"] {
+body[data-dsh-claude-style-plus] [class*="viewArea"] {
   padding-bottom: var(--dsh-composer-fade-h, 40px);
 }
 /* The composer is a chat-view affordance. The host keeps the seat mounted on
@@ -95,15 +95,15 @@ body[data-dsh-claude-style] [class*="viewArea"] {
    should only show on the chat tab — drop the whole bottom area otherwise.
    Hiding the seat also zeroes the host's --dsh-composer-height, so the
    trajectory ledger's bottom clearance collapses with it. */
-body[data-dsh-claude-style][data-dsh-claude-composer-hidden] [data-composer-seat] {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-composer-hidden] [data-composer-seat] {
   display: none !important;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"]:not([data-has-attachments="true"]) [class*="_rail"],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card]:not([data-has-attachments="true"]) [class*="_rail"] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"]:not([data-has-attachments="true"]) [class*="_rail"],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card]:not([data-has-attachments="true"]) [class*="_rail"] {
   display: none !important;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"][data-has-attachments="true"] [class*="_rail"],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][data-has-attachments="true"] [class*="_rail"] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"][data-has-attachments="true"] [class*="_rail"],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][data-has-attachments="true"] [class*="_rail"] {
   background: var(--dsw-specific-input-major, #ffffff);
   border: 1px solid var(--dsw-alias-border-l1) !important;
   border-bottom: none !important;
@@ -122,17 +122,17 @@ body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant
   position: relative;
   transition: border-color 0.12s ease, box-shadow 0.12s ease;
 }
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) [data-composer-card][data-composer-variant="inline"][data-has-attachments="true"] [class*="_rail"],
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][data-has-attachments="true"] [class*="_rail"] {
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) [data-composer-card][data-composer-variant="inline"][data-has-attachments="true"] [class*="_rail"],
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][data-has-attachments="true"] [class*="_rail"] {
   background: var(--dsw-specific-input-major);
   border-color: var(--dsw-alias-border-l1);
 }
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) [data-composer-card][data-composer-variant="inline"]:focus-within [class*="_rail"],
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card]:focus-within [class*="_rail"] {
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) [data-composer-card][data-composer-variant="inline"]:focus-within [class*="_rail"],
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card]:focus-within [class*="_rail"] {
   border-color: rgba(20, 20, 19, 0.18) !important;
 }
-body[data-dsh-claude-style][data-ds-dark-theme] [data-composer-card][data-composer-variant="inline"]:focus-within [class*="_rail"],
-body[data-dsh-claude-style][data-ds-dark-theme] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card]:focus-within [class*="_rail"] {
+body[data-dsh-claude-style-plus][data-ds-dark-theme] [data-composer-card][data-composer-variant="inline"]:focus-within [class*="_rail"],
+body[data-dsh-claude-style-plus][data-ds-dark-theme] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card]:focus-within [class*="_rail"] {
   border-color: rgba(250, 249, 245, 0.22) !important;
 }
 /* The attachment rail nests two levels: ComposerAttachments' outer rail wraps
@@ -140,8 +140,8 @@ body[data-dsh-claude-style][data-ds-dark-theme] [class*="_composerStack"]:not([d
    `[class*="_rail"]`, so the block above would draw the card frame twice —
    one box inside the other. Only the outer shell carries the frame; the
    inner scrolling rail stays frameless. */
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"][data-has-attachments="true"] [class*="_rail"] [class*="_rail"],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][data-has-attachments="true"] [class*="_rail"] [class*="_rail"] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"][data-has-attachments="true"] [class*="_rail"] [class*="_rail"],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][data-has-attachments="true"] [class*="_rail"] [class*="_rail"] {
   background: transparent;
   border: none !important;
   box-shadow: none;
@@ -158,8 +158,8 @@ body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant
 }
 /* Attachment thumbnail card: enlarged by 75% (~140px), matching non-focus
    border without shadow. The composer pass finds the tiles once per pass and
-   marks them data-dsh-claude-attachment (packages/client/src/features/composer/composer.ts). */
-body[data-dsh-claude-style] [data-composer-card] [class*="_rail"] [data-dsh-claude-attachment] {
+   marks them data-dsh-claude-style-plus-attachment (packages/client/src/features/composer/composer.ts). */
+body[data-dsh-claude-style-plus] [data-composer-card] [class*="_rail"] [data-dsh-claude-style-plus-attachment] {
   width: 140px;
   height: 140px;
   min-width: 140px;
@@ -175,10 +175,10 @@ body[data-dsh-claude-style] [data-composer-card] [class*="_rail"] [data-dsh-clau
   flex: 0 0 140px;
   box-sizing: border-box;
 }
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) [data-composer-card] [class*="_rail"] [data-dsh-claude-attachment] {
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) [data-composer-card] [class*="_rail"] [data-dsh-claude-style-plus-attachment] {
   border-color: var(--dsw-alias-border-l1);
 }
-body[data-dsh-claude-style] [data-composer-card] [class*="_rail"] [data-dsh-claude-attachment] :is(img, canvas, [class*="_preview"], [class*="_image"]) {
+body[data-dsh-claude-style-plus] [data-composer-card] [class*="_rail"] [data-dsh-claude-style-plus-attachment] :is(img, canvas, [class*="_preview"], [class*="_image"]) {
   width: 100%;
   height: 100%;
   max-width: 100%;
@@ -187,12 +187,12 @@ body[data-dsh-claude-style] [data-composer-card] [class*="_rail"] [data-dsh-clau
   display: block;
   border-radius: 11px;
 }
-body[data-dsh-claude-style] [data-composer-card] [class*="_rail"] [data-dsh-claude-attachment] :is(button, [role="button"], [class*="_close"], [class*="_delete"], [class*="_remove"], [class*="badge"], [class*="_tag"]) {
+body[data-dsh-claude-style-plus] [data-composer-card] [class*="_rail"] [data-dsh-claude-style-plus-attachment] :is(button, [role="button"], [class*="_close"], [class*="_delete"], [class*="_remove"], [class*="badge"], [class*="_tag"]) {
   position: absolute;
   z-index: 6;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] [data-input-scroll],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [data-input-scroll] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] [data-input-scroll],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [data-input-scroll] {
   background: var(--dsw-specific-input-major, #ffffff);
   border: 1px solid var(--dsw-alias-border-l1) !important;
   border-radius: 14px;
@@ -213,8 +213,8 @@ body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant
   box-shadow: 0 1px 3px rgba(20, 20, 19, 0.03);
   transition: border-color 0.12s ease, box-shadow 0.12s ease;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"][data-has-attachments="true"] [data-input-scroll],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][data-has-attachments="true"] [data-input-scroll] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"][data-has-attachments="true"] [data-input-scroll],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][data-has-attachments="true"] [data-input-scroll] {
   border-top: none !important;
   border-radius: 0 0 14px 14px;
   /* Seamless join with attachment rail above: 1px negative margin prevents subpixel seam without clipping thumbnails */
@@ -222,14 +222,14 @@ body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant
   min-height: 32px;
   padding: 8px 36px 6px 14px;
 }
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) [data-composer-card][data-composer-variant="inline"] [data-input-scroll],
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [data-input-scroll] {
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) [data-composer-card][data-composer-variant="inline"] [data-input-scroll],
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [data-input-scroll] {
   background: var(--dsw-specific-input-major);
   border-color: var(--dsw-alias-border-l1) !important;
   box-shadow: 0 1px 3px rgba(20, 20, 19, 0.03);
 }
-body[data-dsh-claude-style][data-ds-dark-theme] [data-composer-card][data-composer-variant="inline"] [data-input-scroll],
-body[data-dsh-claude-style][data-ds-dark-theme] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [data-input-scroll] {
+body[data-dsh-claude-style-plus][data-ds-dark-theme] [data-composer-card][data-composer-variant="inline"] [data-input-scroll],
+body[data-dsh-claude-style-plus][data-ds-dark-theme] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [data-input-scroll] {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 /* No workspace picked yet: the host marks the card as a workspace picker with a
@@ -238,45 +238,45 @@ body[data-dsh-claude-style][data-ds-dark-theme] [class*="_composerStack"]:not([d
    itself — the host's dashed stroke and colours, hover included — and the
    card's own ring is dropped. The input box stays flat, the way the host's
    picker card drops its elevation. */
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"][class*="_cardWorkspaceTrigger"]::after,
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][class*="_cardWorkspaceTrigger"]::after {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"][class*="_cardWorkspaceTrigger"]::after,
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][class*="_cardWorkspaceTrigger"]::after {
   display: none !important;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"][class*="_cardWorkspaceTrigger"] [data-input-scroll],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][class*="_cardWorkspaceTrigger"] [data-input-scroll] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"][class*="_cardWorkspaceTrigger"] [data-input-scroll],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][class*="_cardWorkspaceTrigger"] [data-input-scroll] {
   border-style: dashed !important;
   border-color: var(--dsw-alias-border-l4) !important;
   box-shadow: none !important;
   cursor: pointer !important;
   transition: border-color 100ms ease !important;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"][class*="_cardWorkspaceTrigger"]:hover [data-input-scroll],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][class*="_cardWorkspaceTrigger"]:hover [data-input-scroll] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"][class*="_cardWorkspaceTrigger"]:hover [data-input-scroll],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][class*="_cardWorkspaceTrigger"]:hover [data-input-scroll] {
   border-color: var(--dsw-alias-state-business-primary) !important;
 }
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) [data-composer-card][data-composer-variant="inline"]:focus-within [data-input-scroll],
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card]:focus-within [data-input-scroll] {
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) [data-composer-card][data-composer-variant="inline"]:focus-within [data-input-scroll],
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card]:focus-within [data-input-scroll] {
   border-color: rgba(20, 20, 19, 0.18) !important;
   box-shadow: 0 0 0 1px rgba(20, 20, 19, 0.065), 0 4px 12px rgba(20, 20, 19, 0.025);
 }
-body[data-dsh-claude-style][data-ds-dark-theme] [data-composer-card][data-composer-variant="inline"]:focus-within [data-input-scroll],
-body[data-dsh-claude-style][data-ds-dark-theme] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card]:focus-within [data-input-scroll] {
+body[data-dsh-claude-style-plus][data-ds-dark-theme] [data-composer-card][data-composer-variant="inline"]:focus-within [data-input-scroll],
+body[data-dsh-claude-style-plus][data-ds-dark-theme] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card]:focus-within [data-input-scroll] {
   border-color: rgba(250, 249, 245, 0.22) !important;
   box-shadow: 0 0 0 1px rgba(250, 249, 245, 0.09), 0 4px 16px rgba(0, 0, 0, 0.20);
 }
 /* With attachments the rail already carries the card's focus ring, so the
    input keeps only the deepened drop — its own 1px ring would paint a second
    line across the seam between the thumbnails and the text. */
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) [data-composer-card][data-composer-variant="inline"][data-has-attachments="true"]:focus-within [data-input-scroll],
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][data-has-attachments="true"]:focus-within [data-input-scroll] {
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) [data-composer-card][data-composer-variant="inline"][data-has-attachments="true"]:focus-within [data-input-scroll],
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][data-has-attachments="true"]:focus-within [data-input-scroll] {
   box-shadow: 0 4px 12px rgba(20, 20, 19, 0.025);
 }
-body[data-dsh-claude-style][data-ds-dark-theme] [data-composer-card][data-composer-variant="inline"][data-has-attachments="true"]:focus-within [data-input-scroll],
-body[data-dsh-claude-style][data-ds-dark-theme] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][data-has-attachments="true"]:focus-within [data-input-scroll] {
+body[data-dsh-claude-style-plus][data-ds-dark-theme] [data-composer-card][data-composer-variant="inline"][data-has-attachments="true"]:focus-within [data-input-scroll],
+body[data-dsh-claude-style-plus][data-ds-dark-theme] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][data-has-attachments="true"]:focus-within [data-input-scroll] {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.20);
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] [data-input-scroll] [class*="_grow"],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [data-input-scroll] [class*="_grow"] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] [data-input-scroll] [class*="_grow"],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [data-input-scroll] [class*="_grow"] {
   width: 100%;
   max-width: 100%;
   min-height: 24px;
@@ -285,8 +285,8 @@ body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant
   box-sizing: border-box;
   overflow-x: hidden;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] [data-composer-input],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [data-composer-input] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] [data-composer-input],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [data-composer-input] {
   min-height: 24px;
   height: auto;
   line-height: 24px;
@@ -302,8 +302,8 @@ body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant
   overflow-wrap: anywhere;
   overflow-x: hidden;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] [data-composer-placeholder],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [data-composer-placeholder] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] [data-composer-placeholder],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [data-composer-placeholder] {
   line-height: 24px;
   height: 24px;
   position: absolute;
@@ -321,8 +321,8 @@ body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant
   user-select: none;
 }
 /* Pinned send button inside input box */
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-control="send"],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-control="send"] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-style-plus-control="send"],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-style-plus-control="send"] {
   position: absolute;
   bottom: 40px;
   right: 8px;
@@ -344,14 +344,14 @@ body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant
   cursor: pointer;
   transition: color 0.12s ease, background-color 0.12s ease;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-control="send"] :is(svg, [class*="_chevron"], span) {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-style-plus-control="send"] :is(svg, [class*="_chevron"], span) {
   display: none;
 }
 /* The return glyph is drawn, as Claude Code draws it: a short stub along the
    top, down the right side, and back along the bottom to a left arrowhead, in
    crisp 1.5px square-cornered strokes filled with the button's own colour. */
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-control="send"]::after,
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-control="send"]::after {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-style-plus-control="send"]::after,
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-style-plus-control="send"]::after {
   content: "";
   width: 16px;
   height: 16px;
@@ -359,20 +359,20 @@ body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linejoin='miter'%3E%3Cpath d='M8 3.75h5.25v7H3M6 7.75l-3 3 3 3'/%3E%3C/svg%3E") center / contain no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linejoin='miter'%3E%3Cpath d='M8 3.75h5.25v7H3M6 7.75l-3 3 3 3'/%3E%3C/svg%3E") center / contain no-repeat;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-control="send"]:not(:disabled):hover,
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-control="send"]:not(:disabled):hover {
-  background: var(--dsh-claude-hover-bg, rgba(0, 0, 0, 0.08)) !important;
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-style-plus-control="send"]:not(:disabled):hover,
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-style-plus-control="send"]:not(:disabled):hover {
+  background: var(--dsh-claude-style-plus-hover-bg, rgba(0, 0, 0, 0.08)) !important;
   color: var(--dsw-alias-label-primary) !important;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"]:not([data-dsh-claude-draft-empty]) button[data-dsh-claude-control="send"],
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"][data-has-attachments="true"] button[data-dsh-claude-control="send"],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card]:not([data-dsh-claude-draft-empty]) button[data-dsh-claude-control="send"],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][data-has-attachments="true"] button[data-dsh-claude-control="send"] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"]:not([data-dsh-claude-style-plus-draft-empty]) button[data-dsh-claude-style-plus-control="send"],
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"][data-has-attachments="true"] button[data-dsh-claude-style-plus-control="send"],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card]:not([data-dsh-claude-style-plus-draft-empty]) button[data-dsh-claude-style-plus-control="send"],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card][data-has-attachments="true"] button[data-dsh-claude-style-plus-control="send"] {
   color: var(--dsw-alias-label-primary);
 }
 /* Pinned stop button inside input box */
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-control="stop"],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-control="stop"] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-style-plus-control="stop"],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-style-plus-control="stop"] {
   position: absolute;
   bottom: 40px;
   right: 8px;
@@ -394,14 +394,14 @@ body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant
   /* The host ships this border with `!important`; only this one has to beat it. */
   border: none !important;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-control="stop"]:hover:not(:disabled),
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-control="stop"]:hover:not(:disabled) {
-  background: var(--dsh-claude-hover-bg, rgba(0, 0, 0, 0.08)) !important;
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-style-plus-control="stop"]:hover:not(:disabled),
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-style-plus-control="stop"]:hover:not(:disabled) {
+  background: var(--dsh-claude-style-plus-hover-bg, rgba(0, 0, 0, 0.08)) !important;
 }
 /* The ring the host's square sits in: drawn here, since the shipped glyph is the
    square alone. */
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-control="stop"]::before,
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-control="stop"]::before {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-style-plus-control="stop"]::before,
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-style-plus-control="stop"]::before {
   content: "";
   display: block;
   position: absolute;
@@ -414,23 +414,23 @@ body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant
   border-radius: 50%;
   corner-shape: round;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-control="stop"] svg,
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-control="stop"] svg {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-style-plus-control="stop"] svg,
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-style-plus-control="stop"] svg {
   display: block;
   width: 7px;
   height:  7px;
   border-radius: 1.5px;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-control="stop"]::after,
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-control="stop"]::after {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-style-plus-control="stop"]::after,
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-style-plus-control="stop"]::after {
   display: none;
 }
 /* Toolbar row below input card. `[class*="_row"]` on purpose: a bare
    `[class*="row"]` substring-matches the shipped `.p_FcLG_grow` input
    wrapper ("grow" contains "row"), and the fixed 28px height + flex
    display here would pin the composer field to one line forever. */
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] [class*="_row"],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [class*="_row"] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] [class*="_row"],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [class*="_row"] {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
@@ -455,8 +455,8 @@ body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant
    list into one 28px flex line and wrapped every label/value. Restore the
    shipped legend layout: the list stacks vertically, each row keeps its
    natural height and space-between distribution. */
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] [class*="_rows"],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [class*="_rows"] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] [class*="_rows"],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [class*="_rows"] {
   display: block !important;
   height: auto !important;
   min-height: 0 !important;
@@ -464,8 +464,8 @@ body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant
   max-width: none !important;
   padding: 0 !important;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] [class*="_rows"] [class*="_row"],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [class*="_rows"] [class*="_row"] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] [class*="_rows"] [class*="_row"],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [class*="_rows"] [class*="_row"] {
   display: flex !important;
   height: auto !important;
   min-height: 0 !important;
@@ -474,23 +474,23 @@ body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant
   padding: 2px 0 !important;
   margin: 0 !important;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] [class*="_tools"],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [class*="_tools"] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] [class*="_tools"],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [class*="_tools"] {
   display: flex;
   align-items: center;
   gap: 8px;
   flex: 0 0 auto;
   overflow: visible;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] [class*="_modes"],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [class*="_modes"] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] [class*="_modes"],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [class*="_modes"] {
   order: 1;
   display: inline-flex;
   align-items: center;
   overflow: visible;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-control="commands"],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-control="commands"] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-style-plus-control="commands"],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-style-plus-control="commands"] {
   order: 3;
   width: 24px;
   height: 24px;
@@ -501,13 +501,13 @@ body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant
   align-items: center;
   justify-content: center;
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-control="commands"]:hover:not(:disabled),
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-control="commands"]:hover:not(:disabled) {
-  background: var(--dsh-claude-hover-bg, rgba(0, 0, 0, 0.08));
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-style-plus-control="commands"]:hover:not(:disabled),
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-style-plus-control="commands"]:hover:not(:disabled) {
+  background: var(--dsh-claude-style-plus-hover-bg, rgba(0, 0, 0, 0.08));
   color: var(--dsw-alias-label-primary);
 }
-body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] [class*="_trailing"],
-body[data-dsh-claude-style] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [class*="_trailing"] {
+body[data-dsh-claude-style-plus] [data-composer-card][data-composer-variant="inline"] [class*="_trailing"],
+body[data-dsh-claude-style-plus] [class*="_composerStack"]:not([data-composer-variant="hero"]) [data-composer-card] [class*="_trailing"] {
   display: flex;
   align-items: center;
   gap: 8px;

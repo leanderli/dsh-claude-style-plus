@@ -13,7 +13,7 @@ export default defineConfig({
   // The contract package (D46) resolves the way the type check and the bundler
   // resolve it, from tsconfig.json's paths.
   resolve: {
-    alias: { '@dsh-claude-style/contracts': path.resolve(import.meta.dirname, 'packages/contracts/src') },
+    alias: { '@dsh-claude-style-plus/contracts': path.resolve(import.meta.dirname, 'packages/contracts/src') },
   },
   test: {
     include: ['packages/client/src/**/*.test.ts'],

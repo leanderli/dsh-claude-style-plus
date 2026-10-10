@@ -1,7 +1,7 @@
 {
-  "name": "dsh-claude-style",
-  "description": "Claude Code Desktop theme for DeepSeek Harness (dsh) web GUI — visual & interaction overhaul",
-  "version": "0.12.0",
+  "name": "dsh-claude-style-plus",
+  "description": "Independently maintained Claude Code Desktop theme for DeepSeek Harness (dsh) web GUI",
+  "version": "0.13.0",
   "type": "module",
   "main": "lib/host/index.js",
   "icon": "lib/claude-mark.svg",
@@ -19,7 +19,9 @@
     "features:check": "node scripts/features.mjs --check",
     "probe": "node scripts/probe.cjs",
     "smoke": "node scripts/smoke.cjs",
-    "test": "vitest run",
+    "test:host": "vitest run --config vitest.host.config.mjs",
+    "test:node": "node --test packages/testing/profile-integration.test.mjs",
+    "test": "vitest run && npm run test:host && npm run test:node",
     "prepublishOnly": "npm run build"
   },
   "exports": {
@@ -70,14 +72,14 @@
     "editorial"
   ],
   "license": "MIT",
-  "author": "Nwflower",
+  "author": "leanderlee",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nwflower/dsh-claude-style.git"
+    "url": "git+https://github.com/leanderli/dsh-claude-style-plus.git"
   },
-  "homepage": "https://github.com/Nwflower/dsh-claude-style#readme",
+  "homepage": "https://github.com/leanderli/dsh-claude-style-plus#readme",
   "bugs": {
-    "url": "https://github.com/Nwflower/dsh-claude-style/issues"
+    "url": "https://github.com/leanderli/dsh-claude-style-plus/issues"
   },
   "devDependencies": {
     "@deepseek-ai/dsh-client-ui-primitives": "0.2.1-alpha.1",

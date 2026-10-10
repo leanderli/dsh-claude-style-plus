@@ -1,7 +1,7 @@
 /**
  * The usage payload the plugin's two halves exchange (D27's panel, D38's route).
  *
- * `packages/host/src/usage.ts` answers `GET /dsh-claude-style/usage` with this shape and the
+ * `packages/host/src/usage.ts` answers `GET /dsh-claude-style-plus/usage` with this shape and the
  * browser half reads it in `packages/client/src/features/home/data.ts`; the session list's own
  * roll-up (`sessions.list`, a host service) answers a narrower version of the
  * same entries, which is why several fields below are optional. These types are
@@ -44,6 +44,50 @@ export interface UsageModel {
   lastAt?: number
 }
 
+/** One Skill event's two separately attributable sources in a calendar day. */
+export interface WorkspaceSkillDay {
+  explicitCalls: number
+  modelCalls: number
+  sessionIds: string[]
+}
+
+/** One workspace/day's token activity plus per-skill event counts. */
+export interface WorkspaceUsageDay extends UsageDay {
+  skills?: Record<string, WorkspaceSkillDay>
+}
+
+/** A skill's all-history counts within one workspace. */
+export interface WorkspaceSkillTotal {
+  name: string
+  explicitCalls: number
+  modelCalls: number
+  sessions: number
+}
+
+/** One registered DSH Workspace, or the distinct unassigned-session group. */
+export interface WorkspaceUsageRow {
+  workspaceId: string | null
+  title: string | null
+  path: string | null
+  /** Current Workspace membership size; range-active sessions are in `totals.sessions`. */
+  registeredSessions: number
+  days: WorkspaceUsageDay[]
+  totals: UsageTotals
+  models: UsageModel[]
+  skills: WorkspaceSkillTotal[]
+}
+
+/** Session-log-derived workspace analytics; `failed` makes partial history visible. */
+export interface WorkspaceUsageReport {
+  source: 'session-logs'
+  read: number
+  failed: number
+  sessions: number
+  /** True when current Workspace membership could not be read or validated. */
+  workspaceRegistryUnavailable?: boolean
+  workspaces: WorkspaceUsageRow[]
+}
+
 /** What the usage route answers: the window's days, the models, and where the figures came from. */
 export interface UsageReport {
   /**
@@ -62,6 +106,8 @@ export interface UsageReport {
   hours?: number[]
   /** The window's sums: the four buckets, the settled calls, and how many days and sessions they came from. */
   totals: UsageTotals
+  /** Per-workspace and per-skill view, folded from readable Session logs. */
+  workspaceUsage?: WorkspaceUsageReport
   /** An older host half sent the window's favourite model here; the panel still reads it as a fallback. */
   model?: string
   totalSessions?: number
@@ -94,7 +140,7 @@ export interface UsageAnswer {
 
 /**
  * The answer of the plugin's own content search (`packages/host/src/search.ts`,
- * `GET /dsh-claude-style/session-search`): the hits, each naming its session
+ * `GET /dsh-claude-style-plus/session-search`): the hits, each naming its session
  * and the match inside the excerpt.
  */
 export interface SearchAnswer {

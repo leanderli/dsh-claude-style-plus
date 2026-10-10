@@ -1,4 +1,4 @@
-import { FRAME_TOP_CLEARANCE_PROPERTY, FULLSCREEN_ATTRIBUTE, WINDOWS_TITLEBAR_ATTRIBUTE } from '@dsh-claude-style/contracts/dom'
+import { FRAME_TOP_CLEARANCE_PROPERTY, FULLSCREEN_ATTRIBUTE, WINDOWS_TITLEBAR_ATTRIBUTE } from '@dsh-claude-style-plus/contracts/dom'
 
 /** macOS: the clearance the traffic lights need, read off the host's own leading seat. */
 const MAC_TRAFFIC_LIGHTS = 88

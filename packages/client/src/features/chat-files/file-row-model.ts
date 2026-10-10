@@ -1,5 +1,5 @@
 import type { HostText } from '../../core/host'
-import type { HostChatBlock } from '@dsh-claude-style/contracts/services'
+import type { HostChatBlock } from '@dsh-claude-style-plus/contracts/services'
 
 /**
  * The file-change row's derivations, kept apart from its React component
@@ -32,51 +32,51 @@ export type FileRowState = 'preparing' | 'running' | 'ok' | 'error' | 'stopped'
 export type CallArgs = Record<string, unknown>
 
 /** The row root. */
-export const CHAT_FILE_ROW_CLASS = 'dsh-claude-file-root'
+export const CHAT_FILE_ROW_CLASS = 'dsh-claude-style-plus-file-root'
 /** The disclosure row's own element: the hover highlight hangs here. */
-export const CHAT_FILE_ROW_LINE_CLASS = 'dsh-claude-file-row'
+export const CHAT_FILE_ROW_LINE_CLASS = 'dsh-claude-style-plus-file-row'
 /** The icon slot. */
-export const CHAT_FILE_LEADING_CLASS = 'dsh-claude-file-leading'
+export const CHAT_FILE_LEADING_CLASS = 'dsh-claude-style-plus-file-leading'
 /** The open and close chevron. */
-export const CHAT_FILE_CHEVRON_CLASS = 'dsh-claude-file-chevron'
+export const CHAT_FILE_CHEVRON_CLASS = 'dsh-claude-style-plus-file-chevron'
 /** The title (edit or write). */
-export const CHAT_FILE_TITLE_CLASS = 'dsh-claude-file-title'
+export const CHAT_FILE_TITLE_CLASS = 'dsh-claude-style-plus-file-title'
 /** The dot between the title and the summary. */
-export const CHAT_FILE_SEP_CLASS = 'dsh-claude-file-sep'
+export const CHAT_FILE_SEP_CLASS = 'dsh-claude-style-plus-file-sep'
 /** The summary text. */
-export const CHAT_FILE_SUMMARY_CLASS = 'dsh-claude-file-summary'
+export const CHAT_FILE_SUMMARY_CLASS = 'dsh-claude-style-plus-file-summary'
 /** The failure colour on the summary. */
-export const CHAT_FILE_ERROR_CLASS = 'dsh-claude-file-error'
+export const CHAT_FILE_ERROR_CLASS = 'dsh-claude-style-plus-file-error'
 /** The stopped colour on the summary. */
-export const CHAT_FILE_STOPPED_CLASS = 'dsh-claude-file-stopped'
+export const CHAT_FILE_STOPPED_CLASS = 'dsh-claude-style-plus-file-stopped'
 /** The clickable file path. */
-export const CHAT_FILE_LINK_CLASS = 'dsh-claude-file-link'
+export const CHAT_FILE_LINK_CLASS = 'dsh-claude-style-plus-file-link'
 /** The container of the small statistics tail. */
-export const CHAT_FILE_SUFFIX_CLASS = 'dsh-claude-file-suffix'
+export const CHAT_FILE_SUFFIX_CLASS = 'dsh-claude-style-plus-file-suffix'
 /** The type size both statistics share. */
-export const CHAT_FILE_STAT_CLASS = 'dsh-claude-file-stat'
+export const CHAT_FILE_STAT_CLASS = 'dsh-claude-style-plus-file-stat'
 /** The added count. */
-export const CHAT_FILE_ADD_CLASS = 'dsh-claude-file-add'
+export const CHAT_FILE_ADD_CLASS = 'dsh-claude-style-plus-file-add'
 /** The removed count. */
-export const CHAT_FILE_DEL_CLASS = 'dsh-claude-file-del'
+export const CHAT_FILE_DEL_CLASS = 'dsh-claude-style-plus-file-del'
 /** The expanded body. */
-export const CHAT_FILE_BODY_CLASS = 'dsh-claude-file-body'
+export const CHAT_FILE_BODY_CLASS = 'dsh-claude-style-plus-file-body'
 /** The diff card inside an expanded body. */
-export const CHAT_FILE_DIFF_CLASS = 'dsh-claude-file-diff'
+export const CHAT_FILE_DIFF_CLASS = 'dsh-claude-style-plus-file-diff'
 /** The IN/OUT card inside an expanded body. */
-export const CHAT_FILE_IO_CLASS = 'dsh-claude-file-io'
+export const CHAT_FILE_IO_CLASS = 'dsh-claude-style-plus-file-io'
 /** One section of the IN/OUT card. */
-export const CHAT_FILE_IO_SECTION_CLASS = 'dsh-claude-file-io-section'
+export const CHAT_FILE_IO_SECTION_CLASS = 'dsh-claude-style-plus-file-io-section'
 /** The hairline between IN and OUT. */
-export const CHAT_FILE_IO_DIVIDER_CLASS = 'dsh-claude-file-io-divider'
+export const CHAT_FILE_IO_DIVIDER_CLASS = 'dsh-claude-style-plus-file-io-divider'
 /** The IN and OUT side labels. */
-export const CHAT_FILE_IO_LABEL_CLASS = 'dsh-claude-file-io-label'
+export const CHAT_FILE_IO_LABEL_CLASS = 'dsh-claude-style-plus-file-io-label'
 /** The IN and OUT bodies. */
-export const CHAT_FILE_IO_TEXT_CLASS = 'dsh-claude-file-io-text'
+export const CHAT_FILE_IO_TEXT_CLASS = 'dsh-claude-style-plus-file-io-text'
 /** The trajectory entrance pill. */
-export const CHAT_FILE_INSPECT_CLASS = 'dsh-claude-file-inspect'
+export const CHAT_FILE_INSPECT_CLASS = 'dsh-claude-style-plus-file-inspect'
 /** The running state label only a screen reader reads. */
-export const CHAT_FILE_HIDDEN_CLASS = 'dsh-claude-file-hidden'
+export const CHAT_FILE_HIDDEN_CLASS = 'dsh-claude-style-plus-file-hidden'
 /** The seat both file tools render through; the host's own rows sit at priority 0 and a keyed seat renders the lowest. */
 export const CHAT_FILE_SEAT = 'tool.call.toolview'
 

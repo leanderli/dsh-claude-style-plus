@@ -5,7 +5,7 @@
  * skin's CSS lives by are checked on the syntax tree, selectors through
  * postcss-selector-parser:
  *
- *   scope        every selector holds `body[data-dsh-claude-style]` (outside :not())
+ *   scope        every selector holds `body[data-dsh-claude-style-plus]` (outside :not())
  *   :has()       only in its selector's last compound, at every nesting level (D9)
  *   token gates  a rule writing a host token carries the Claude palette or
  *                typeface gate, and every private token the Claude choice
@@ -17,7 +17,7 @@
  *
  * The token stylesheet is generated from packages/client/src/theme/tokens.json, and so is the
  * token table in docs/STYLE.md; it also declares the brand marks' addresses
- * as `--dsh-claude-image-<name>`, the one thing in the CSS only the build knows.
+ * as `--dsh-claude-style-plus-image-<name>`, the one thing in the CSS only the build knows.
  *
  * The joined sheet ships minified (scripts/shared/minify-css.cjs): comments and
  * formatting are for the source, and the checks above read the source.
@@ -31,7 +31,7 @@ import { minifyCss } from './shared/minify-css.cjs'
 
 /** The selector root every skin rule hangs off. */
 const SCOPE_TAG = 'body'
-const SCOPE_ATTRIBUTE = 'data-dsh-claude-style'
+const SCOPE_ATTRIBUTE = 'data-dsh-claude-style-plus'
 const SCOPE = `${SCOPE_TAG}[${SCOPE_ATTRIBUTE}]`
 /** The comment in a gated sheet below which every rule follows the composer preference. */
 const COMPOSER_GATE_MARKER = '@composer-gate'
@@ -46,10 +46,10 @@ const TABLE_END = '<!-- /generated:tokens -->'
 const SKIN_ATTRIBUTE_PREFIX = 'data-dsh-'
 /**
  * Attributes the browser half builds rather than spells out: the mascot
- * player marks its stand `data-dsh-claude-<character>-anchor` from the
+ * player marks its stand `data-dsh-claude-style-plus-<character>-anchor` from the
  * character's name (features/mascot/mascot-player.ts).
  */
-const BUILT_ATTRIBUTES = new Set(['data-dsh-claude-crab-anchor', 'data-dsh-claude-deepy-anchor'])
+const BUILT_ATTRIBUTES = new Set(['data-dsh-claude-style-plus-crab-anchor', 'data-dsh-claude-style-plus-deepy-anchor'])
 
 /* ---------- selectors ---------- */
 
@@ -72,7 +72,7 @@ function negated(node) {
 }
 
 /**
- * The scope compounds of one selector: each `[data-dsh-claude-style]` on a
+ * The scope compounds of one selector: each `[data-dsh-claude-style-plus]` on a
  * `body` compound outside :not(), with the compound around it. A rule that
  * paints the document element reaches the scope through `html:has(…)`.
  */
@@ -131,8 +131,8 @@ function checkTokenGates(file, rule, selectors, gates, names) {
     } else if (name.startsWith('--dsw-')) {
       if (!every(gates.palette, gates.palette.claude)) throw new Error(`build: ${where} writes ${name} outside the Claude palette gate`)
     }
-    if (!name.startsWith('--dsh-claude-')) continue
-    const gate = name.startsWith('--dsh-claude-font-') ? gates.typeface : gates.palette
+    if (!name.startsWith('--dsh-claude-style-plus-')) continue
+    const gate = name.startsWith('--dsh-claude-style-plus-font-') ? gates.typeface : gates.palette
     if (every(gate, gate.claude)) names.claude.add(name)
     if (every(gate, gate.host)) names.host.add(name)
   }
@@ -223,7 +223,7 @@ function declarationsOf(items, pick) {
  * Every block that writes a host token carries the Claude gate, so under
  * "follow the host" the host's own tokens stand (D30). The palette blocks name
  * `[data-ds-dark-theme]` for dark on purpose: the host's own dark block weighs
- * the same (0,1,1) as a bare `body[data-dsh-claude-style]`, so whichever sheet
+ * the same (0,1,1) as a bare `body[data-dsh-claude-style-plus]`, so whichever sheet
  * the loader appended last would win; naming the attribute lifts these to
  * (0,2,1). The DeepSeek blocks add the brand attribute on top and only state
  * what differs from Claude's. The brand marks' addresses come first: every
@@ -239,7 +239,7 @@ function tokenSheet(doc, gates, images) {
   const deepseek = `${claude}${gate(gates.brand, gates.brand.deepseek)}`
   return [
     `/* Generated from packages/client/src/${TOKEN_SHEET} by scripts/css.mjs; edit the JSON. */\n`,
-    tokenBlock(SCOPE, Object.entries(images).map(([name, url]) => [`--dsh-claude-image-${name}`, `url("${url}")`])),
+    tokenBlock(SCOPE, Object.entries(images).map(([name, url]) => [`--dsh-claude-style-plus-image-${name}`, `url("${url}")`])),
     tokenBlock(`${SCOPE}${gate(gates.typeface, gates.typeface.claude)}`, declarationsOf(doc.typeface, (item) => item.claude)),
     tokenBlock(`${SCOPE}${gate(gates.typeface, gates.typeface.host)}`, declarationsOf(doc.typeface, (item) => item.host)),
     tokenBlock(`${SCOPE}${dark}`, declarationsOf(doc.apex, (item) => item.dark)),

@@ -6,7 +6,7 @@ import type { HostContext } from '../../core/host'
 import type { FeatureHandle } from '../../core/scheduler'
 import type { FeatureUi } from '../../core/feature'
 import type manifest from './peakrate.manifest'
-import type { RateState } from '@dsh-claude-style/contracts/peakrate'
+import type { RateState } from '@dsh-claude-style-plus/contracts/peakrate'
 
 /**
  * What the model picker reads off this feature: the rate for one row.

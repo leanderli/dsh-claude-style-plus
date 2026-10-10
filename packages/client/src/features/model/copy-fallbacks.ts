@@ -13,7 +13,7 @@
  * fetch has no locale to honour.
  */
 export const MODEL_OFFICIAL_GROUP = 'deepseek-official'
-export const MODEL_COPY_ROUTE = '/dsh-claude-style/model-descriptions.json'
+export const MODEL_COPY_ROUTE = '/dsh-claude-style-plus/model-descriptions.json'
 export const MODEL_COPY_FALLBACK_LOCALE = 'en'
 export const MODEL_FALLBACK_LABEL = 'Select model'
 export const MODEL_LOADING_LABEL = 'Loading models…'

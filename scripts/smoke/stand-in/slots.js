@@ -14,10 +14,12 @@
   var host = window.__dshSmokeHost
   var CASE = host.CASE
 
-  var slotRegistry = CASE === 'studio' || CASE === 'settings' || CASE === 'chunk-late' || CASE === 'chat-files' || CASE === 'peer-chat-ux' || CASE === 'skin-center-handoff' || CASE === 'skin-center-arrival' ? {
+  var slotRegistry = CASE === 'studio' || CASE === 'desktop' || CASE === 'settings' || CASE === 'chunk-late' || CASE === 'chat-files' || CASE === 'peer-chat-ux' || CASE === 'skin-center-handoff' || CASE === 'skin-center-arrival' ? {
     inject: function (key, callback) {
       var declared = CASE === 'studio'
         ? key === 'conversation.input.dock'
+        : CASE === 'desktop'
+          ? key === 'shell.overlay' || key === 'settings.section' || key === 'plugins.bundle.config'
         : CASE === 'chat-files'
           ? key === 'tool.call.toolview'
           : CASE === 'skin-center-handoff' || CASE === 'skin-center-arrival'

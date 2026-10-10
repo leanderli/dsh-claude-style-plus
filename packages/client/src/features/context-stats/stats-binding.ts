@@ -12,7 +12,7 @@ import { CONTEXT_PANEL_ALIGNED_ATTR, CONTEXT_PANEL_ATTR, contextPanel, contextTr
  */
 
 /** The custom property the stylesheet reads to line the panel up with the meter. */
-const CONTEXT_PANEL_LEFT = '--dsh-claude-context-panel-left'
+const CONTEXT_PANEL_LEFT = '--dsh-claude-style-plus-context-panel-left'
 /** The viewport margin the host keeps for this panel (ui-chat's stat-dialog). */
 const CONTEXT_PANEL_MARGIN = 12
 

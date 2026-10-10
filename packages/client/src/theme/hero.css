@@ -4,15 +4,15 @@
    slot wrapper, not always a bare svg — and the mark is painted on the hitbox,
    so React keeps owning its own node. The hero keeps the clay fill in both
    brands, matching the shipped accent treatment. */
-body[data-dsh-claude-style][data-dsh-claude-brand="claude"] [class*="fishHitbox"] > * {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-brand="claude"] [class*="fishHitbox"] > * {
   display: none !important;
 }
 
-body[data-dsh-claude-style][data-dsh-claude-brand="claude"] [class*="fishHitbox"] svg {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-brand="claude"] [class*="fishHitbox"] svg {
   display: none;
 }
 
-body[data-dsh-claude-style][data-dsh-claude-brand="claude"] [class*="fishHitbox"]::before {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-brand="claude"] [class*="fishHitbox"]::before {
   content: "";
   flex: none;
   width: 42.5px;
@@ -22,24 +22,24 @@ body[data-dsh-claude-style][data-dsh-claude-brand="claude"] [class*="fishHitbox"
   background-size: contain;
 }
 
-body[data-dsh-claude-style][data-dsh-claude-brand="claude"] [class*="fishHitbox"]::before {
-  background-image: var(--dsh-claude-image-claude-mark-clay);
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-brand="claude"] [class*="fishHitbox"]::before {
+  background-image: var(--dsh-claude-style-plus-image-claude-mark-clay);
 }
 
 /* The DeepSeek brand keeps the host's own fish, and paints it in DeepSeek's
    brand blue (the host inks it with the headline's primary label). */
-body[data-dsh-claude-style][data-dsh-claude-brand="deepseek"] [class*="fishHitbox"] svg {
-  color: var(--dsh-claude-logo-ink);
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-brand="deepseek"] [class*="fishHitbox"] svg {
+  color: var(--dsh-claude-style-plus-logo-ink);
 }
 
 /* The preview badge has no Claude Code counterpart. */
-body[data-dsh-claude-style] [class*="previewBadge"] {
+body[data-dsh-claude-style-plus] [class*="previewBadge"] {
   display: none;
 }
 
 /* Headline: the shipped 26px/32px editorial display, then 15% back off that
    (52 -> 44.2) and one weight step below the display rule. */
-body[data-dsh-claude-style] [class*="headline"]:has([class*="fishHitbox"]) {
+body[data-dsh-claude-style-plus] [class*="headline"]:has([class*="fishHitbox"]) {
   font-size: 44.2px;
   line-height: 54.4px;
   font-weight: 400;

@@ -22,12 +22,13 @@ import { join, resolve } from 'node:path'
 import type { DshContext } from './dsh.js'
 import { harnessPath } from './harness-home.js'
 import { readCache, writeCache } from './usage-cache.js'
+import type { WorkspaceUsageReport } from '@dsh-claude-style-plus/contracts/usage'
 import type { CacheSession } from './usage-cache.js'
 import { foldSession, listSessionLogs, readEvents } from './usage-fold.js'
 import type { SessionLog } from './usage-fold.js'
 import { readLedger } from './usage-ledger.js'
 import type { DayBuckets } from './usage-ledger.js'
-import { mergeLedgerFold, summarize } from './usage-summary.js'
+import { mergeLedgerFold, summarize, summarizeWorkspaces } from './usage-summary.js'
 import type { UsageSummary } from './usage-summary.js'
 
 /** The `source` field of an answer that came from the cost meter's ledger. */
@@ -36,6 +37,64 @@ const LEDGER_SOURCE = 'cost-meter'
 const LOCAL_SOURCE = 'local'
 /** An empty hour histogram, for a session list with nothing to fold. */
 const NO_HOURS = new Array(24).fill(0) as number[]
+
+interface WorkspaceAccount {
+  id: string
+  title: string
+  path: string
+  sessionIds: readonly string[]
+}
+
+interface WorkspaceAccountRead {
+  accounts: WorkspaceAccount[]
+  unavailable: boolean
+}
+
+function workspaceAccounts(ctx: DshContext): WorkspaceAccountRead {
+  const unavailable = (detail: string): WorkspaceAccountRead => {
+    ctx.logger?.warn?.(`dsh-claude-style-plus: Workspace membership unavailable: ${detail}`)
+    return { accounts: [], unavailable: true }
+  }
+  let registry: { list?: () => unknown } | null | undefined
+  try {
+    registry = ctx.get('workspaceRegistry') as { list?: () => unknown } | undefined
+  } catch (error) {
+    return unavailable(String((error as { message?: string } | null)?.message ?? error))
+  }
+  if (registry === undefined || registry === null || typeof registry.list !== 'function') return unavailable('workspaceRegistry.list is unavailable')
+
+  let rows: unknown
+  try {
+    rows = registry.list()
+  } catch (error) {
+    return unavailable(String((error as { message?: string } | null)?.message ?? error))
+  }
+  if (!Array.isArray(rows)) return unavailable('workspaceRegistry.list returned an invalid value')
+
+  const accounts: WorkspaceAccount[] = []
+  let hasInvalidRow = false
+  for (const row of rows) {
+    try {
+      if (row === null || typeof row !== 'object') {
+        hasInvalidRow = true
+        continue
+      }
+      const candidate = row as Partial<WorkspaceAccount>
+      if (typeof candidate.id !== 'string' || typeof candidate.title !== 'string'
+        || typeof candidate.path !== 'string' || !Array.isArray(candidate.sessionIds)
+        || !candidate.sessionIds.every((id: unknown) => typeof id === 'string')) {
+        hasInvalidRow = true
+        continue
+      }
+      accounts.push({ id: candidate.id, title: candidate.title, path: candidate.path, sessionIds: candidate.sessionIds })
+    } catch (error) {
+      hasInvalidRow = true
+      ctx.logger?.warn?.(`dsh-claude-style-plus: Workspace membership row could not be read: ${String((error as { message?: string } | null)?.message ?? error)}`)
+    }
+  }
+  if (hasInvalidRow) ctx.logger?.warn?.('dsh-claude-style-plus: Workspace membership contains an invalid registry row')
+  return { accounts, unavailable: hasInvalidRow }
+}
 
 /** The hour histogram of a merged day map: its days' histograms, slot by slot. */
 function hoursOf(days: ReadonlyMap<string, DayBuckets>): number[] {
@@ -72,6 +131,7 @@ export function createUsage(ctx: DshContext) {
 
   /** Fold every session whose log changed since the cache was written. */
   async function computeLocal(logs: SessionLog[], ledgerDays: ReadonlyMap<string, DayBuckets>) {
+    const memberships = workspaceAccounts(ctx)
     const cache = readCache(ctx, home())
     const sessions = new Map<string, CacheSession>()
     let read = 0
@@ -82,8 +142,8 @@ export function createUsage(ctx: DshContext) {
         sessions.set(log.id, cached)
         continue
       }
-      const events = await readEvents(ctx, log.id)
-      if (events === null) {
+      const sessionRead = await readEvents(ctx, log.id)
+      if (sessionRead === null) {
         // The reader refused (no `sessionQuery` service, or a log it cannot
         // parse). Leave the session out of the cache so the next pass retries it
         // instead of freezing an empty day map behind a fresh fingerprint.
@@ -91,8 +151,8 @@ export function createUsage(ctx: DshContext) {
         if (cached !== undefined) sessions.set(log.id, cached)
         continue
       }
-      const folded = foldSession(events)
-      sessions.set(log.id, { size: log.size, mtimeMs: log.mtimeMs, days: folded.days, hours: folded.hours })
+      const folded = foldSession(sessionRead.events, sessionRead.inheritedEventCount)
+      sessions.set(log.id, { size: log.size, mtimeMs: log.mtimeMs, days: folded.days, hours: folded.hours, skillDays: folded.skillDays })
       read += 1
     }
     writeCache(ctx, home(), sessions)
@@ -104,10 +164,18 @@ export function createUsage(ctx: DshContext) {
       merge.days.size === 0 ? undefined : hoursOf(merge.days),
       { sessionIds: merge.sessionIds },
     )
-    if (sessions.size === 0 && failed > 0) {
-      return { ...summary, unavailable: true, reason: 'session-query-unavailable' }
+    const workspaceUsage: WorkspaceUsageReport = {
+      source: 'session-logs',
+      read,
+      failed,
+      sessions: logs.length,
+      workspaceRegistryUnavailable: memberships.unavailable,
+      workspaces: summarizeWorkspaces(sessions, memberships.accounts),
     }
-    return { ...summary, read, failed, sessions: logs.length }
+    if (sessions.size === 0 && failed > 0) {
+      return { ...summary, unavailable: true, reason: 'session-query-unavailable', workspaceUsage }
+    }
+    return { ...summary, read, failed, sessions: logs.length, workspaceUsage }
   }
 
   /**
@@ -119,7 +187,21 @@ export function createUsage(ctx: DshContext) {
     const logs = listSessionLogs(root)
     const ledgerDays = readLedger(home())
 
-    if (logs.length === 0) return summarize(new Map(), 0, LOCAL_SOURCE, NO_HOURS)
+    if (logs.length === 0) {
+      const summary = summarize(new Map(), 0, LOCAL_SOURCE, NO_HOURS)
+      const memberships = workspaceAccounts(ctx)
+      return {
+        ...summary,
+        workspaceUsage: {
+          source: 'session-logs',
+          read: 0,
+          failed: 0,
+          sessions: 0,
+          workspaceRegistryUnavailable: memberships.unavailable,
+          workspaces: summarizeWorkspaces(new Map<string, CacheSession>(), memberships.accounts),
+        },
+      }
+    }
     if (ledgerDays !== null && ledgerDays.size > 0) {
       // The ledger is the wider account: it saw every provider and it outlives
       // the logs. Hand its own answer over before the fold runs, so a stale

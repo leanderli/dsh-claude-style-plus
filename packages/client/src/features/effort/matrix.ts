@@ -113,14 +113,14 @@ export function createEffortMatrix(track: HTMLElement, matrix: HTMLElement) {
     for (let r = 0; r < lay.rows; r++) {
       for (let c = 0; c < lay.cols; c++) {
         const fx = lay.cols > 1 ? c / (lay.cols - 1) : 1
-        const cell = buildElement('div', 'dsh-claude-effort-matrix-cell')
+        const cell = buildElement('div', 'dsh-claude-style-plus-effort-matrix-cell')
         /* The entrance sweeps in from the right — the end the knob reached
            for — with a whisper of scatter so it does not read as a wipe.
            !important inline: the stylesheet's animation shorthand is
            !important (it resets delay/duration), so a plain assignment
            would silently lose. */
         cell.style.setProperty('animation-delay', `${(((1 - fx) * 0.45) + cellUnit(r, c, 4) * 0.08).toFixed(3)}s`, 'important')
-        const sq = buildElement('div', 'dsh-claude-effort-matrix-sq')
+        const sq = buildElement('div', 'dsh-claude-style-plus-effort-matrix-sq')
         /* The plume shape is a STATIC per-block opacity: the flash animates
            the colour through it, so the two never fight. */
         sq.style.opacity = cellFade(fx).toFixed(3)

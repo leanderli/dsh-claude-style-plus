@@ -9,9 +9,9 @@
  * package still loads the skin — it just loses the settings form.
  *
  * The preference list itself is the shared contract, so both halves declare
- * the fields from one table (`@dsh-claude-style/contracts/prefs`, D46).
+ * the fields from one table (`@dsh-claude-style-plus/contracts/prefs`, D46).
  */
-import { PREFS_DEFAULT } from '@dsh-claude-style/contracts/prefs'
+import { PREFS_DEFAULT } from '@dsh-claude-style-plus/contracts/prefs'
 import type { DshContext, DshScope } from './dsh.ts'
 
 /**
@@ -143,7 +143,7 @@ export function registerSettings(ctx: DshContext) {
     if (typeof settings?.configure !== 'function') return
     scope.effect(
       () => settings.configure({ auto: false }, ctx.fiber),
-      'dsh-claude-style: settings presentation',
+      'dsh-claude-style-plus: settings presentation',
     )
   })
 }

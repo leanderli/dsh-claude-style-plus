@@ -14,7 +14,6 @@ export const PREFS_DEFAULT = Object.freeze({
   peakrate: true,
   quickProviders: [],
   username: '',
-  banLocale: 'en',
   homeLayout: 'studio',
   palette: 'claude',
   typeface: 'claude',

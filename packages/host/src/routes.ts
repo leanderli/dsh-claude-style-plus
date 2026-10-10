@@ -8,13 +8,14 @@
  * registered on its own: one path the web server refuses is reported, and the
  * other routes still register.
  *
- * The paths are the shared contract (`@dsh-claude-style/contracts/routes`,
+ * The paths are the shared contract (`@dsh-claude-style-plus/contracts/routes`,
  * D46): the browser half addresses the same names.
  */
-import { HDSL_PATH, HDSL_SKIN_PATH, PEAKRATE_PATH, ROUTE_PREFIX, SESSION_DELETE_PATH, SESSION_SEARCH_PATH, USAGE_PATH, USERNAME_PATH } from '@dsh-claude-style/contracts/routes'
+import { AVATAR_PATH, HDSL_PATH, HDSL_SKIN_PATH, PEAKRATE_PATH, ROUTE_PREFIX, SESSION_DELETE_PATH, SESSION_SEARCH_PATH, USAGE_PATH, USERNAME_PATH } from '@dsh-claude-style-plus/contracts/routes'
 import { existsSync, readFileSync, readdirSync, rmSync, statSync } from 'node:fs'
+import { isIP } from 'node:net'
 import { userInfo } from 'node:os'
-import { dirname, join, resolve, sep } from 'node:path'
+import { dirname, isAbsolute, join, resolve, sep } from 'node:path'
 import { brotliDecompressSync } from 'node:zlib'
 import type { DshContext, DshRequest, DshResponse, DshRoute, DshScope } from './dsh.js'
 import { harnessPath } from './harness-home.js'
@@ -24,6 +25,7 @@ import { packageRoot } from './package-root.js'
 import { createPeakRate } from './peakrate.js'
 import { QUERY_MAX, createSessionSearch } from './search.js'
 import { createUsage } from './usage.js'
+import { MAX_AVATAR_BYTES, readProfileAvatar, removeProfileAvatar, saveProfileAvatar } from './avatar-store.js'
 
 /** The copy document, built from `packages/client/data/model-descriptions.json` by scripts/build.mjs. */
 const COPY_FILE = 'model-descriptions.json'
@@ -34,7 +36,7 @@ const COPY_FILE = 'model-descriptions.json'
  * path traversal is possible.
  *
  * A name is looked up in the user's own drop point first — the harness home's
- * `dsh-claude-style/fonts/` — and then in the package's `lib/fonts/` (D11). The
+ * `dsh-claude-style-plus/fonts/` — and then in the package's `lib/fonts/` (D11). The
  * JetBrains Mono files and the two look-alike faces behind the Anthropic ones
  * (Inter, Noto Serif) ship in the npm package; the Anthropic faces do not
  * (copyright), so only a copy the user dropped in answers them. A name neither
@@ -71,39 +73,34 @@ const SESSION_ID_RE = /^[A-Za-z0-9][A-Za-z0-9._-]{0,199}$/
 /** Largest deletion request body read; a real one carries one id. */
 const DELETE_BODY_MAX = 4096
 
+/** Whether a direct Node socket peer is in IPv4 127/8 or IPv6 loopback. */
+function isLoopbackAddress(value: string | undefined) {
+  if (value === '::1') return true
+  const address = value?.startsWith('::ffff:') === true ? value.slice(7) : value
+  if (typeof address !== 'string' || isIP(address) !== 4) return false
+  return Number(address.slice(0, address.indexOf('.'))) === 127
+}
+
 /**
- * Why a request to the username route must be refused, or undefined when it
- * may proceed.
- *
- * `webServer.register()` hands a plugin route raw requests: the host's own
- * `/api` sits behind a Host/Origin fence and the browser-session cookie, but
- * nothing puts a plugin route there, and this route reads the OS user. So it
- * borrows the host's own check, `connection.requestRejection()` — the fence and
- * authentication `/api` applies. The browser passes it with a same-origin
- * request that carries the session cookie; the desktop shell passes it because
- * it forwards to a loopback Host, drops the page's Origin and attaches the
- * cookie itself. A host without that service cannot authenticate anyone, so the
- * stand-in below serves loopback only: a loopback Host (which also defeats DNS
- * rebinding), no cross-site marker, and an Origin, when sent, naming that Host.
- *
- * @param ctx - host plugin context.
- * @param req - node request.
- * @returns 401 / 403, or undefined when the request may proceed.
+ * The preferred fence is the Host's authenticated requestRejection service.
+ * A legacy host without that capability may serve local browser requests only:
+ * the actual TCP peer, Host authority, and browser same-origin evidence must all
+ * agree. Host alone is client-controlled and never establishes trust.
  */
 function refusalOf(ctx: DshContext, req: DshRequest) {
   const connection = ctx.get('connection')
   if (typeof connection?.requestRejection === 'function') return connection.requestRejection(req)
+  if (!isLoopbackAddress(req.socket?.remoteAddress)) return 403
+
   const host = req.headers.host
-  if (host !== undefined) {
-    // A Host header that is no host name at all is refused.
-    if (!URL.canParse(`http://${host}`)) return 403
-    const name = new URL(`http://${host}`).hostname
-    if (name !== 'localhost' && name !== '[::1]' && !/^127\.\d+\.\d+\.\d+$/.test(name)) return 403
-  }
+  if (host === undefined || !URL.canParse(`http://${host}`)) return 403
+  const name = new URL(`http://${host}`).hostname
+  if (name !== 'localhost' && name !== '[::1]' && !/^127\.\d+\.\d+\.\d+$/.test(name)) return 403
+
   const site = req.headers['sec-fetch-site']
   if (site !== undefined && site !== 'same-origin' && site !== 'none') return 403
   const origin = req.headers.origin
-  if (origin === undefined) return undefined
+  if (origin === undefined) return site === 'same-origin' || site === 'none' ? undefined : 403
   if (!URL.canParse(origin)) return 403
   return new URL(origin).host === host ? undefined : 403
 }
@@ -161,6 +158,42 @@ function readRequestBody(req: DshRequest, limit: number): Promise<string | null>
     })
     req.on('end', () => settle(Buffer.concat(chunks).toString('utf8')))
     req.on('error', () => settle(null))
+  })
+}
+
+function profileAvatarDirectory(ctx: DshContext) {
+  const direct = process.env.DSH_PROFILE_DIR
+  if (typeof direct === 'string' && direct.trim() !== '') {
+    const profileDir = direct.trim()
+    return isAbsolute(profileDir) ? resolve(profileDir) : null
+  }
+  const profile = process.env.DSH_PROFILE
+  if (typeof profile !== 'string' || !/^[A-Za-z0-9][A-Za-z0-9._-]{0,199}$/.test(profile)) return null
+  return harnessPath(ctx, 'profiles', profile)
+}
+
+/** Read a bounded binary upload; an oversized or unreadable request returns null. */
+function readRequestBytes(req: DshRequest, limit: number): Promise<Buffer | null> {
+  return new Promise<Buffer | null>((settle) => {
+    const chunks: Buffer[] = []
+    let size = 0
+    let finished = false
+    const finish = (value: Buffer | null) => {
+      if (finished) return
+      finished = true
+      settle(value)
+    }
+    req.on('data', (chunk: Buffer | string) => {
+      size += chunk.length
+      if (size > limit) {
+        finish(null)
+        req.destroy()
+        return
+      }
+      chunks.push(Buffer.from(chunk))
+    })
+    req.on('end', () => finish(Buffer.concat(chunks)))
+    req.on('error', () => finish(null))
   })
 }
 
@@ -261,7 +294,7 @@ export function registerRoutes(ctx: DshContext, scope: DshScope) {
   const file = join(root, 'lib', COPY_FILE)
   const fontsDir = join(root, 'lib', 'fonts')
   /** Where a user's own faces live; resolved per request, so a file added while the host runs is served. */
-  const userFontsDir = () => harnessPath(ctx, 'dsh-claude-style', 'fonts')
+  const userFontsDir = () => harnessPath(ctx, 'dsh-claude-style-plus', 'fonts')
   const assetsDir = join(root, 'lib', 'assets')
   /** The decompressed payload of each brotli-stored asset served to a client that cannot take it. */
   const unpressed = new Map()
@@ -350,7 +383,7 @@ export function registerRoutes(ctx: DshContext, scope: DshScope) {
     } catch (error) {
       // A manifest that cannot be read is a build that did not finish; say so
       // once per request and answer 404 rather than failing the route (D12).
-      ctx.logger?.warn?.(`dsh-claude-style: lib/assets/${ASSETS_MANIFEST} is unreadable: ${(error as { message?: string } | null)?.message ?? String(error)}`)
+      ctx.logger?.warn?.(`dsh-claude-style-plus: lib/assets/${ASSETS_MANIFEST} is unreadable: ${(error as { message?: string } | null)?.message ?? String(error)}`)
       return undefined
     }
   }
@@ -381,7 +414,7 @@ export function registerRoutes(ctx: DshContext, scope: DshScope) {
 
   scope.effect(() => {
     const disposers: (() => void)[] = []
-    const report = (message: string, error: unknown) => ctx.logger?.warn?.(`dsh-claude-style: ${message}: ${(error as { message?: string } | null)?.message ?? String(error)}`)
+    const report = (message: string, error: unknown) => ctx.logger?.warn?.(`dsh-claude-style-plus: ${message}: ${(error as { message?: string } | null)?.message ?? String(error)}`)
     const usage = createUsage(ctx)
     const hdsl = createHdslAccount(ctx)
     const sessionSearch = createSessionSearch(ctx)
@@ -508,6 +541,83 @@ export function registerRoutes(ctx: DshContext, scope: DshScope) {
       },
     })
 
+    register('profile avatar', {
+      kind: 'exact',
+      path: AVATAR_PATH,
+      handler: (req: DshRequest, res: DshResponse) => {
+        if (methodRefused(req, res, ['GET', 'HEAD', 'PUT', 'DELETE'])) return
+        if (fenceRefused(req, res)) return
+        const profileDir = profileAvatarDirectory(ctx)
+        if (profileDir === null) {
+          sendJson(res, 503, { ok: false, error: 'profile-storage-unavailable' })
+          return
+        }
+        return (async () => {
+          if (req.method === 'GET' || req.method === 'HEAD') {
+            const avatar = await readProfileAvatar(profileDir)
+            if (avatar === null) {
+              res.writeHead(404, { 'cache-control': 'private, no-store' })
+              res.end()
+              return
+            }
+            res.writeHead(200, {
+              'content-type': avatar.mediaType,
+              'content-length': String(avatar.bytes.byteLength),
+              etag: `"${avatar.version}"`,
+              'cache-control': 'private, no-store',
+              'x-content-type-options': 'nosniff',
+            })
+            res.end(req.method === 'HEAD' ? undefined : avatar.bytes)
+            return
+          }
+          if (req.method === 'DELETE') {
+            await removeProfileAvatar(profileDir)
+            sendJson(res, 200, { ok: true })
+            return
+          }
+
+          const mediaType = String(req.headers['content-type'] ?? '').split(';', 1)[0].trim().toLowerCase()
+          if (!new Set(['image/png', 'image/jpeg', 'image/webp']).has(mediaType)) {
+            sendJson(res, 415, { ok: false, error: 'unsupported-avatar-type' })
+            return
+          }
+          const declaredLength = Number(req.headers['content-length'])
+          if (Number.isFinite(declaredLength) && declaredLength > MAX_AVATAR_BYTES) {
+            sendJson(res, 413, { ok: false, error: 'avatar-too-large' })
+            return
+          }
+          const bytes = await readRequestBytes(req, MAX_AVATAR_BYTES)
+          if (bytes === null) {
+            sendJson(res, 413, { ok: false, error: 'avatar-too-large' })
+            return
+          }
+          try {
+            const avatar = await saveProfileAvatar(profileDir, mediaType, bytes)
+            sendJson(res, 200, { ok: true, version: avatar.version })
+          } catch (error) {
+            const detail = String((error as { message?: unknown } | null)?.message ?? error)
+            if (detail.includes('unsupported avatar media type')) {
+              sendJson(res, 415, { ok: false, error: 'unsupported-avatar-type' })
+            } else if (detail.includes('size is invalid')) {
+              sendJson(res, 413, { ok: false, error: 'avatar-too-large' })
+            } else if (detail.includes('signature is invalid')) {
+              sendJson(res, 400, { ok: false, error: 'invalid-avatar-image' })
+            } else if (detail.includes('profile directory is unavailable')) {
+              sendJson(res, 503, { ok: false, error: 'profile-storage-unavailable' })
+            } else {
+              throw error
+            }
+          }
+        })().catch((error: unknown) => {
+          if (res.headersSent) res.destroy()
+          else {
+            report('profile avatar route failed', error)
+            sendJson(res, 500, { ok: false, error: 'avatar-storage-failed' })
+          }
+        })
+      },
+    })
+
     register('session delete', {
       kind: 'exact',
       path: SESSION_DELETE_PATH,
@@ -607,5 +717,5 @@ export function registerRoutes(ctx: DshContext, scope: DshScope) {
         }
       }
     }
-  }, 'dsh-claude-style: host routes')
+  }, 'dsh-claude-style-plus: host routes')
 }

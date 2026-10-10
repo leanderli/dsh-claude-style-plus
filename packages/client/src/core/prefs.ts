@@ -2,7 +2,7 @@ import { AUTO_POPOVER_ALL, AUTO_POPOVER_OFF, AUTO_POPOVER_SCOPES, BRAND_ATTR, BR
 import { MODEL_OFFICIAL_GROUP } from '../features/model/copy-fallbacks'
 import type { Prefs } from '../constants'
 import type { HostContext } from './host'
-import type { HostConfigForm, HostConfigFormsService } from '@dsh-claude-style/contracts/services'
+import type { HostConfigForm, HostConfigFormsService } from '@dsh-claude-style-plus/contracts/services'
 import { notifyAll } from '../shared/notify'
 import { externalOwnerActive } from '../shared/visual-owner'
 
@@ -319,8 +319,7 @@ export function normalizePrefs(value: unknown): Prefs {
  * yet is written through the form and the local copy dropped.
  */
 const LOCAL_PREF_KEYS: Partial<Record<keyof Prefs, string>> = {
-  username: 'dsh-claude-style.username',
-  banLocale: 'dsh-claude-style.banLocale',
+  username: 'dsh-claude-style-plus.username',
 }
 let localPrefsMoved = false
 

@@ -17,7 +17,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, renameSync, statSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
-import type { PeakCatalog, RateProfile } from '@dsh-claude-style/contracts/peakrate'
+import type { PeakCatalog, RateProfile } from '@dsh-claude-style-plus/contracts/peakrate'
 import type { DshContext } from './dsh.js'
 import { harnessPath } from './harness-home.js'
 import { packageRoot } from './package-root.js'
@@ -77,7 +77,7 @@ function readDocument(path: string, label: string, log: (message: string) => voi
   try {
     return JSON.parse(readFileSync(path, 'utf8'))
   } catch (error) {
-    log(`dsh-claude-style: ${label} unreadable (${(error as { message?: string }).message})`)
+    log(`dsh-claude-style-plus: ${label} unreadable (${(error as { message?: string }).message})`)
     return undefined
   }
 }
@@ -90,7 +90,7 @@ function readDocument(path: string, label: string, log: (message: string) => voi
  */
 export function createPeakRate(ctx: DshContext): PeakRateStore {
   const snapshotFile = join(packageRoot(), 'lib', PEAKRATE_CATALOG_FILE)
-  const cacheFile = join(harnessPath(ctx, 'cache', 'dsh-claude-style'), 'peakrate.json')
+  const cacheFile = join(harnessPath(ctx, 'cache', 'dsh-claude-style-plus'), 'peakrate.json')
 
   let catalog: PeakCatalog | undefined
   let origin: 'remote' | 'bundled' = 'bundled'
@@ -105,7 +105,7 @@ export function createPeakRate(ctx: DshContext): PeakRateStore {
     if (parsed === null) {
       // The shipped copy is produced from the source at release time; one that
       // no longer parses means the build shipped the wrong document.
-      warn(`dsh-claude-style: lib/${PEAKRATE_CATALOG_FILE} is not a catalog this build understands`)
+      warn(`dsh-claude-style-plus: lib/${PEAKRATE_CATALOG_FILE} is not a catalog this build understands`)
       return undefined
     }
     return parsed
@@ -158,7 +158,7 @@ export function createPeakRate(ctx: DshContext): PeakRateStore {
       try {
         const response = await fetch(PEAKRATE_CATALOG_URL, { signal: controller.signal })
         if (!response.ok) {
-          warn(`dsh-claude-style: peak rate source answered ${response.status}; keeping the current catalog`)
+          warn(`dsh-claude-style-plus: peak rate source answered ${response.status}; keeping the current catalog`)
           return false
         }
         raw = await response.json()
@@ -168,12 +168,12 @@ export function createPeakRate(ctx: DshContext): PeakRateStore {
     } catch (error) {
       // A source that cannot be reached is not a fault here: the meter keeps
       // judging by the catalog already held (docs/decisions D54).
-      warn(`dsh-claude-style: peak rate source unreachable, keeping the current catalog: ${(error as { message?: string }).message}`)
+      warn(`dsh-claude-style-plus: peak rate source unreachable, keeping the current catalog: ${(error as { message?: string }).message}`)
       return false
     }
     const parsed = parseCatalog(raw)
     if (parsed === null) {
-      warn('dsh-claude-style: peak rate source answered a document this build does not understand; keeping the current catalog')
+      warn('dsh-claude-style-plus: peak rate source answered a document this build does not understand; keeping the current catalog')
       return false
     }
     catalog = parsed
@@ -194,7 +194,7 @@ export function createPeakRate(ctx: DshContext): PeakRateStore {
     } catch (error) {
       // The cache only saves a fetch: a write that fails is reported and the
       // catalog this run holds is still served (docs/decisions D54).
-      warn(`dsh-claude-style: peak rate cache not written: ${(error as { message?: string }).message}`)
+      warn(`dsh-claude-style-plus: peak rate cache not written: ${(error as { message?: string }).message}`)
     }
   }
 

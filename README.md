@@ -1,17 +1,13 @@
 <div align="center">
 
-# DSH Claude Style
+# DSH Claude Style Plus
 
-**为 DeepSeek Harness 复刻 Claude Code Desktop 风格与交互体验的主题插件。**
+**由 leanderlee 独立维护的 Claude Code Desktop 风格与交互主题 fork。**
 
 > **在 DSH 里，就是 Claude Code Desktop 的样子。**
 
 [![简体中文](https://img.shields.io/badge/lang-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-red.svg)](README.md) [![English](https://img.shields.io/badge/lang-English-blue.svg)](README.en.md)
 
-[![version](https://img.shields.io/npm/v/dsh-claude-style?style=flat&label=version&color=D97757)](https://www.npmjs.com/package/dsh-claude-style)
-[![downloads](https://img.shields.io/npm/dm/dsh-claude-style?style=flat&label=downloads&color=D97757)](https://www.npmjs.com/package/dsh-claude-style)
-[![GitHub stars](https://img.shields.io/github/stars/Nwflower/dsh-claude-style?style=flat&label=%E2%98%85&color=08C)](https://github.com/Nwflower/dsh-claude-style)
-[![dsh.so install](https://www.dsh.so/badge/install/dsh-claude-style.svg)](https://www.dsh.so/artifact/dsh-claude-style/)
 [![license](https://img.shields.io/badge/license-MIT-2EA44F?style=flat)](LICENSE)
 
 </div>
@@ -67,21 +63,16 @@
 
 ## 安装
 
-1. 官方插件页，添加以下插件即可快速安装
-
-```
-dsh-claude-style
-```
-
-2. 通过终端安装
+这是基于 [Nwflower/dsh-claude-style](https://github.com/Nwflower/dsh-claude-style) 的独立 fork，目前未发布到 npm 或 DSH 插件市场。克隆本仓库并构建：
 
 ```bash
-dsh plugin --profile web add dsh-claude-style                  # npm 包（推荐）
+git clone https://github.com/leanderli/dsh-claude-style-plus.git
+cd dsh-claude-style-plus
+npm install
+npm run build
 ```
 
-3. 通过[插件市场](https://github.com/dsh-market/dsh-market)安装
-
-同一时刻建议只启用一个主题。安装后推荐重启 `DeepSeek Harness`以获得完整能力。
+然后从 DSH Plugin Manager 将此 checkout 目录安装到目标 Profile。Plus 与原版使用独立的包名、设置 ID、路由和存储目录，可同时安装；同一时刻建议只启用一个主题。安装后推荐重启 `DeepSeek Harness` 以获得完整能力。
 
 ## 功能与设置
 
@@ -97,11 +88,11 @@ dsh plugin --profile web add dsh-claude-style                  # npm 包（推�
 
 | 字体 | 用途 | 文件 |
 |---|---|---|
-| Anthropic Sans Web Text | 界面 / UI | [`packages/assets/src/fonts/anthropic/AnthropicSansWebText.ttf`](https://github.com/Nwflower/dsh-claude-style/raw/main/packages/assets/src/fonts/anthropic/AnthropicSansWebText.ttf) |
-| Anthropic Serif Web Text | 对话正文 / Markdown | [`packages/assets/src/fonts/anthropic/AnthropicSerifWebText.ttf`](https://github.com/Nwflower/dsh-claude-style/raw/main/packages/assets/src/fonts/anthropic/AnthropicSerifWebText.ttf) |
-| JetBrains Mono Variable | 代码 / 代码块 | [`packages/assets/src/fonts/JetBrainsMonoVariable.ttf`](https://github.com/Nwflower/dsh-claude-style/raw/main/packages/assets/src/fonts/JetBrainsMonoVariable.ttf)、[`packages/assets/src/fonts/JetBrainsMonoItalicVariable.ttf`](https://github.com/Nwflower/dsh-claude-style/raw/main/packages/assets/src/fonts/JetBrainsMonoItalicVariable.ttf) |
-| Inter | 没有 Anthropic Sans 时的界面字体 | [`packages/assets/src/fonts/InterVariable.woff2`](https://github.com/Nwflower/dsh-claude-style/raw/main/packages/assets/src/fonts/InterVariable.woff2) |
-| Noto Serif | 没有 Anthropic Serif 时的正文字体 | [`packages/assets/src/fonts/NotoSerifVariable.woff2`](https://github.com/Nwflower/dsh-claude-style/raw/main/packages/assets/src/fonts/NotoSerifVariable.woff2) |
+| Anthropic Sans Web Text | 界面 / UI | [`packages/assets/src/fonts/anthropic/AnthropicSansWebText.ttf`](https://github.com/leanderli/dsh-claude-style-plus/raw/main/packages/assets/src/fonts/anthropic/AnthropicSansWebText.ttf) |
+| Anthropic Serif Web Text | 对话正文 / Markdown | [`packages/assets/src/fonts/anthropic/AnthropicSerifWebText.ttf`](https://github.com/leanderli/dsh-claude-style-plus/raw/main/packages/assets/src/fonts/anthropic/AnthropicSerifWebText.ttf) |
+| JetBrains Mono Variable | 代码 / 代码块 | [`packages/assets/src/fonts/JetBrainsMonoVariable.ttf`](https://github.com/leanderli/dsh-claude-style-plus/raw/main/packages/assets/src/fonts/JetBrainsMonoVariable.ttf)、[`packages/assets/src/fonts/JetBrainsMonoItalicVariable.ttf`](https://github.com/leanderli/dsh-claude-style-plus/raw/main/packages/assets/src/fonts/JetBrainsMonoItalicVariable.ttf) |
+| Inter | 没有 Anthropic Sans 时的界面字体 | [`packages/assets/src/fonts/InterVariable.woff2`](https://github.com/leanderli/dsh-claude-style-plus/raw/main/packages/assets/src/fonts/InterVariable.woff2) |
+| Noto Serif | 没有 Anthropic Serif 时的正文字体 | [`packages/assets/src/fonts/NotoSerifVariable.woff2`](https://github.com/leanderli/dsh-claude-style-plus/raw/main/packages/assets/src/fonts/NotoSerifVariable.woff2) |
 
 JetBrains Mono、Inter 与 Noto Serif 采用 SIL Open Font License 1.1，随 npm 包分发，无需任何操作。Inter 与 Noto Serif 的字高、字宽与两款 Anthropic 字体几乎一致，没有启用 Anthropic 字体时由它们代替，界面与正文的排版不会因此变样；两者只含 Anthropic 字体覆盖的拉丁字符，中文照旧使用系统中文字体。
 
@@ -109,7 +100,7 @@ Anthropic 字体启用（二选一）：
 
 ① 安装到系统——Windows 双击 `.ttf` → 「安装」，macOS 用「字体册」导入；
 
-② 免安装——把 `.ttf` 复制到 `$DSH_HOME/dsh-claude-style/fonts/`（没有设置 `DSH_HOME` 时是 `~/.dsh/dsh-claude-style/fonts/`）。完成后刷新页面生效。
+② 免安装——把 `.ttf` 复制到 `$DSH_HOME/dsh-claude-style-plus/fonts/`（没有设置 `DSH_HOME` 时是 `~/.dsh/dsh-claude-style-plus/fonts/`）。完成后刷新页面生效。
 
 ## 皮肤中心交接
 
@@ -122,7 +113,7 @@ Anthropic 字体启用（二选一）：
   时再次让出，页面启动之后才选的皮肤也一样。
 - 壁纸插件不算另一个属主：壁纸在渲染时本主题照常工作，见[设置说明](docs/SETTINGS.md)里的「与其他主题插件同时使用」。
 - 交接期间设置页与所有偏好都还在：别的皮肤占屏不等于卸载，关掉皮肤中心也不丢这里配过的东西。
-- `body` 上的 `data-dsh-claude-style-handoff` 标记支持交接的构建；皮肤中心只在这一属性存在时才提供该选项。
+- `body` 上的 `data-dsh-claude-style-plus-handoff` 标记支持交接的构建；皮肤中心只在这一属性存在时才提供该选项。
 
 ## 文档
 
@@ -143,8 +134,4 @@ Anthropic 字体启用（二选一）：
 
 ## 友链
 
-> 想把 Claude Code / Codex 等外部代理的会话历史导入 DSH 接着聊？推荐作者的另一个插件 [dsh-chat-import](https://github.com/Nwflower/dsh-chat-import)。
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=Nwflower/dsh-claude-style&type=Date)](https://star-history.com/#Nwflower/dsh-claude-style&Date)
+> 想把 Claude Code / Codex 等外部代理的会话历史导入 DSH 接着聊？可查看原版项目作者的另一个插件 [dsh-chat-import](https://github.com/Nwflower/dsh-chat-import)。

@@ -1,7 +1,7 @@
 import { PEAKRATE_ROUTE } from '../../constants'
 import { forgetRates } from './schedule'
 import type { HostAnswer } from '../../shared/resource'
-import type { RateProfile } from '@dsh-claude-style/contracts/peakrate'
+import type { RateProfile } from '@dsh-claude-style-plus/contracts/peakrate'
 
 /**
  * The catalog in the browser: what the host half holds, read once and kept

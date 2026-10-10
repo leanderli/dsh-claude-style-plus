@@ -1,8 +1,8 @@
-import { CLIENT_VERSION } from 'virtual:dsh-claude-style/generated'
+import { CLIENT_VERSION } from 'virtual:dsh-claude-style-plus/generated'
 import { setAccountIdentity } from '../../core/host'
 import { activeLocale } from '../../core/i18n'
 import type { HostContext, HostFiber } from '../../core/host'
-import type { HostAccountAnswer, HostAccountClient, HostAccountFrame, HostAccountService, HostStream, HostStreamStep } from '@dsh-claude-style/contracts/services'
+import type { HostAccountAnswer, HostAccountClient, HostAccountFrame, HostAccountService, HostStream, HostStreamStep } from '@dsh-claude-style-plus/contracts/services'
 
 /**
  * The signed-in account, when the desktop has one: `remote.account.getProfile(client)`
@@ -160,7 +160,7 @@ export function createAccountProfile(ctx: HostContext, onChange: () => void) {
     const remote = ctx.get('remote')
     if (account === null || typeof account.watch !== 'function' || typeof remote?.$stream !== 'function') return false
     const stream = remote.$stream({
-      name: 'dsh-claude-style account',
+      name: 'dsh-claude-style-plus account',
       open(signal: AbortSignal) { return account.watch(signal) },
       ended() { return new Error('account stream ended') }
     })
@@ -198,7 +198,7 @@ export function createAccountProfile(ctx: HostContext, onChange: () => void) {
       scope.effect(() => {
         if (!followAccount()) loadAccount()
         return stopFollowingAccount
-      }, 'dsh-claude-style: account')
+      }, 'dsh-claude-style-plus: account')
     })
   } else if (!followAccount()) {
     loadAccount()

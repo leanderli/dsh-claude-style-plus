@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-10",
+  "group": "improvements",
+  "order": 0,
+  "external": false,
+  "zh": "侧栏搜索固定在“新会话”下方，并改为与其一致的无边框行按钮：左侧圆形搜索图标，右侧“搜索会话”文案；不再使用输入框描边或快捷键键帽。Ctrl+K 与 Search palette 保持不变，折叠侧栏仍显示可访问的搜索图标。",
+  "en": "Sidebar Search stays below New Session and now matches its borderless action-row style: a circular search icon on the left and a Search sessions label on the right, without an outlined field or shortcut keycaps. Ctrl+K and the palette remain unchanged, and the collapsed rail keeps an accessible search icon."
+}

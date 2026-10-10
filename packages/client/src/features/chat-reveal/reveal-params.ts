@@ -14,9 +14,9 @@ export const CHAT_REVEAL_MIN_OPACITY = 0.2
  */
 export const CHAT_REVEAL_MS = 120
 /** The prefix of every highlight name this engine registers (reveal-rules.css carries the same names by hand). */
-export const CHAT_REVEAL_HIGHLIGHT_PREFIX = 'dsh-claude-tok-'
+export const CHAT_REVEAL_HIGHLIGHT_PREFIX = 'dsh-claude-style-plus-tok-'
 /** The custom property an element publishes its own colour to; the step rules read it inside ::highlight(). */
-export const CHAT_REVEAL_COLOR_VAR = '--dsh-claude-run-color'
+export const CHAT_REVEAL_COLOR_VAR = '--dsh-claude-style-plus-run-color'
 /** The share of one fade a batch's stagger spreads over: proportional to the fade, so neither pace lets staggering take over. */
 export const CHAT_REVEAL_STAGGER_DIVISOR = 50
 /** The stagger step's bounds: smaller shows no sweep, larger makes the last characters late. */

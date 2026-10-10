@@ -1,47 +1,47 @@
 /* ---------- canvas + hairline structure ---------- */
 /* Under the Claude palette the skin paints the columns; under "follow the
    host" they take the host's own tokens and only the hairline stays. */
-body[data-dsh-claude-style][data-dsh-claude-palette="claude"] :is([data-pane="sidebar"], [class*="sidebarCol"], .dshDesktopSidebarSurface) {
-  --dsw-specific-sidebar-fill: var(--dsh-claude-sidebar-canvas);
-  background: var(--dsh-claude-sidebar-canvas);
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-palette="claude"] :is([data-pane="sidebar"], [class*="sidebarCol"], .dshDesktopSidebarSurface) {
+  --dsw-specific-sidebar-fill: var(--dsh-claude-style-plus-sidebar-canvas);
+  background: var(--dsh-claude-style-plus-sidebar-canvas);
 }
 
-body[data-dsh-claude-style] :is([data-pane="sidebar"], [class*="sidebarCol"], .dshDesktopSidebarSurface) {
+body[data-dsh-claude-style-plus] :is([data-pane="sidebar"], [class*="sidebarCol"], .dshDesktopSidebarSurface) {
   border-right: 1px solid var(--dsw-alias-border-l1);
 }
 
-body[data-dsh-claude-style][data-dsh-claude-palette="claude"] :is([data-pane="conversation"], [class*="centerCol"]) {
-  background: var(--dsh-claude-canvas);
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-palette="claude"] :is([data-pane="conversation"], [class*="centerCol"]) {
+  background: var(--dsh-claude-style-plus-canvas);
 }
 
 /* ---------- Windows titlebar: the columns run to the window's top ---------- */
 /* The shell keeps a caption row above every column and paints the three window
    buttons over it; the skin clears the row and each column paints its own fill
    up through it (D31). */
-html[data-windows-titlebar] body[data-dsh-claude-style] [class*="_frame"]:has(> [class*="_sidebarCol"]) {
+html[data-windows-titlebar] body[data-dsh-claude-style-plus] [class*="_frame"]:has(> [class*="_sidebarCol"]) {
   --dsh-windows-content-radius: 0px;
-  background: var(--dsh-claude-canvas) !important;
+  background: var(--dsh-claude-style-plus-canvas) !important;
 }
 
-html[data-windows-titlebar] body[data-dsh-claude-style] [class*="_frame"]:has(> [class*="_sidebarCol"])::before {
+html[data-windows-titlebar] body[data-dsh-claude-style-plus] [class*="_frame"]:has(> [class*="_sidebarCol"])::before {
   background: transparent !important;
 }
 
-html[data-windows-titlebar] body[data-dsh-claude-style] > span[style*="--dsw-specific-sidebar-fill"] {
+html[data-windows-titlebar] body[data-dsh-claude-style-plus] > span[style*="--dsw-specific-sidebar-fill"] {
   background-color: transparent !important;
 }
 
-html[data-windows-titlebar] body[data-dsh-claude-style] [class*="_frame"] > [class*="_sidebarCol"] {
-  box-shadow: 0 calc(-1 * var(--dsh-windows-titlebar-height)) 0 0 var(--dsh-claude-sidebar-canvas);
+html[data-windows-titlebar] body[data-dsh-claude-style-plus] [class*="_frame"] > [class*="_sidebarCol"] {
+  box-shadow: 0 calc(-1 * var(--dsh-windows-titlebar-height)) 0 0 var(--dsh-claude-style-plus-sidebar-canvas);
 }
 
-html[data-windows-titlebar] body[data-dsh-claude-style] [class*="_frame"] > [class*="_centerCol"] {
-  box-shadow: 0 calc(-1 * var(--dsh-windows-titlebar-height)) 0 0 var(--dsh-claude-canvas);
+html[data-windows-titlebar] body[data-dsh-claude-style-plus] [class*="_frame"] > [class*="_centerCol"] {
+  box-shadow: 0 calc(-1 * var(--dsh-windows-titlebar-height)) 0 0 var(--dsh-claude-style-plus-canvas);
 }
 
 /* The handle is 8px wide, centred on the column edge; the sidebar's 1px
    hairline is the last pixel inside the column, 3px into the handle. */
-html[data-windows-titlebar] body[data-dsh-claude-style] [class*="_frame"] > [data-side="sidebar"]::before {
+html[data-windows-titlebar] body[data-dsh-claude-style-plus] [class*="_frame"] > [data-side="sidebar"]::before {
   content: "";
   position: absolute;
   left: 3px;
@@ -56,7 +56,7 @@ html[data-windows-titlebar] body[data-dsh-claude-style] [class*="_frame"] > [dat
    hairline and the host's own panel elevation over the frame's canvas. It hangs on
    what paints the column — a docked tab's pane, or the column's own empty host; a
    panel pulled out into the host's floating window is left to that window. */
-body[data-dsh-claude-style] [class*="_rightbarCol"] :is([data-dockkit-empty], [data-dockkit-host="dock"] > [data-dockkit-pane]) {
+body[data-dsh-claude-style-plus] [class*="_rightbarCol"] :is([data-dockkit-empty], [data-dockkit-host="dock"] > [data-dockkit-pane]) {
   margin: 8px;
   overflow: hidden;
   border: 1px solid var(--dsw-alias-border-l1);
@@ -68,52 +68,52 @@ body[data-dsh-claude-style] [class*="_rightbarCol"] :is([data-dockkit-empty], [d
    taller than the pane is clipped at both ends with no way to reach it. The stack
    scrolls instead: the two auto margins hold the centering while it fits and stay
    at zero once it does not, and the host's trailing 10% spacer shrinks away. */
-body[data-dsh-claude-style] [class*="_rightbarCol"] [class*="_guide"] {
+body[data-dsh-claude-style-plus] [class*="_rightbarCol"] [class*="_guide"] {
   justify-content: flex-start !important;
   overflow-y: auto !important;
 }
-body[data-dsh-claude-style] [class*="_rightbarCol"] [class*="_guide"] > :first-child {
+body[data-dsh-claude-style-plus] [class*="_rightbarCol"] [class*="_guide"] > :first-child {
   margin-top: auto !important;
 }
-body[data-dsh-claude-style] [class*="_rightbarCol"] [class*="_guide"] > :last-child {
+body[data-dsh-claude-style-plus] [class*="_rightbarCol"] [class*="_guide"] > :last-child {
   margin-bottom: auto !important;
 }
 
 /* ---------- clay accent: one emphasis color, disciplined ---------- */
 /* A host button anchor (`_linkButton`, e.g. the settings page's 充值) states its
    own ink; repainting it here would paint the label the same colour as its fill. */
-body[data-dsh-claude-style] a:not([class*="_linkButton"]) {
+body[data-dsh-claude-style-plus] a:not([class*="_linkButton"]) {
   color: var(--dsw-alias-link);
 }
 
-body[data-dsh-claude-style] a:not([class*="_linkButton"]):hover {
-  color: var(--dsh-claude-link-hover);
+body[data-dsh-claude-style-plus] a:not([class*="_linkButton"]):hover {
+  color: var(--dsh-claude-style-plus-link-hover);
 }
 
-body[data-dsh-claude-style] button[class*="brand"]:not([class*="dsh-claude"]) {
+body[data-dsh-claude-style-plus] button[class*="brand"]:not([class*="dsh-claude"]) {
   color: var(--dsw-alias-brand-primary);
 }
 
 /* The baked-in wordmark badge (pill rect + letter paths) crowds the whale and
    the wordmark; hide it so the brand reads as mark + word. */
-body[data-dsh-claude-style] button[class*="brand"]:not([class*="dsh-claude"]) rect[fill="currentColor"],
-body[data-dsh-claude-style] button[class*="brand"]:not([class*="dsh-claude"]) path[fill*="label-primary-inverted"] {
+body[data-dsh-claude-style-plus] button[class*="brand"]:not([class*="dsh-claude"]) rect[fill="currentColor"],
+body[data-dsh-claude-style-plus] button[class*="brand"]:not([class*="dsh-claude"]) path[fill*="label-primary-inverted"] {
   display: none;
 }
 
 /* pill CTAs: send + settings sidebar actions */
-body[data-dsh-claude-style] button[class*="_brand"],
-body[data-dsh-claude-style] button[class*="_primary"],
-body[data-dsh-claude-style] [data-slot="sidebar.settings"] > :is(button, [role="button"]) {
+body[data-dsh-claude-style-plus] button[class*="_brand"],
+body[data-dsh-claude-style-plus] button[class*="_primary"],
+body[data-dsh-claude-style-plus] [data-slot="sidebar.settings"] > :is(button, [role="button"]) {
   border-radius: 9999px;
   background: var(--dsw-alias-button-primary-fill);
   color: #ffffff;
   font-weight: 500;
 }
 
-body[data-dsh-claude-style] button[class*="_brand"]:hover,
-body[data-dsh-claude-style] button[class*="_primary"]:hover,
-body[data-dsh-claude-style] [data-slot="sidebar.settings"] > :is(button, [role="button"]):hover {
+body[data-dsh-claude-style-plus] button[class*="_brand"]:hover,
+body[data-dsh-claude-style-plus] button[class*="_primary"]:hover,
+body[data-dsh-claude-style-plus] [data-slot="sidebar.settings"] > :is(button, [role="button"]):hover {
   background: var(--dsw-alias-button-primary-hover);
 }
 
@@ -121,25 +121,25 @@ body[data-dsh-claude-style] [data-slot="sidebar.settings"] > :is(button, [role="
    canvas and the pill's arc stops clipping the mark's leading edge. Every
    "brand" rule excludes the skin's own controls: the settings page's brand
    cards carry the same substring and draw their own box. */
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) button[class*="brand"]:not([class*="dsh-claude"]),
-body[data-dsh-claude-style][data-ds-dark-theme] button[class*="brand"]:not([class*="dsh-claude"]) {
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) button[class*="brand"]:not([class*="dsh-claude"]),
+body[data-dsh-claude-style-plus][data-ds-dark-theme] button[class*="brand"]:not([class*="dsh-claude"]) {
   background: transparent;
   border: none;
   border-radius: 0;
 }
 
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) button[class*="brand"]:not([class*="dsh-claude"]) {
-  color: var(--dsh-claude-logo-ink);
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) button[class*="brand"]:not([class*="dsh-claude"]) {
+  color: var(--dsh-claude-style-plus-logo-ink);
 }
 
-body[data-dsh-claude-style][data-ds-dark-theme] button[class*="brand"]:not([class*="dsh-claude"]) {
-  color: var(--dsh-claude-logo-ink);
+body[data-dsh-claude-style-plus][data-ds-dark-theme] button[class*="brand"]:not([class*="dsh-claude"]) {
+  color: var(--dsh-claude-style-plus-logo-ink);
 }
 
 /* Host badges and tags: full pill, each named by its own CSS-module class (D3),
    so a plugin's own badge keeps the shape it draws. corner-shape: round undoes
    the host's superellipse sheet, which squares a pill's ends. */
-body[data-dsh-claude-style] :is(
+body[data-dsh-claude-style-plus] :is(
   [class*="_tagSystem"],
   [class*="_tagUser"],
   [class*="_tagContext"],
@@ -157,27 +157,27 @@ body[data-dsh-claude-style] :is(
 }
 
 /* ---------- chrome details ---------- */
-body[data-dsh-claude-style] * {
+body[data-dsh-claude-style-plus] * {
   scrollbar-width: thin;
-  scrollbar-color: var(--dsh-claude-scrollbar) transparent;
+  scrollbar-color: var(--dsh-claude-style-plus-scrollbar) transparent;
 }
 
-body[data-dsh-claude-style] ::-webkit-scrollbar {
+body[data-dsh-claude-style-plus] ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
-body[data-dsh-claude-style] ::-webkit-scrollbar-track {
+body[data-dsh-claude-style-plus] ::-webkit-scrollbar-track {
   background: transparent;
 }
 
-body[data-dsh-claude-style] ::-webkit-scrollbar-thumb {
-  background: var(--dsh-claude-scrollbar);
+body[data-dsh-claude-style-plus] ::-webkit-scrollbar-thumb {
+  background: var(--dsh-claude-style-plus-scrollbar);
   border-radius: 9999px;
 }
 
-body[data-dsh-claude-style] ::-webkit-scrollbar-thumb:hover {
-  background: var(--dsh-claude-scrollbar-hover);
+body[data-dsh-claude-style-plus] ::-webkit-scrollbar-thumb:hover {
+  background: var(--dsh-claude-style-plus-scrollbar-hover);
 }
 
 /* Text selection: white on blue, gray on black while the window is blurred.
@@ -186,46 +186,46 @@ body[data-dsh-claude-style] ::-webkit-scrollbar-thumb:hover {
    comes after the focused one at the same weight, so the attribute decides.
    Scope: text blocks in the conversation and the draft editor only (D35).
    Selection styles inherit, so the blocks carry their inline descendants. */
-body[data-dsh-claude-style] :is([data-chat-flow], [data-lexical-editor]) :is(p, li, td, th, blockquote, pre, h1, h2, h3, h4, h5, h6)::selection {
+body[data-dsh-claude-style-plus] :is([data-chat-flow], [data-lexical-editor]) :is(p, li, td, th, blockquote, pre, h1, h2, h3, h4, h5, h6)::selection {
   background-color: #3366d0 !important;
   color: #ffffff !important;
 }
 
-body[data-dsh-claude-style][data-dsh-window-blur] :is([data-chat-flow], [data-lexical-editor]) :is(p, li, td, th, blockquote, pre, h1, h2, h3, h4, h5, h6)::selection {
+body[data-dsh-claude-style-plus][data-dsh-window-blur] :is([data-chat-flow], [data-lexical-editor]) :is(p, li, td, th, blockquote, pre, h1, h2, h3, h4, h5, h6)::selection {
   background-color: #c7c7c6 !important;
   color: #000000 !important;
 }
 
 /* Inline-code chips: the chip's own background paints above the selection
    highlight, so these paints are the channel-wise inverse of that wash. */
-body[data-dsh-claude-style] [data-chat-flow] code:not(pre code)::selection {
+body[data-dsh-claude-style-plus] [data-chat-flow] code:not(pre code)::selection {
   background-color: rgb(40, 94, 206) !important;
 }
 
-body[data-dsh-claude-style][data-dsh-window-blur] [data-chat-flow] code:not(pre code)::selection {
+body[data-dsh-claude-style-plus][data-dsh-window-blur] [data-chat-flow] code:not(pre code)::selection {
   background-color: rgb(196, 196, 195) !important;
 }
 
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) [data-chat-flow] code:not(pre code)::selection {
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) [data-chat-flow] code:not(pre code)::selection {
   background-color: rgb(54, 107, 219) !important;
 }
 
-body[data-dsh-claude-style]:not([data-ds-dark-theme])[data-dsh-window-blur] [data-chat-flow] code:not(pre code)::selection {
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme])[data-dsh-window-blur] [data-chat-flow] code:not(pre code)::selection {
   background-color: rgb(209, 209, 208) !important;
 }
 
-body[data-dsh-claude-style] :is(button, input, textarea, select, [role="button"], [role="tab"], [role="treeitem"]) {
+body[data-dsh-claude-style-plus] :is(button, input, textarea, select, [role="button"], [role="tab"], [role="treeitem"]) {
   outline: none;
 }
 
 /* Keyboard focus ring: espresso ink on light, bright ivory on dark — a
    near-black canvas gets a light ring. */
-body[data-dsh-claude-style] :is(button, input, textarea, select, [role="button"], [role="tab"], [role="treeitem"]):focus-visible {
+body[data-dsh-claude-style-plus] :is(button, input, textarea, select, [role="button"], [role="tab"], [role="treeitem"]):focus-visible {
   outline: 2px solid rgba(20, 20, 19, 0.45);
   outline-offset: 1px;
 }
 
-body[data-dsh-claude-style][data-ds-dark-theme] :is(button, input, textarea, select, [role="button"], [role="tab"], [role="treeitem"]):focus-visible {
+body[data-dsh-claude-style-plus][data-ds-dark-theme] :is(button, input, textarea, select, [role="button"], [role="tab"], [role="treeitem"]):focus-visible {
   outline-color: rgba(250, 249, 245, 0.60);
 }
 
@@ -238,7 +238,7 @@ body[data-dsh-claude-style][data-ds-dark-theme] :is(button, input, textarea, sel
 /* The header actions sit outside that seat, so their z-index is read against
    the page: 9 clears the message layer (pinned headers 7, back-to-bottom 8) and
    stays under ui-dockkit's dock layers (10, 40 fullscreen). */
-body[data-dsh-claude-style] [data-slot="conversation.session.header.actions"] > * {
+body[data-dsh-claude-style-plus] [data-slot="conversation.session.header.actions"] > * {
   position: relative;
   z-index: 9;
 }
@@ -250,7 +250,7 @@ body[data-dsh-claude-style] [data-slot="conversation.session.header.actions"] > 
 /* The conversation header carries the host's own bottom border — the line under
    the tabs; the transcript's top fade below takes over that job. Scoped with
    :has() to the header that owns the tab strip, so no other header loses its edge. */
-body[data-dsh-claude-style] [class*="_header"]:has([class*="_tabs"]) {
+body[data-dsh-claude-style-plus] [class*="_header"]:has([class*="_tabs"]) {
   border-bottom-color: transparent;
   /* The host's header rule sets no position, so it is static and an absolutely
      positioned band would anchor to a far ancestor. The stickiness lives on the
@@ -262,7 +262,7 @@ body[data-dsh-claude-style] [class*="_header"]:has([class*="_tabs"]) {
 /* The transcript's top fade: the header already covers the transcript, so the
    band hangs off the header's own bottom edge and follows it. One knob,
    --dsh-transcript-fade-h, matching the composer's own fade. */
-body[data-dsh-claude-style] [class*="_header"]:has([class*="_tabs"])::after {
+body[data-dsh-claude-style-plus] [class*="_header"]:has([class*="_tabs"])::after {
   content: "";
   position: absolute;
   left: 0;
@@ -283,12 +283,12 @@ body[data-dsh-claude-style] [class*="_header"]:has([class*="_tabs"])::after {
 }
 
 /* ---------- the animation choice: reduced motion ---------- */
-/* The resolved choice rides <body data-dsh-claude-motion> (packages/client/src/core/prefs.ts,
+/* The resolved choice rides <body data-dsh-claude-style-plus-motion> (packages/client/src/core/prefs.ts,
    D26), because a stylesheet cannot talk a media query out of the system's
    setting. Scoped to the skin's own class prefix so the host's transitions stay
    as the host wrote them. Two things keep moving on purpose: the segmented
    controls' sliding pill and the background-work ring (theme/sidebar.css). */
-body[data-dsh-claude-style][data-dsh-claude-motion="reduced"] [class*="dsh-claude-"] {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-motion="reduced"] [class*="dsh-claude-style-plus-"] {
   animation-duration: 0.01ms !important;
   animation-iteration-count: 1 !important;
   transition-duration: 0.01ms !important;

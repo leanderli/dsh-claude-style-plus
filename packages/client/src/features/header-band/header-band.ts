@@ -6,7 +6,7 @@ import {
   HEADER_UTILITIES_SELECTOR,
   VIEW_TABS_STRIP_SELECTOR,
   WINDOWS_MENU_SELECTOR,
-} from '@dsh-claude-style/contracts/dom'
+} from '@dsh-claude-style-plus/contracts/dom'
 import { observeSize } from '../../core/bus'
 import { desktopBand } from '../../core/desktop-band'
 import { createStamp, setAttributeIfChanged } from '../../shared/dom'

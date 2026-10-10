@@ -4,7 +4,7 @@ import { requestFrame } from '../../core/frame'
 import { readPrefs, subscribePrefs } from '../../core/prefs'
 import { caretClipToField, caretMeasurePlain, caretMeasureRich } from './caret-measure'
 import type { CaretBox } from './caret-measure'
-import { COMPOSER_INPUT_SELECTOR, COMPOSER_TEXTAREA_SELECTOR } from '@dsh-claude-style/contracts/dom'
+import { COMPOSER_INPUT_SELECTOR, COMPOSER_TEXTAREA_SELECTOR } from '@dsh-claude-style-plus/contracts/dom'
 import type { HostContext } from '../../core/host'
 import type { FeatureUi } from '../../core/feature'
 import type manifest from './caret.manifest'
@@ -38,9 +38,9 @@ import type manifest from './caret.manifest'
  * the native caret back rather than leaving the surface with none.
  */
 /** The blink animation, by name; the stylesheet's keyframes carry the same name by hand. */
-export const CARET_BLINK_NAME = 'dsh-claude-caret-blink'
+export const CARET_BLINK_NAME = 'dsh-claude-style-plus-caret-blink'
 /** The drawn caret's colour, on the element itself: read off the native caret when taking over. */
-export const CARET_COLOR_PROPERTY = '--dsh-claude-caret-color'
+export const CARET_COLOR_PROPERTY = '--dsh-claude-style-plus-caret-color'
 /** How long after a focus change to look again: a session switch leaves a few frames between the focus and a selection that is ready. */
 export const CARET_FOCUS_SETTLE_MS = 120
 

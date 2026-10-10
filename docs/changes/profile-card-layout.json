@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-09",
+  "group": "improvements",
+  "order": 0,
+  "external": false,
+  "zh": "个人活动页先展示 Token/模型统计卡片，下方展示 Workspace 数据卡片；宽屏每区采用最多三列布局，默认最多展示六张，标题右侧可展开或收起全部。Workspace 卡片保留用量条、分桶和模型明细；Skill 调用以按调用量排序的水平堆叠条形图显示，区分显式注入与模型工具调用，并将图表收进 Workspace 数据区。",
+  "en": "The Profile page now places Token/model cards first and Workspace data cards below. Wide layouts use up to three columns; each section previews six cards and offers a right-aligned expand/collapse control. Workspace cards retain usage meters, Token buckets and model details; Skill calls use a ranked horizontal stacked-bar chart separating explicit injections from model tool calls, nested in the Workspace data area."
+}

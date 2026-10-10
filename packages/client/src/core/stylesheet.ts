@@ -1,5 +1,5 @@
-import { UNTAGGED_SHEET_SELECTOR } from '@dsh-claude-style/contracts/dom'
-import { STYLESHEET } from 'virtual:dsh-claude-style/generated'
+import { UNTAGGED_SHEET_SELECTOR } from '@dsh-claude-style-plus/contracts/dom'
+import { STYLESHEET } from 'virtual:dsh-claude-style-plus/generated'
 import { FOREIGN_SHEET_TAG, PACKAGE_NAME, STYLE_ID, STYLE_PLUGIN_CSS } from '../constants'
 
 /** The generation whose stylesheet is mounted; 0 before the first mount. */

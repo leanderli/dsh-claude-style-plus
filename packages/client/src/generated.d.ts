@@ -2,7 +2,7 @@
  * The module scripts/build.mjs generates while bundling (D36): build output
  * the source imports by name instead of reading it from text placeholders.
  */
-declare module 'virtual:dsh-claude-style/generated' {
+declare module 'virtual:dsh-claude-style-plus/generated' {
   /** The skin's stylesheet: the generated token sheet and the src/ stylesheets in order, the composer gate stamped (D4). */
   export const STYLESHEET: string
   /** Vendor lockup markup by brand id (packages/assets/src/icons/combine/). */
@@ -23,11 +23,11 @@ declare module 'virtual:dsh-claude-style/generated' {
  * The modules the feature chunks share with the bundle (D39), by the id each
  * chunk asks for: a source module's repository path, or a host package's name.
  */
-declare module 'virtual:dsh-claude-style/chunk-modules' {
+declare module 'virtual:dsh-claude-style-plus/chunk-modules' {
   export const CHUNK_MODULES: Record<string, unknown>
 }
 
 /** The feature registry scripts/build.mjs generates from the manifests (D42), in install order. */
-declare module 'virtual:dsh-claude-style/features' {
+declare module 'virtual:dsh-claude-style-plus/features' {
   export const FEATURES: import('./core/feature').Feature[]
 }

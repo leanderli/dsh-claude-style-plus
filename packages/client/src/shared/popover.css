@@ -10,11 +10,11 @@
    instead of toggling `data-open` (the host's own panels, which the skin opens
    but does not build). Same distance, same duration, same curve as the card
    transition above, so every surface the skin opens arrives the same way. */
-@keyframes dsh-claude-popover-in {
+@keyframes dsh-claude-style-plus-popover-in {
   from { opacity: 0; transform: translateY(4px) scale(0.98); }
   to { opacity: 1; transform: none; }
 }
-body[data-dsh-claude-style] .dsh-claude-popover-card {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-card {
   background: var(--dsw-alias-bg-overlay, #ffffff);
   border: 1px solid var(--dsw-alias-border-l1, #e8e6dc);
   border-radius: 12px;
@@ -27,32 +27,32 @@ body[data-dsh-claude-style] .dsh-claude-popover-card {
   transform: translateY(4px) scale(0.98);
   transition: opacity 0.15s ease, transform 0.15s ease;
 }
-body[data-dsh-claude-style] .dsh-claude-popover-card[data-open="true"] {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-card[data-open="true"] {
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0) scale(1);
 }
-body[data-dsh-claude-style][data-ds-dark-theme] .dsh-claude-popover-card {
-  background: var(--dsh-claude-raised);
+body[data-dsh-claude-style-plus][data-ds-dark-theme] .dsh-claude-style-plus-popover-card {
+  background: var(--dsh-claude-style-plus-raised);
   border-color: var(--dsw-alias-border-l2);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 /* Under the host's colours the card's fill is the host's overlay layer, which
    a theme plugin may turn translucent (a wallpaper's glass): the card blurs
    what lies behind it, so its rows stay readable over a busy picture. */
-body[data-dsh-claude-style][data-dsh-claude-palette="host"] .dsh-claude-popover-card {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-palette="host"] .dsh-claude-style-plus-popover-card {
   -webkit-backdrop-filter: blur(16px) saturate(1.4) !important;
   backdrop-filter: blur(16px) saturate(1.4);
 }
 /* A card's list: rows stacked with a hairline of air. */
-body[data-dsh-claude-style] .dsh-claude-popover-body {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-body {
   display: flex;
   flex-direction: column;
   gap: 3px;
   min-width: 0;
 }
 /* A line in place of rows: loading, or nothing to list. */
-body[data-dsh-claude-style] .dsh-claude-popover-status {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-status {
   color: var(--dsw-alias-label-tertiary, #8f8d84) !important;
   font-size: 12px !important;
   line-height: 20px !important;
@@ -60,7 +60,7 @@ body[data-dsh-claude-style] .dsh-claude-popover-status {
 }
 
 /* ---------- Popover rows ---------- */
-body[data-dsh-claude-style] .dsh-claude-popover-item {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-item {
   width: 100%;
   min-height: 32px;
   padding: 2px 7px;
@@ -80,11 +80,11 @@ body[data-dsh-claude-style] .dsh-claude-popover-item {
   transition: background-color 0.12s ease;
   box-sizing: border-box;
 }
-body[data-dsh-claude-style] .dsh-claude-popover-item:hover {
-  background: var(--dsh-claude-hover-bg, rgba(0, 0, 0, 0.08)) !important;
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-item:hover {
+  background: var(--dsh-claude-style-plus-hover-bg, rgba(0, 0, 0, 0.08)) !important;
   color: var(--dsw-alias-label-primary, #141413) !important;
 }
-body[data-dsh-claude-style] .dsh-claude-popover-item-icon {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-item-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -93,11 +93,11 @@ body[data-dsh-claude-style] .dsh-claude-popover-item-icon {
   flex: none;
   color: var(--dsw-alias-label-secondary, #787672);
 }
-body[data-dsh-claude-style] .dsh-claude-popover-item-icon svg {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-item-icon svg {
   width: 16px;
   height: 16px;
 }
-body[data-dsh-claude-style] .dsh-claude-popover-item-text {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-item-text {
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -107,7 +107,7 @@ body[data-dsh-claude-style] .dsh-claude-popover-item-text {
 }
 /* A two-line row: the title over a quieter second line, the pair sharing the
    slack the one-line text block would take. */
-body[data-dsh-claude-style] .dsh-claude-popover-item-col {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-item-col {
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -115,11 +115,11 @@ body[data-dsh-claude-style] .dsh-claude-popover-item-col {
   min-width: 0;
   text-align: left;
 }
-body[data-dsh-claude-style] .dsh-claude-popover-item-col .dsh-claude-popover-item-text {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-item-col .dsh-claude-style-plus-popover-item-text {
   font-weight: 500;
   line-height: 16px;
 }
-body[data-dsh-claude-style] .dsh-claude-popover-item-desc {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-item-desc {
   font-size: 11px;
   line-height: 14px;
   color: var(--dsw-alias-label-tertiary, #8f8d84);
@@ -128,16 +128,16 @@ body[data-dsh-claude-style] .dsh-claude-popover-item-desc {
 }
 /* The current choice's check, in the accent. A row that carries the mark for
    every choice keeps it out of the flow until its `hidden` comes off. */
-body[data-dsh-claude-style] .dsh-claude-popover-check {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-check {
   flex: none;
   display: inline-flex;
   align-items: center;
   color: var(--dsw-alias-brand-primary, #d97757);
 }
-body[data-dsh-claude-style] .dsh-claude-popover-check[hidden] {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-check[hidden] {
   display: none;
 }
-body[data-dsh-claude-style] .dsh-claude-popover-item-badge {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-item-badge {
   margin-left: auto !important;
   font-size: 10px !important;
   line-height: 14px !important;
@@ -148,15 +148,15 @@ body[data-dsh-claude-style] .dsh-claude-popover-item-badge {
 }
 /* A provider the catalog no longer offers: its stored row stays checked but is
    muted, so it reads as "this used to be picked" and can be unchecked away. */
-body[data-dsh-claude-style] .dsh-claude-popover-item.dsh-claude-popover-item-stale .dsh-claude-popover-item-text,
-body[data-dsh-claude-style] .dsh-claude-popover-item.dsh-claude-popover-item-stale .dsh-claude-popover-item-badge {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-item.dsh-claude-style-plus-popover-item-stale .dsh-claude-style-plus-popover-item-text,
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-item.dsh-claude-style-plus-popover-item-stale .dsh-claude-style-plus-popover-item-badge {
   color: var(--dsw-alias-label-tertiary, #8f8d84) !important;
 }
-body[data-dsh-claude-style] .dsh-claude-popover-item.dsh-claude-popover-item-stale .dsh-claude-popover-item-badge {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-popover-item.dsh-claude-style-plus-popover-item-stale .dsh-claude-style-plus-popover-item-badge {
   background: transparent !important;
 }
 
 /* Ensure popover items only display inside the popover */
-body[data-dsh-claude-style] [class*="footArea"] > .dsh-claude-popover-item {
+body[data-dsh-claude-style-plus] [class*="footArea"] > .dsh-claude-style-plus-popover-item {
   display: none !important;
 }

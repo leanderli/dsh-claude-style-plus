@@ -1,6 +1,6 @@
 import { modelCopy } from '../../core/model-copy'
 import { buildElement } from '../../shared/dom'
-import { COMBINE_SVGS, COMBINE_WORDS } from 'virtual:dsh-claude-style/generated'
+import { COMBINE_SVGS, COMBINE_WORDS } from 'virtual:dsh-claude-style-plus/generated'
 
 /**
  * The brand mark for one model: the vendor that made it, not the route it is
@@ -55,14 +55,14 @@ export function modelCombine(brand: string | null, name: string) {
  * @returns the label element.
  */
 export function buildModelLabel(name: unknown, brand: string | null) {
-  const el = buildElement('span', 'dsh-claude-model-name')
+  const el = buildElement('span', 'dsh-claude-style-plus-model-name')
   const text = typeof name === 'string' ? name : ''
   const mark = modelCombine(brand, text)
   if (mark === null) {
     el.textContent = text
     return el
   }
-  const box = buildElement('span', 'dsh-claude-model-combine')
+  const box = buildElement('span', 'dsh-claude-style-plus-model-combine')
   box.setAttribute('aria-hidden', 'true')
   box.innerHTML = mark.svg
   const head = mark.at === -1 ? '' : text.slice(0, mark.at)
@@ -72,6 +72,6 @@ export function buildModelLabel(name: unknown, brand: string | null) {
   if (head) el.appendChild(document.createTextNode(head))
   el.appendChild(box)
   el.appendChild(document.createTextNode(tail))
-  el.appendChild(buildElement('span', 'dsh-claude-model-combine-alt', tail ? `${mark.word} ` : mark.word))
+  el.appendChild(buildElement('span', 'dsh-claude-style-plus-model-combine-alt', tail ? `${mark.word} ` : mark.word))
   return el
 }

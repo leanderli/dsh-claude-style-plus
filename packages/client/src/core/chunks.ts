@@ -1,4 +1,4 @@
-import { CHUNK_MODULES } from 'virtual:dsh-claude-style/chunk-modules'
+import { CHUNK_MODULES } from 'virtual:dsh-claude-style-plus/chunk-modules'
 import type { FeatureInstall } from './feature'
 
 /** What a chunk's script sets on its own element: its body, still to be run against the shared modules. */
@@ -14,7 +14,7 @@ const loads = new Map<string, Promise<FeatureInstall>>()
  * that state in two, so the build shares every such module through this table.
  */
 function chunkRequire(id: string) {
-  if (!Object.hasOwn(CHUNK_MODULES, id)) throw new Error(`dsh-claude-style: a feature chunk asks for "${id}", which the bundle does not share`)
+  if (!Object.hasOwn(CHUNK_MODULES, id)) throw new Error(`dsh-claude-style-plus: a feature chunk asks for "${id}", which the bundle does not share`)
   return CHUNK_MODULES[id]
 }
 
@@ -32,7 +32,7 @@ function fetchFactory(url: string) {
     script.async = true
     script.onload = () => {
       script.remove()
-      if (script.__dshChunk === undefined) reject(new Error(`dsh-claude-style: the chunk ${url} ran without handing back a factory`))
+      if (script.__dshChunk === undefined) reject(new Error(`dsh-claude-style-plus: the chunk ${url} ran without handing back a factory`))
       else resolve(script.__dshChunk)
     }
     script.onerror = () => {
@@ -40,7 +40,7 @@ function fetchFactory(url: string) {
       // The route answers every chunk the build in lib/ wrote. A host still
       // serving the bundle it read at boot asks for the chunks of the build
       // before an update, which the update replaced.
-      reject(new Error(`dsh-claude-style: the chunk ${url} failed to load; restart the host if the plugin was updated while it ran`))
+      reject(new Error(`dsh-claude-style-plus: the chunk ${url} failed to load; restart the host if the plugin was updated while it ran`))
     }
     document.head.appendChild(script)
   })
@@ -58,7 +58,7 @@ export function loadFeatureChunk(url: string): Promise<FeatureInstall> {
   if (known !== undefined) return known
   const load = fetchFactory(url).then((factory) => {
     const { install } = factory(chunkRequire)
-    if (typeof install !== 'function') throw new Error(`dsh-claude-style: the chunk ${url} exports no install`)
+    if (typeof install !== 'function') throw new Error(`dsh-claude-style-plus: the chunk ${url} exports no install`)
     return install as FeatureInstall
   })
   loads.set(url, load)

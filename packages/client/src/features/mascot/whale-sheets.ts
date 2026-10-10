@@ -1,4 +1,4 @@
-import { DEEPY_SHEET_URLS } from 'virtual:dsh-claude-style/generated'
+import { DEEPY_SHEET_URLS } from 'virtual:dsh-claude-style-plus/generated'
 
 /**
  * Deepy's sheets, as the addresses the sprite paints from.
@@ -30,7 +30,7 @@ export function createMascotWhaleSheets(onReady: (key: string) => void) {
     if (known !== undefined) return known === 'ready'
     const address = DEEPY_SHEET_URLS[key]
     // The table and the sheets are one list; a name outside it is a bug here.
-    if (address === undefined) throw new Error(`dsh-claude-style: no sheet for "${key}"`)
+    if (address === undefined) throw new Error(`dsh-claude-style-plus: no sheet for "${key}"`)
     sheets.set(key, 'loading')
     const image = new Image()
     image.src = address
@@ -38,7 +38,7 @@ export function createMascotWhaleSheets(onReady: (key: string) => void) {
       if (sheets.get(key) !== 'loading') return
       sheets.set(key, ok ? 'ready' : 'failed')
       if (ok && alive) onReady(key)
-      if (!ok) console.warn(`[dsh-claude-style] Deepy's "${key}" sheet did not load from ${address}; the host half serves it, so restart the host after an update.`)
+      if (!ok) console.warn(`[dsh-claude-style-plus] Deepy's "${key}" sheet did not load from ${address}; the host half serves it, so restart the host after an update.`)
     }
     image.decode().then(() => settle(true), () => settle(false))
     return false

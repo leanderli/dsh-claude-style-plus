@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { BUNDLE_CONFIG_SLOT, PACKAGE_NAME, SETTINGS_SCROLLER_ATTR, SETTINGS_SECTION_SLOT, USERNAME_MAX } from '../../constants'
+import { BUNDLE_CONFIG_SLOT, PACKAGE_NAME, SETTINGS_SCROLLER_ATTR, SETTINGS_SECTION_ID, SETTINGS_SECTION_SLOT, USERNAME_MAX } from '../../constants'
 import { SEGMENT_CLASS } from '../permissions/permission-copy'
 import { settingsCopy } from '../../core/i18n'
 import { loadModelCopy, onModelCopyLoaded } from '../../core/model-copy'
@@ -13,7 +13,7 @@ import { createSettingsSidebarTab } from './settings-tab-sidebar'
 import type { Prefs } from '../../constants'
 import type { SettingsTabId } from '../../core/feature'
 import type { HostContext } from '../../core/host'
-import type { HostSlotsService } from '@dsh-claude-style/contracts/services'
+import type { HostSlotsService } from '@dsh-claude-style-plus/contracts/services'
 import type { FeatureUi } from '../../core/feature'
 import type manifest from './settings.manifest'
 import type { SettingsTab, SettingsView } from './settings-controls'
@@ -58,8 +58,7 @@ export let quickProviderApi: QuickProvidersHandle | null = null
  */
 export let slotsApi: HostSlotsService | null = null
 
-/** The host's own id for the settings section this plugin registers. */
-export const SETTINGS_SECTION_ID = 'claude-style'
+export { SETTINGS_SECTION_ID }
 
 /** The page's tabs, in strip order, and the controls their rows are built from. */
 export const SETTINGS_TABS: SettingsTab[] = [
@@ -86,7 +85,7 @@ export function ClaudeStyleSettingsTabStrip(props: { active: SettingsTabId, onPi
     },
     tab.label(),
   ))
-  return React.createElement(ClaudeStyleSegmentGroup, { role: 'tablist', className: 'dsh-claude-settings-tabs' }, buttons)
+  return React.createElement(ClaudeStyleSegmentGroup, { role: 'tablist', className: 'dsh-claude-style-plus-settings-tabs' }, buttons)
 }
 
 export function ClaudeStyleSettingsSection(props: { embed?: boolean }) {
@@ -213,11 +212,11 @@ export function ClaudeStyleSettingsSection(props: { embed?: boolean }) {
   const embedded = !!(props && props.embed)
   return React.createElement(
     'div',
-    { ref: pageRef, className: embedded ? 'dsh-claude-settings dsh-claude-settings-embedded' : 'dsh-claude-settings' },
-    embedded ? null : React.createElement('div', { className: 'dsh-claude-settings-title' }, settingsCopy('title', 'Claude Style')),
+    { ref: pageRef, className: embedded ? 'dsh-claude-style-plus-settings dsh-claude-style-plus-settings-embedded' : 'dsh-claude-style-plus-settings' },
+    embedded ? null : React.createElement('div', { className: 'dsh-claude-style-plus-settings-title' }, settingsCopy('title', 'Claude Style Plus')),
     React.createElement(ClaudeStyleSettingsTabStrip, { active: activeTab, onPick: setActiveTab }),
-    React.createElement('div', { className: 'dsh-claude-settings-rows', role: 'tabpanel', key: tab.id }, tabRows(tab, view)),
-    error === null ? null : React.createElement('div', { className: 'dsh-claude-settings-error' }, error),
+    React.createElement('div', { className: 'dsh-claude-style-plus-settings-rows', role: 'tabpanel', key: tab.id }, tabRows(tab, view)),
+    error === null ? null : React.createElement('div', { className: 'dsh-claude-style-plus-settings-error' }, error),
   )
 }
 
@@ -233,13 +232,13 @@ export function ClaudeStyleSettingsSection(props: { embed?: boolean }) {
  */
 export function ClaudeStyleBundleConfig(props: { view?: string }) {
   if (props && props.view === 'summary') {
-    return React.createElement('span', null, settingsCopy('title', 'Claude Style'))
+    return React.createElement('span', null, settingsCopy('title', 'Claude Style Plus'))
   }
   return React.createElement(ClaudeStyleSettingsSection, { embed: true })
 }
 
 /**
- * Stamped onto the Claude Style nav button in the settings dialog so CSS
+ * Stamped onto the Claude Style Plus nav button in the settings dialog so CSS
  * can replace the host's default settings gear with the black Claude mark.
  */
 export function syncSettingsNav() {
@@ -309,10 +308,10 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
       {
         name: BUNDLE_CONFIG_SLOT,
         key: PACKAGE_NAME,
-        label() { return settingsCopy('title', 'Claude Style') },
+        label() { return settingsCopy('title', 'Claude Style Plus') },
       },
       ClaudeStyleBundleConfig,
-    )), 'dsh-claude-style: plugin page')
+    )), 'dsh-claude-style-plus: plugin page')
     // The full-page section registers on every host that declares the
     // slot. On an older host it is the only seat; on 0.1.7+ the same page
     // also renders on the plugin page, and this tab keeps a route to it
@@ -325,10 +324,10 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
         order: 22,
         // A function, so the navigation entry localizes once the copy
         // document has arrived; the literal is the pre-fetch fallback.
-        label() { return settingsCopy('title', 'Claude Style') },
+        label() { return settingsCopy('title', 'Claude Style Plus') },
       },
       ClaudeStyleSettingsSection,
-    )), 'dsh-claude-style: settings section')
+    )), 'dsh-claude-style-plus: settings section')
   })
   return () => {
     if (ui && ui.settingsNav) {

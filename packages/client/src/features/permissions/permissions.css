@@ -4,11 +4,11 @@
    as long as the permission control is installed to stand in for it. The
    host's button is the one packages/client/src/features/composer/composer.ts marks as the
    access control. */
-body[data-dsh-claude-style][data-dsh-claude-composer-active][data-dsh-claude-permissions] button[data-dsh-claude-control="access"] {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-composer-active][data-dsh-claude-style-plus-permissions] button[data-dsh-claude-style-plus-control="access"] {
   display: none;
 }
 
-body[data-dsh-claude-style] .dsh-claude-segments {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-segments {
   flex: none;
   align-items: center;
   gap: 2px;
@@ -20,11 +20,11 @@ body[data-dsh-claude-style] .dsh-claude-segments {
   position: relative;
 }
 
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) .dsh-claude-segments {
-  background: var(--dsh-claude-chip);
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) .dsh-claude-style-plus-segments {
+  background: var(--dsh-claude-style-plus-chip);
 }
 
-body[data-dsh-claude-style] .dsh-claude-segment {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-segment {
   appearance: none;
   margin: 0;
   border: 0;
@@ -40,46 +40,46 @@ body[data-dsh-claude-style] .dsh-claude-segment {
   transition: background-color .1s, color .1s;
 }
 
-body[data-dsh-claude-style] .dsh-claude-segment:hover:not([data-active]) {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-segment:hover:not([data-active]) {
   color: var(--dsw-alias-label-primary);
 }
 
-body[data-dsh-claude-style] .dsh-claude-segment[data-active] {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-segment[data-active] {
   color: var(--dsw-alias-label-primary);
   background: var(--dsw-alias-bg-layer-3);
 }
 
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) .dsh-claude-segment[data-active] {
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) .dsh-claude-style-plus-segment[data-active] {
   background: var(--dsw-alias-bg-overlay);
   box-shadow: 0 1px 2px rgba(20, 20, 19, 0.08);
 }
 
 /* The group's sliding pill: the box the active segment wore above, which the
    segment gives up while the pill is there. */
-body[data-dsh-claude-style] .dsh-claude-segments[data-dsh-claude-pill]::before {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-segments[data-dsh-claude-style-plus-pill]::before {
   top: 2px;
   bottom: 2px;
   border-radius: 7px;
   background: var(--dsw-alias-bg-layer-3);
 }
 
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) .dsh-claude-segments[data-dsh-claude-pill]::before {
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) .dsh-claude-style-plus-segments[data-dsh-claude-style-plus-pill]::before {
   background: var(--dsw-alias-bg-overlay);
   box-shadow: 0 1px 2px rgba(20, 20, 19, 0.08);
 }
 
-body[data-dsh-claude-style] .dsh-claude-segments[data-dsh-claude-pill] > .dsh-claude-segment[data-active] {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-segments[data-dsh-claude-style-plus-pill] > .dsh-claude-style-plus-segment[data-active] {
   background: transparent;
   box-shadow: none;
 }
 
 /* ---------- Claude Code layout: in-conversation permission popover ---------- */
-body[data-dsh-claude-style] .dsh-claude-perm-container {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-perm-container {
   position: relative;
   display: inline-flex;
   z-index: 20;
 }
-body[data-dsh-claude-style] .dsh-claude-perm-btn {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-perm-btn {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -100,21 +100,21 @@ body[data-dsh-claude-style] .dsh-claude-perm-btn {
   user-select: none;
   transition: background-color 0.12s ease;
 }
-body[data-dsh-claude-style] .dsh-claude-perm-label {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-perm-label {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-body[data-dsh-claude-style][data-ds-dark-theme] .dsh-claude-perm-btn {
+body[data-dsh-claude-style-plus][data-ds-dark-theme] .dsh-claude-style-plus-perm-btn {
   color: var(--dsw-alias-label-primary);
 }
-body[data-dsh-claude-style] .dsh-claude-perm-btn:hover,
-body[data-dsh-claude-style] .dsh-claude-perm-btn[data-open="true"] {
-  background: var(--dsh-claude-hover-bg, rgba(0, 0, 0, 0.08));
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-perm-btn:hover,
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-perm-btn[data-open="true"] {
+  background: var(--dsh-claude-style-plus-hover-bg, rgba(0, 0, 0, 0.08));
 }
 /* The preset list's card is the shared popover card (shared/popover.css). */
-body[data-dsh-claude-style] .dsh-claude-perm-popover {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-perm-popover {
   position: fixed;
   min-width: 248px;
   display: flex;

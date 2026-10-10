@@ -199,27 +199,27 @@ export interface PopoverItemOptions {
  *   not ask for is null.
  */
 export function buildPopoverItem(opts: PopoverItemOptions = {}) {
-  const row = buildElement('button', opts.className ? `dsh-claude-popover-item ${opts.className}` : 'dsh-claude-popover-item')
+  const row = buildElement('button', opts.className ? `dsh-claude-style-plus-popover-item ${opts.className}` : 'dsh-claude-style-plus-popover-item')
   row.type = 'button'
   if (opts.role) row.setAttribute('role', opts.role)
-  const icon = opts.icon ? buildElement('span', 'dsh-claude-popover-item-icon') : null
+  const icon = opts.icon ? buildElement('span', 'dsh-claude-style-plus-popover-item-icon') : null
   if (icon !== null) row.appendChild(icon)
   let text: HTMLSpanElement
   let desc: HTMLSpanElement | null = null
   if (opts.lines === 2) {
-    const col = buildElement('div', 'dsh-claude-popover-item-col')
-    text = buildElement('span', 'dsh-claude-popover-item-text')
-    desc = buildElement('span', 'dsh-claude-popover-item-desc')
+    const col = buildElement('div', 'dsh-claude-style-plus-popover-item-col')
+    text = buildElement('span', 'dsh-claude-style-plus-popover-item-text')
+    desc = buildElement('span', 'dsh-claude-style-plus-popover-item-desc')
     col.appendChild(text)
     col.appendChild(desc)
     row.appendChild(col)
   } else {
-    text = buildElement('span', opts.textClass || 'dsh-claude-popover-item-text')
+    text = buildElement('span', opts.textClass || 'dsh-claude-style-plus-popover-item-text')
     row.appendChild(text)
   }
-  const badge = opts.badge ? buildElement('span', 'dsh-claude-popover-item-badge') : null
+  const badge = opts.badge ? buildElement('span', 'dsh-claude-style-plus-popover-item-badge') : null
   if (badge !== null) row.appendChild(badge)
-  const check = opts.check ? buildElement('span', 'dsh-claude-popover-check') : null
+  const check = opts.check ? buildElement('span', 'dsh-claude-style-plus-popover-check') : null
   if (check !== null) row.appendChild(check)
   return { row, icon, text, desc, badge, check }
 }

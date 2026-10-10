@@ -65,11 +65,11 @@ const HOST = {
  * that stand-in flies, which the flight stylesheet hides.
  */
 const SKIN = {
-  sendGhost: '[data-dsh-claude-send-ghost]', // CHAT_SEND_GHOST_ATTR
-  flyingMark: 'data-dsh-claude-send-flight', // CHAT_FLYING_ATTR
+  sendGhost: '[data-dsh-claude-style-plus-send-ghost]', // CHAT_SEND_GHOST_ATTR
+  flyingMark: 'data-dsh-claude-style-plus-send-flight', // CHAT_FLYING_ATTR
   echoAttribute: 'data-submission-echo', // SUBMISSION_ECHO_SELECTOR without its brackets
   // The other mark the pin reads while the glide holds a position (FOLLOW_HOLD_ATTR).
-  hold: '[data-dsh-claude-follow-hold]', // FOLLOW_HOLD_ATTR
+  hold: '[data-dsh-claude-style-plus-follow-hold]', // FOLLOW_HOLD_ATTR
 }
 
 /** Both tables, for the sampler that runs inside the page. */
@@ -141,7 +141,7 @@ async function captureFailure(session, out, name) {
       dialogs: [...document.querySelectorAll('[role="dialog"]')]
         .filter((node) => node.offsetParent !== null)
         .map((node) => (node.innerText || '').replace(/\s+/g, ' ').slice(0, 160)),
-      skin: document.body.getAttribute('data-dsh-claude-style'),
+      skin: document.body.getAttribute('data-dsh-claude-style-plus'),
     }
   }).catch((error) => ({ error: String(error) }))
   const report = [
@@ -364,7 +364,7 @@ function runProbes({ table, entries, frames = 0 }) {
  */
 async function captureBothSchemes(context) {
   const { page, out } = context
-  const brand = await page.evaluate(() => document.body.getAttribute('data-dsh-claude-brand'))
+  const brand = await page.evaluate(() => document.body.getAttribute('data-dsh-claude-style-plus-brand'))
   const canvas = CANVAS[brand]
   if (canvas === undefined) throw new Error(`the page carries brand "${brand}", which has no recorded palette`)
   const files = []
@@ -424,22 +424,22 @@ const SCENARIOS = {
         }
         const shown = (el) => el !== null && getComputedStyle(el).display !== 'none'
         const cap = (el) => (el === null ? null : getComputedStyle(el).maxWidth)
-        const perm = read('.dsh-claude-perm-btn')
-        const permLabel = read('.dsh-claude-perm-label')
-        const model = read('.dsh-claude-model-btn')
-        const modelLabel = read('.dsh-claude-model-btn-label')
-        const meter = read('[data-dsh-claude-context-meter]')
+        const perm = read('.dsh-claude-style-plus-perm-btn')
+        const permLabel = read('.dsh-claude-style-plus-perm-label')
+        const model = read('.dsh-claude-style-plus-model-btn')
+        const modelLabel = read('.dsh-claude-style-plus-model-btn-label')
+        const meter = read('[data-dsh-claude-style-plus-context-meter]')
         return {
           width: window.innerWidth,
           card: box(read('[data-composer-card]')),
           perm: box(perm),
           permMax: cap(perm),
           permEllipsis: permLabel === null ? null : getComputedStyle(permLabel).textOverflow,
-          chevron: shown(read('.dsh-claude-perm-chevron')),
+          chevron: shown(read('.dsh-claude-style-plus-perm-chevron')),
           model: box(model),
           modelMax: cap(model),
           modelEllipsis: modelLabel === null ? null : getComputedStyle(modelLabel).textOverflow,
-          effort: box(read('.dsh-claude-effort-btn')),
+          effort: box(read('.dsh-claude-style-plus-effort-btn')),
           meter: box(meter),
           ring: shown(meter === null ? null : meter.querySelector('svg')),
           number: shown(meter === null ? null : meter.querySelector('button > span')),

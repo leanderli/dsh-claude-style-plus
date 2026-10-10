@@ -1,6 +1,6 @@
 import { CRAB_FRAME_MS, CRAB_SHEETS } from './sheets'
 import { createMascotPlayer } from './mascot-player'
-import { CRAB_SHEET_URLS } from 'virtual:dsh-claude-style/generated'
+import { CRAB_SHEET_URLS } from 'virtual:dsh-claude-style-plus/generated'
 import type { HostContext } from '../../core/host'
 import type { FeatureUi } from '../../core/feature'
 import type manifest from './mascot.manifest'
@@ -34,8 +34,8 @@ export function createMascotCrab(ctx: HostContext, ui: FeatureUi<typeof manifest
         ready: key => Object.prototype.hasOwnProperty.call(CRAB_SHEET_URLS, key),
         failed: () => false,
         paint(style, key) {
-          style.setProperty('--dsh-claude-crab-sheet', `url("${CRAB_SHEET_URLS[key].body}")`)
-          style.setProperty('--dsh-claude-crab-ink', `url("${CRAB_SHEET_URLS[key].ink}")`)
+          style.setProperty('--dsh-claude-style-plus-crab-sheet', `url("${CRAB_SHEET_URLS[key].body}")`)
+          style.setProperty('--dsh-claude-style-plus-crab-ink', `url("${CRAB_SHEET_URLS[key].ink}")`)
         },
         dispose() {},
       }

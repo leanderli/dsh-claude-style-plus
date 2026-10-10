@@ -1,17 +1,13 @@
 <div align="center">
 
-# DSH Claude Style
+# DSH Claude Style Plus
 
-**A theme plugin that brings the look and feel of Claude Code Desktop to the DeepSeek Harness Web GUI.**
+**An independently maintained fork of the Claude Code Desktop theme for the DeepSeek Harness Web GUI.**
 
 > **Claude Code Desktop, right inside DSH.**
 
 [![English](https://img.shields.io/badge/lang-English-blue.svg)](README.en.md) [![简体中文](https://img.shields.io/badge/lang-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-red.svg)](README.md)
 
-[![version](https://img.shields.io/npm/v/dsh-claude-style?style=flat&label=version&color=D97757)](https://www.npmjs.com/package/dsh-claude-style)
-[![downloads](https://img.shields.io/npm/dm/dsh-claude-style?style=flat&label=downloads&color=D97757)](https://www.npmjs.com/package/dsh-claude-style)
-[![GitHub stars](https://img.shields.io/github/stars/Nwflower/dsh-claude-style?style=flat&label=%E2%98%85&color=08C)](https://github.com/Nwflower/dsh-claude-style)
-[![dsh.so install](https://www.dsh.so/badge/install/dsh-claude-style.svg)](https://www.dsh.so/artifact/dsh-claude-style/)
 [![license](https://img.shields.io/badge/license-MIT-2EA44F?style=flat)](LICENSE)
 
 </div>
@@ -73,15 +69,15 @@ What the plugin does and what each setting changes is documented: [Features](doc
 
 ## Fonts
 
-> **Important: the Anthropic fonts are not bundled with the npm package.** They are available for download in this repository under [`packages/assets/src/fonts/anthropic/`](packages/assets/src/fonts/anthropic/). You can either install them on your system, or skip the install entirely — drop the two `.ttf` files into `$DSH_HOME/dsh-claude-style/fonts/` (`~/.dsh/dsh-claude-style/fonts/` when `DSH_HOME` is unset) and the host will serve them as webfonts (the files are identical, so the result is the same). Either way, refresh or restart the web UI for the fonts to take effect.
+> **Important: the Anthropic fonts are not bundled with the npm package.** They are available for download in this repository under [`packages/assets/src/fonts/anthropic/`](packages/assets/src/fonts/anthropic/). You can either install them on your system, or skip the install entirely — drop the two `.ttf` files into `$DSH_HOME/dsh-claude-style-plus/fonts/` (`~/.dsh/dsh-claude-style-plus/fonts/` when `DSH_HOME` is unset) and the host will serve them as webfonts (the files are identical, so the result is the same). Either way, refresh or restart the web UI for the fonts to take effect.
 
 | Font | Used for | File |
 |---|---|---|
-| Anthropic Sans Web Text | Interface / UI | [`packages/assets/src/fonts/anthropic/AnthropicSansWebText.ttf`](https://github.com/Nwflower/dsh-claude-style/raw/main/packages/assets/src/fonts/anthropic/AnthropicSansWebText.ttf) |
-| Anthropic Serif Web Text | Conversation body / Markdown | [`packages/assets/src/fonts/anthropic/AnthropicSerifWebText.ttf`](https://github.com/Nwflower/dsh-claude-style/raw/main/packages/assets/src/fonts/anthropic/AnthropicSerifWebText.ttf) |
-| JetBrains Mono Variable | Code / code blocks | [`packages/assets/src/fonts/JetBrainsMonoVariable.ttf`](https://github.com/Nwflower/dsh-claude-style/raw/main/packages/assets/src/fonts/JetBrainsMonoVariable.ttf), [`packages/assets/src/fonts/JetBrainsMonoItalicVariable.ttf`](https://github.com/Nwflower/dsh-claude-style/raw/main/packages/assets/src/fonts/JetBrainsMonoItalicVariable.ttf) |
-| Inter | Interface when Anthropic Sans is absent | [`packages/assets/src/fonts/InterVariable.woff2`](https://github.com/Nwflower/dsh-claude-style/raw/main/packages/assets/src/fonts/InterVariable.woff2) |
-| Noto Serif | Conversation body when Anthropic Serif is absent | [`packages/assets/src/fonts/NotoSerifVariable.woff2`](https://github.com/Nwflower/dsh-claude-style/raw/main/packages/assets/src/fonts/NotoSerifVariable.woff2) |
+| Anthropic Sans Web Text | Interface / UI | [`packages/assets/src/fonts/anthropic/AnthropicSansWebText.ttf`](https://github.com/leanderli/dsh-claude-style-plus/raw/main/packages/assets/src/fonts/anthropic/AnthropicSansWebText.ttf) |
+| Anthropic Serif Web Text | Conversation body / Markdown | [`packages/assets/src/fonts/anthropic/AnthropicSerifWebText.ttf`](https://github.com/leanderli/dsh-claude-style-plus/raw/main/packages/assets/src/fonts/anthropic/AnthropicSerifWebText.ttf) |
+| JetBrains Mono Variable | Code / code blocks | [`packages/assets/src/fonts/JetBrainsMonoVariable.ttf`](https://github.com/leanderli/dsh-claude-style-plus/raw/main/packages/assets/src/fonts/JetBrainsMonoVariable.ttf), [`packages/assets/src/fonts/JetBrainsMonoItalicVariable.ttf`](https://github.com/leanderli/dsh-claude-style-plus/raw/main/packages/assets/src/fonts/JetBrainsMonoItalicVariable.ttf) |
+| Inter | Interface when Anthropic Sans is absent | [`packages/assets/src/fonts/InterVariable.woff2`](https://github.com/leanderli/dsh-claude-style-plus/raw/main/packages/assets/src/fonts/InterVariable.woff2) |
+| Noto Serif | Conversation body when Anthropic Serif is absent | [`packages/assets/src/fonts/NotoSerifVariable.woff2`](https://github.com/leanderli/dsh-claude-style-plus/raw/main/packages/assets/src/fonts/NotoSerifVariable.woff2) |
 
 JetBrains Mono, Inter and Noto Serif are licensed under the SIL Open Font License 1.1 and ship with the npm package; nothing to set up. Inter and Noto Serif nearly match the two Anthropic fonts in letter height and width, so without the Anthropic fonts they stand in and the interface and conversation text keep their layout. Both carry only the Latin characters the Anthropic fonts cover; Chinese text keeps using the system's Chinese fonts.
 
@@ -89,7 +85,7 @@ To enable the Anthropic fonts, choose one of the following:
 
 ① Install them on your system — on Windows, double-click each `.ttf` and choose "Install"; on macOS, import them with Font Book.
 
-② Skip the install — copy the `.ttf` files into `$DSH_HOME/dsh-claude-style/fonts/`, then refresh the page.
+② Skip the install — copy the `.ttf` files into `$DSH_HOME/dsh-claude-style-plus/fonts/`, then refresh the page.
 
 > The Anthropic Sans and Serif fonts are the property of Anthropic, licensed for personal use only, and are not covered by this project's MIT license.
 
@@ -107,27 +103,21 @@ plugin; selecting another skin or the official default takes the page back witho
   [Settings](docs/SETTINGS.en.md) under "Alongside other theme plugins".
 - The settings page and every stored preference survive the handoff. A skin taking the screen does not uninstall
   anything, and closing the Skin Center does not throw away what you configured here.
-- `data-dsh-claude-style-handoff` on `body` marks a build that can do this; the Skin Center offers the row only
+- `data-dsh-claude-style-plus-handoff` on `body` marks a build that can do this; the Skin Center offers the row only
   while it is there.
 
 ## Installation
 
-1. From the official plugin page, add the plugin below and it installs.
-
-```
-dsh-claude-style
-```
-
-2. From a terminal:
+This independent fork is based on [Nwflower/dsh-claude-style](https://github.com/Nwflower/dsh-claude-style) and is not published to npm or the DSH plugin market. Clone and build this repository:
 
 ```bash
-dsh plugin --profile web add dsh-claude-style                  # npm package (recommended)
-dsh plugin --profile web add Nwflower/dsh-claude-style         # GitHub source
+git clone https://github.com/leanderli/dsh-claude-style-plus.git
+cd dsh-claude-style-plus
+npm install
+npm run build
 ```
 
-3. From the [plugin market](https://github.com/dsh-market/dsh-market)
-
-Keep only one theme enabled at a time. dsh ≥ 0.1.7 is required, and a restart of DeepSeek Harness brings the full feature set.
+Then install this checkout directory into the target DSH profile through Plugin Manager. Plus has separate package, settings, route, and storage namespaces, so it can remain installed alongside the original bundle; enable only one theme at a time. Restart DeepSeek Harness after updating the bundle.
 
 ## Documentation
 
@@ -148,10 +138,6 @@ The pixel crab (Clawd) is a character of Anthropic, and all rights in it remain 
 
 ## Related projects
 
-> Running several themes at once? Try [dsh-skin-manager](https://github.com/xiaoyangcheng84-svg/dsh-skin-manager) — it switches between all installed themes from a single settings page.
+> Running several themes at once? Try [dsh-skin-manager](https://github.com/xiaoyangcheng84-svg/dsh-skin-manager) — it switches between installed themes from one settings page.
 
-> Want to import your Claude Code / Codex session history into DSH and keep the conversation going? Try the author's other plugin, [dsh-chat-import](https://github.com/Nwflower/dsh-chat-import).
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=Nwflower/dsh-claude-style&type=Date)](https://star-history.com/#Nwflower/dsh-claude-style&Date)
+> Want to import Claude Code / Codex session history into DSH and keep the conversation going? See the original author's other plugin, [dsh-chat-import](https://github.com/Nwflower/dsh-chat-import).

@@ -1,11 +1,12 @@
 import * as React from 'react'
-import { AUTO_POPOVER_ACCOUNT, AUTO_POPOVER_ALL, AUTO_POPOVER_OFF, BAN_LOCALE_EN, BAN_LOCALE_ZH, MOTION_FULL, MOTION_REDUCED, MOTION_SYSTEM, USERNAME_MAX } from '../../constants'
+import { AUTO_POPOVER_ACCOUNT, AUTO_POPOVER_ALL, AUTO_POPOVER_OFF, MOTION_FULL, MOTION_REDUCED, MOTION_SYSTEM, USERNAME_MAX } from '../../constants'
 import { settingsCopy } from '../../core/i18n'
 import type { SettingsTab, SettingsView } from './settings-controls'
+import { CustomAvatarSetting } from './avatar-setting'
 
 /**
- * The settings page's General tab: the username, the animation choice, the
- * hover-open popovers and the account-hold easter egg's language.
+ * The settings page's General tab: the profile avatar, username, animation
+ * choice and hover-open popovers.
  *
  * Each tab is a `{ id, label, rows(view) }` record: `rows` runs on every
  * render of the page (packages/client/src/features/settings/settings.ts) with the page's
@@ -27,12 +28,18 @@ export function createSettingsGeneralTab(): SettingsTab {
       { value: AUTO_POPOVER_ACCOUNT, label: settingsCopy('autoPopoverAccount', 'Account only') },
       { value: AUTO_POPOVER_ALL, label: settingsCopy('autoPopoverAll', 'All') },
     ]
-    const banLocaleOptions = [
-      { value: BAN_LOCALE_ZH, label: settingsCopy('banLocaleZh', '中文') },
-      { value: BAN_LOCALE_EN, label: settingsCopy('banLocaleEn', 'English') },
-    ]
     const username = view.username
     return [
+      {
+        rank: 5,
+        node: controls.row(
+          'avatar',
+          settingsCopy('avatarTitle', 'Profile photo'),
+          settingsCopy('avatarDesc', 'Shown in the lower-left account row. Drag and zoom to choose a square crop stored in this DSH web profile.'),
+          React.createElement(CustomAvatarSetting),
+          true,
+        ),
+      },
       {
         rank: 10,
         node: controls.row(
@@ -41,7 +48,7 @@ export function createSettingsGeneralTab(): SettingsTab {
           settingsCopy('usernameDesc', 'The name shown in the new-conversation greeting and the account row. Leave empty to use the signed-in account name, then the HDSL launcher name, then the local system user.'),
           React.createElement('input', {
             type: 'text',
-            className: 'dsh-claude-settings-input',
+            className: 'dsh-claude-style-plus-settings-input',
             value: username.value,
             maxLength: USERNAME_MAX,
             placeholder: settingsCopy('usernamePlaceholder', 'Auto-detect account or host user'),
@@ -69,15 +76,6 @@ export function createSettingsGeneralTab(): SettingsTab {
           settingsCopy('autoPopoverTitle', 'Open popovers on hover'),
           settingsCopy('autoPopoverDesc', 'Which popovers open on hover. "Account only" keeps it to the sidebar account popover; "All" adds the permission, model, session-stats and home-page pickers. Off leaves every popover click-to-open.'),
           controls.segment(autoPopoverOptions, prefs.autoPopover, value => { write({ autoPopover: value }) }),
-        ),
-      },
-      {
-        rank: 40,
-        node: controls.row(
-          'banLocale',
-          settingsCopy('banLocaleTitle', 'Account-hold easter egg language'),
-          settingsCopy('banLocaleDesc', 'The language of the account-hold easter egg page (open it from the account row at the top of the sidebar footer popover). It does not follow the interface language.'),
-          controls.segment(banLocaleOptions, prefs.banLocale, value => { write({ banLocale: value }) }),
         ),
       },
     ]

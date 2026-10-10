@@ -15,7 +15,6 @@ export interface CopyRule {
 export interface ModelCopyIndex {
   ui: Record<string, CopyPair>
   settings: Record<string, CopyPair>
-  ban: Record<string, CopyPair>
   fallback: string
   families: CopyRule[]
   tiers: CopyRule[]
@@ -70,11 +69,6 @@ function indexModelCopy(doc: HostAnswer): ModelCopyIndex | null {
   const index: ModelCopyIndex = {
     ui: table(doc.ui),
     settings: table(doc.settings),
-    // The account-hold easter egg's page copy rides the same document
-    // (packages/client/src/features/ban-screen/ban-screen.ts). Every block the document carries has to
-    // be listed here: this index IS what lookups read, so an unlisted block
-    // would silently fall back to the bundle's English constants.
-    ban: table(doc.ban),
     fallback: typeof doc.fallback === 'string' && doc.fallback ? doc.fallback : MODEL_COPY_FALLBACK_LOCALE,
     families: [],
     tiers: [],

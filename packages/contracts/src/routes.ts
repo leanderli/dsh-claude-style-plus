@@ -5,7 +5,7 @@
  */
 
 /** Route prefix this plugin owns. */
-export const ROUTE_PREFIX = '/dsh-claude-style'
+export const ROUTE_PREFIX = '/dsh-claude-style-plus'
 
 /** One-shot host OS user route; the browser half caches the response and never polls. */
 export const USERNAME_PATH = `${ROUTE_PREFIX}/username`
@@ -19,6 +19,9 @@ export const HDSL_PATH = `${ROUTE_PREFIX}/hdsl`
 
 /** The player's own avatar PNG, forwarded; the absolute path never leaves the host half. */
 export const HDSL_SKIN_PATH = `${ROUTE_PREFIX}/hdsl-skin.png`
+
+/** User-owned avatar bytes for this Plus package's DSH profile. */
+export const AVATAR_PATH = `${ROUTE_PREFIX}/avatar`
 
 /**
  * Session deletion. The harness gives the browser half no deletion API of its

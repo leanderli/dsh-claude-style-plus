@@ -60,7 +60,7 @@ export function createSettingsComposerTab(): SettingsTab {
           React.createElement('button', {
             type: 'button',
             ref: quickTrigger,
-            className: 'dsh-claude-settings-picker',
+            className: 'dsh-claude-style-plus-settings-picker',
             disabled: !prefs.modelPicker,
             'aria-haspopup': 'menu',
             'aria-expanded': 'false',

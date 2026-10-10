@@ -1,6 +1,6 @@
 # Style Guide · 设计令牌
 
-Design tokens for `dsh-claude-style`, recreating the Claude Code Desktop aesthetic.
+Design tokens for `dsh-claude-style-plus`, recreating the Claude Code Desktop aesthetic.
 
 ## Palette
 
@@ -59,14 +59,14 @@ keeps where it states none of its own; `—` is a token that theme leaves unset.
 | `--dsw-alias-button-info-fill` | `#d97757` | `#4d6bfe` | `#d97757` | `#4d6bfe` | host's own |  |
 | `--dsw-alias-button-info-hover` | `#c6613f` | `#3a57e8` | `#e08a6d` | `#6a84ff` | host's own |  |
 | `--dsw-alias-interactive-bg-active` | `rgba(217, 119, 87, 0.30)` | `rgba(77, 107, 254, 0.22)` | `rgba(217, 119, 87, 0.30)` | `rgba(77, 107, 254, 0.30)` | host's own |  |
-| `--dsh-claude-hover-bg` | `rgba(0, 0, 0, 0.08)` | `rgba(38, 49, 72, 0.08)` | `rgba(255, 255, 255, 0.08)` | `rgba(255, 255, 255, 0.08)` | `var(--dsw-alias-interactive-bg-hover)` | hover wash |
-| `--dsh-claude-inline-code-bg` | `rgba(0, 0, 0, 0.05)` | `rgba(38, 49, 72, 0.05)` | `rgba(255, 255, 255, 0.05)` | `rgba(255, 255, 255, 0.05)` | `var(--dsw-alias-markdown-inline-code)` | inline code fill |
-| `--dsh-claude-inline-code-fg` | `#943333` | `var(--dsw-alias-label-primary)` | `#e8a08a` | `var(--dsw-alias-label-primary)` | `var(--dsw-alias-label-primary)` | inline code ink |
-| `--dsh-claude-link` | `#184f95` | `#3b56d9` | `#8ab4f8` | `#8fa4ff` | `var(--dsw-alias-link)` | markdown links |
-| `--dsh-claude-link-underline` | `rgba(24, 79, 149, 0.6)` | `rgba(59, 86, 217, 0.6)` | `rgba(138, 180, 248, 0.6)` | `rgba(143, 164, 255, 0.6)` | `color-mix(in srgb, var(--dsw-alias-link) 60%, transparent)` | markdown link underline |
+| `--dsh-claude-style-plus-hover-bg` | `rgba(0, 0, 0, 0.08)` | `rgba(38, 49, 72, 0.08)` | `rgba(255, 255, 255, 0.08)` | `rgba(255, 255, 255, 0.08)` | `var(--dsw-alias-interactive-bg-hover)` | hover wash |
+| `--dsh-claude-style-plus-inline-code-bg` | `rgba(0, 0, 0, 0.05)` | `rgba(38, 49, 72, 0.05)` | `rgba(255, 255, 255, 0.05)` | `rgba(255, 255, 255, 0.05)` | `var(--dsw-alias-markdown-inline-code)` | inline code fill |
+| `--dsh-claude-style-plus-inline-code-fg` | `#943333` | `var(--dsw-alias-label-primary)` | `#e8a08a` | `var(--dsw-alias-label-primary)` | `var(--dsw-alias-label-primary)` | inline code ink |
+| `--dsh-claude-style-plus-link` | `#184f95` | `#3b56d9` | `#8ab4f8` | `#8fa4ff` | `var(--dsw-alias-link)` | markdown links |
+| `--dsh-claude-style-plus-link-underline` | `rgba(24, 79, 149, 0.6)` | `rgba(59, 86, 217, 0.6)` | `rgba(138, 180, 248, 0.6)` | `rgba(143, 164, 255, 0.6)` | `color-mix(in srgb, var(--dsw-alias-link) 60%, transparent)` | markdown link underline |
 | `--dsw-alias-markdown-code-block` | `#ffffff` | `#ffffff` | `#1c1b1a` | `#1a1e27` | host's own |  |
 | `--dsw-alias-markdown-code-block-banner` | `#ffffff` | `#ffffff` | `#242320` | `#212631` | host's own |  |
-| `--dsw-alias-interactive-bg-hover` | `var(--dsh-claude-hover-bg)` | `var(--dsh-claude-hover-bg)` | `var(--dsh-claude-hover-bg)` | `var(--dsh-claude-hover-bg)` | host's own |  |
+| `--dsw-alias-interactive-bg-hover` | `var(--dsh-claude-style-plus-hover-bg)` | `var(--dsh-claude-style-plus-hover-bg)` | `var(--dsh-claude-style-plus-hover-bg)` | `var(--dsh-claude-style-plus-hover-bg)` | host's own |  |
 | `--dsw-alias-interactive-bg-hover-solid` | `#f0efe9` | `#eef3fc` | `#2e2c29` | `#2a303c` | host's own | the host's solid hover chip |
 | `--dsw-alias-label-primary` | `#141413` | `#0f1115` | `#faf9f5` | `#eef1f8` | host's own |  |
 | `--dsw-alias-label-primary-bluish` | `#141413` | `#0f1115` | `#faf9f5` | `#eef1f8` | host's own |  |
@@ -81,24 +81,24 @@ keeps where it states none of its own; `—` is a token that theme leaves unset.
 | `--dsw-specific-selector` | `#fbfbf9` | `#f7f9ff` | `#2e2c29` | `#2a303c` | host's own |  |
 | `--dsw-specific-sidebar-fill` | `#fbfbf9` | `#f7f9ff` | `#141413` | `#13161d` | host's own |  |
 | `--dsw-alias-brand-primary-new-colorprimary-new-color` | `#d97757` | `#4d6bfe` | `#d97757` | `#4d6bfe` | host's own |  |
-| `--dsh-claude-canvas` | `#fcfcfb` | `#fafbff` | `#141413` | `#13161d` | `var(--dsw-alias-bg-base)` | the page canvas, the search box |
-| `--dsh-claude-sidebar-canvas` | `#fbfbf9` | `#f7f9ff` | `#141413` | `#13161d` | `var(--dsw-specific-sidebar-fill)` | the sidebar |
-| `--dsh-claude-raised` | — | — | `#1e1e1d` | `#1b1f28` | `var(--dsw-alias-bg-overlay)` | popovers and menus raised above the dark canvas |
-| `--dsh-claude-card` | `#fcfcfb` | `#fafbff` | `#1e1e1d` | `#1b1f28` | `var(--dsw-alias-bg-overlay)` | cards on the canvas in light and raised in dark: the account popover, the search palette |
-| `--dsh-claude-inverse-fill` | `#141413` | `#141413` | `#faf9f5` | `#faf9f5` | `var(--dsw-alias-interactive-bg-hover)` | the model picker's group label fill: an inverted chip under Claude, a hover-plate chip under the host |
-| `--dsh-claude-inverse-ink` | `#faf9f5` | `#faf9f5` | `#141413` | `#141413` | `var(--dsw-alias-label-primary)` | the model picker's group label ink |
-| `--dsh-claude-ink-strong` | — | — | `#f5f4ef` | `#e9edf6` | `var(--dsw-alias-label-primary)` | active row ink |
-| `--dsh-claude-session-ink` | — | — | `#8c8983` | `#8a91a0` | `var(--dsw-alias-label-secondary)` | session title at rest |
-| `--dsh-claude-table-head` | `#f0f0ef` | `#eff3fb` | `#242320` | `#212631` | `var(--dsw-alias-bg-layer-2)` | table header row |
-| `--dsh-claude-scrollbar` | `rgba(208, 205, 193, 0.9)` | `rgba(206, 216, 233, 0.9)` | `rgba(58, 56, 51, 0.9)` | `rgba(54, 61, 75, 0.9)` | `var(--dsw-alias-border-l2)` | scrollbar thumb |
-| `--dsh-claude-scrollbar-hover` | `rgba(143, 138, 126, 0.8)` | `rgba(129, 133, 140, 0.8)` | `rgba(107, 106, 101, 0.9)` | `rgba(104, 112, 128, 0.9)` | `var(--dsw-alias-label-caption)` | scrollbar thumb under the pointer |
-| `--dsh-claude-link-hover` | `#a94f2f` | `#2c43b8` | `#f0a488` | `#b0c0ff` | `var(--dsw-alias-link)` | text link under the pointer |
-| `--dsh-claude-logo-ink` | `#141413` | `#4d6bfe` | `#faf9f5` | `#4d6bfe` | `var(--dsw-alias-label-primary)` | sidebar brand art: the whale and the wordmark |
+| `--dsh-claude-style-plus-canvas` | `#fcfcfb` | `#fafbff` | `#141413` | `#13161d` | `var(--dsw-alias-bg-base)` | the page canvas, the search box |
+| `--dsh-claude-style-plus-sidebar-canvas` | `#fbfbf9` | `#f7f9ff` | `#141413` | `#13161d` | `var(--dsw-specific-sidebar-fill)` | the sidebar |
+| `--dsh-claude-style-plus-raised` | — | — | `#1e1e1d` | `#1b1f28` | `var(--dsw-alias-bg-overlay)` | popovers and menus raised above the dark canvas |
+| `--dsh-claude-style-plus-card` | `#fcfcfb` | `#fafbff` | `#1e1e1d` | `#1b1f28` | `var(--dsw-alias-bg-overlay)` | cards on the canvas in light and raised in dark: the account popover, the search palette |
+| `--dsh-claude-style-plus-inverse-fill` | `#141413` | `#141413` | `#faf9f5` | `#faf9f5` | `var(--dsw-alias-interactive-bg-hover)` | the model picker's group label fill: an inverted chip under Claude, a hover-plate chip under the host |
+| `--dsh-claude-style-plus-inverse-ink` | `#faf9f5` | `#faf9f5` | `#141413` | `#141413` | `var(--dsw-alias-label-primary)` | the model picker's group label ink |
+| `--dsh-claude-style-plus-ink-strong` | — | — | `#f5f4ef` | `#e9edf6` | `var(--dsw-alias-label-primary)` | active row ink |
+| `--dsh-claude-style-plus-session-ink` | — | — | `#8c8983` | `#8a91a0` | `var(--dsw-alias-label-secondary)` | session title at rest |
+| `--dsh-claude-style-plus-table-head` | `#f0f0ef` | `#eff3fb` | `#242320` | `#212631` | `var(--dsw-alias-bg-layer-2)` | table header row |
+| `--dsh-claude-style-plus-scrollbar` | `rgba(208, 205, 193, 0.9)` | `rgba(206, 216, 233, 0.9)` | `rgba(58, 56, 51, 0.9)` | `rgba(54, 61, 75, 0.9)` | `var(--dsw-alias-border-l2)` | scrollbar thumb |
+| `--dsh-claude-style-plus-scrollbar-hover` | `rgba(143, 138, 126, 0.8)` | `rgba(129, 133, 140, 0.8)` | `rgba(107, 106, 101, 0.9)` | `rgba(104, 112, 128, 0.9)` | `var(--dsw-alias-label-caption)` | scrollbar thumb under the pointer |
+| `--dsh-claude-style-plus-link-hover` | `#a94f2f` | `#2c43b8` | `#f0a488` | `#b0c0ff` | `var(--dsw-alias-link)` | text link under the pointer |
+| `--dsh-claude-style-plus-logo-ink` | `#141413` | `#4d6bfe` | `#faf9f5` | `#4d6bfe` | `var(--dsw-alias-label-primary)` | sidebar brand art: the whale and the wordmark |
 | `--dsw-specific-menu` | `#ffffff` | `#ffffff` | — | — | host's own |  |
-| `--dsw-specific-bubble` | `var(--dsh-claude-hover-bg)` | `#eaf0fe` | — | `#232a3a` | host's own | user message bubble |
-| `--dsh-claude-chip` | `#f6f6f4` | `#f2f6fd` | — | — | `var(--dsw-specific-selector)` | segmented control and switch at rest |
-| `--dsh-claude-meter-peak` | `#a4621d` | `#9a5a1a` | `#e2a45f` | `#e5ae67` | `var(--dsw-alias-state-warn-label)` | the peak rate badge: the expensive end of a provider's own billing clock |
-| `--dsh-claude-meter-valley` | `#3d7550` | `#2e7554` | `#8cbf96` | `#7cc2a0` | `var(--dsw-alias-state-success-primary)` | the off-peak rate badge, and the dated promotions priced below it |
+| `--dsw-specific-bubble` | `var(--dsh-claude-style-plus-hover-bg)` | `#eaf0fe` | — | `#232a3a` | host's own | user message bubble |
+| `--dsh-claude-style-plus-chip` | `#f6f6f4` | `#f2f6fd` | — | — | `var(--dsw-specific-selector)` | segmented control and switch at rest |
+| `--dsh-claude-style-plus-meter-peak` | `#a4621d` | `#9a5a1a` | `#e2a45f` | `#e5ae67` | `var(--dsw-alias-state-warn-label)` | the peak rate badge: the expensive end of a provider's own billing clock |
+| `--dsh-claude-style-plus-meter-valley` | `#3d7550` | `#2e7554` | `#8cbf96` | `#7cc2a0` | `var(--dsw-alias-state-success-primary)` | the off-peak rate badge, and the dated promotions priced below it |
 <!-- /generated:tokens -->
 
 **Host token bindings.** The skin supplies its palette through the host's own
@@ -117,8 +117,8 @@ light, a raised gray in dark).
 
 The Colours and Typefaces rows each choose who paints: **Claude** (the default)
 or **Follow the host**. Every rule that writes a host token carries the Claude
-gate in its selector — `[data-dsh-claude-palette="claude"]` for colours,
-`[data-dsh-claude-typeface="claude"]` for `--dsw-font-*` — and so does every
+gate in its selector — `[data-dsh-claude-style-plus-palette="claude"]` for colours,
+`[data-dsh-claude-style-plus-typeface="claude"]` for `--dsw-font-*` — and so does every
 rule that paints the skin's canvas onto the host's frame (`<html>`, `<body>`,
 `#root`, the sidebar and conversation
 columns); the build refuses an ungated one. Under "follow the host" those rules
@@ -135,20 +135,16 @@ clears the canvas still gives its overlays a readable fill, and the shared
 popover card blurs what lies behind it (`blur(16px) saturate(1.4)`).
 
 Under the host typeface the skin's own faces fall back to the host's:
-`--dsh-claude-font-serif`, `-prose` and `-brand` to `--dsw-font-family` (the host
-carries no serif), `--dsh-claude-font-code` to `--ds-font-family-code`.
+`--dsh-claude-style-plus-font-serif`, `-prose` and `-brand` to `--dsw-font-family` (the host
+carries no serif), `--dsh-claude-style-plus-font-code` to `--ds-font-family-code`.
 
-Two colours stay whoever paints: the reasoning slider's violet top rung
-(`--dsh-claude-apex*`) and the account-hold page, which reproduces a Claude
-screen. Translucent neutral hover tints and the usage panel's data colours stay
-literal; they read on any canvas. Every other colour that paints a surface, a
-text, a border or an accent reads a token.
+The reasoning slider's violet top rung (`--dsh-claude-style-plus-apex*`) is a status signal, so it remains distinct from the theme accent. Translucent neutral hover tints and the usage panel's data colours stay literal; they read on any canvas. Every other colour that paints a surface, a text, a border or an accent reads a token.
 
 ## Windows titlebar · 桌面顶栏
 
 On the Windows desktop the 40px caption row has no colour of its own: the
 sidebar and the conversation run to the window's top edge, each in its own
-fill (`--dsh-claude-sidebar-canvas`, `--dsh-claude-canvas`), and the sidebar's
+fill (`--dsh-claude-style-plus-sidebar-canvas`, `--dsh-claude-style-plus-canvas`), and the sidebar's
 1px `--dsw-alias-border-l1` hairline runs with them from the top edge to the
 bottom. The conversation column and the fullscreen file panel lose the host's
 16px top-left corner, so the hairline meets them straight. The three window
@@ -183,9 +179,9 @@ and scrolls to its end.
 
 ## Typography
 
-- **Serif display** — headings / editorial statements (`--dsh-claude-font-serif`).
+- **Serif display** — headings / editorial statements (`--dsh-claude-style-plus-font-serif`).
 - **Sans UI** — chrome, body (`--dsw-font-family`).
-- **Mono** — code, technical labels (`--dsh-claude-font-code`).
+- **Mono** — code, technical labels (`--dsh-claude-style-plus-font-code`).
 
 
 ## Shapes
@@ -301,7 +297,7 @@ the shell itself. What it carries is described under "Context popover" below.
 | padding | `2px 7px` |
 | radius | 6px |
 | text | 13px / 20px, `var(--dsw-alias-label-primary)` |
-| hover | `var(--dsh-claude-hover-bg, rgba(0, 0, 0, .08))` |
+| hover | `var(--dsh-claude-style-plus-hover-bg, rgba(0, 0, 0, .08))` |
 | icon | 16px, `var(--dsw-alias-label-secondary)` |
 | two-line row | name 13px / 16px at 500; description 11px / 14px in `label-tertiary` |
 | current row | trailing `IconCheckOutline16` in `var(--dsw-alias-brand-primary)` — the accent is what marks the choice |
@@ -326,7 +322,7 @@ never the bare local name.
 
 The hero row's two pickers are that primitive, portaled to `<body>` with no
 marker of their own. `packages/client/src/features/hero-menu/hero-menu.ts` stamps the open card with
-`data-dsh-claude-hero-menu` and `features/hero-menu/hero-menu.css` restyles it; the
+`data-dsh-claude-style-plus-hero-menu` and `features/hero-menu/hero-menu.css` restyles it; the
 host's other menus (sidebar row menus, the settings permission row, submenus)
 keep the host's own design on purpose. What that replaces: a 20px radius card
 with 4px padding, 40px rows at 10px radius, and 14px text.
@@ -345,7 +341,7 @@ list changed. Nothing may be painted in between: the card would fade in at the
 height and the place it is about to leave — low, then jumping up mid-fade. So
 while the account row is armed the card stays unpainted (the same armed window
 that carries its one-shot entrance), and the feature stamps
-`data-dsh-claude-account-ready` once the skin's rows are inside it and its
+`data-dsh-claude-style-plus-account-ready` once the skin's rows are inside it and its
 placement has been read twice with the same value. The entrance animation hangs
 on that stamp, so it plays on the card the reader will actually see.
 
@@ -367,7 +363,7 @@ leaves the panel against the window's right margin instead of under the ring.
 `features/context-stats/stats-binding.ts` reads the meter's right edge and the
 panel's own layout width — `offsetWidth`, not its rect: the entrance scales the
 box, and a transformed rect is two per cent narrower than the one that settles —
-and writes `--dsh-claude-context-panel-left` with the mark that turns it on;
+and writes `--dsh-claude-style-plus-context-panel-left` with the mark that turns it on;
 `features/composer/inline-bar.css` reads it with `!important`, which outranks the
 host's inline value. The reading is re-taken when the panel's box changes (a size
 subscription on the observation bus) and when the viewport moves (`reposition('viewport')`).
@@ -416,25 +412,13 @@ upward by the same 6px air, flipping below only when the viewport leaves no room
 above, and clamped to the 8px viewport margin (`POPOVER_MARGIN`). The host
 re-runs its own placement from its anchor geometry on every frame while the card
 is open, so the position is handed over in two custom properties on the card
-(`--dsh-claude-hero-menu-x` / `--dsh-claude-hero-menu-y`, written by the same
+(`--dsh-claude-style-plus-hero-menu-x` / `--dsh-claude-style-plus-hero-menu-y`, written by the same
 pass that stamps it) which `features/hero-menu/hero-menu.css` reads with
 `!important`; that declaration outranks the host's plain inline value.
 
 ## Search · 搜索
 
-**Sidebar box.** The box takes the brand's place in the logo row while the
-pointer is over the sidebar: 32px tall, 8px radius, a 1px `#E8E6DC` hairline on
-the ivory canvas fill (dark: `#2E2C29` on `#1E1E1D`), a 16px search glyph in the
-secondary label, the "Search" label in the tertiary label at 14px, and the
-host's search shortcut as 20px keycaps at the right end. It is a button like
-the New session and Plugins rows below it: the pointer cursor, and on hover the
-same plate those rows take (`--dsh-claude-hover-bg`, dark `rgba(255, 255, 255,
-0.08)`) laid over its opaque fill. Box and brand share one grid cell and
-cross-fade over 0.16s, the timing the workspace heading and its segmented
-control trade places with; the box is excluded from the window drag region. In
-the desktop titlebar mode the brand row rises 10px, since the sidebar column
-starts under the 40px titlebar — as far as it goes with the box still wholly
-below that edge, which clips the column.
+**Sidebar action.** Search is a persistent 28px row directly below New Session, using the same borderless transparent surface, 6px radius, 8px horizontal padding, 13px medium label and 6px row gap. A 20px light-gray circular badge holds a 14px dark magnifier; the adjacent action label reads “搜索会话” / “Search sessions”. There is no outlined field or keycap group. Hover only paints the row, the brand remains unchanged, and Ctrl+K still opens the same palette. In the collapsed rail it becomes a centered 32px icon button with the accessible Search name retained and the label hidden.
 
 **Palette.** A modal card set 8vh from the top, 760px wide at most, 16px radius,
 on the same ivory fill (dark `#1E1E1D`) under the host's mask. From the top: a
@@ -470,7 +454,7 @@ control.
 ## Home layouts · 首页版面
 
 The new-conversation page has two arrangements. `homeLayout` (settings: Home
-layout) writes `data-dsh-claude-home-layout` onto `<body>` and
+layout) writes `data-dsh-claude-style-plus-home-layout` onto `<body>` and
 `packages/client/src/features/home/home-panel.css` branches on it. Both are the host's own
 hero markup — the greeting, the workspace row, the dock and the composer card
 inside `…_composerStack …_composerHero` — so only the arrangement differs.
@@ -486,7 +470,7 @@ inside `…_composerStack …_composerHero` — so only the arrangement differs.
 The studio composer is stamped `data-composer-variant="inline"` (composer.ts's
 pass reads the same preference), so the home card is drawn by the conversation's
 single-line stylesheet. The classic tray rules in `features/composer/card.css` are scoped
-away from studio with `:not([data-dsh-claude-home-layout="studio"])`. That is
+away from studio with `:not([data-dsh-claude-style-plus-home-layout="studio"])`. That is
 deliberate: they set `order: 1` / `order: 2` on the same boxes, and a competing
 rule would have to be out-specified rather than merely reordered — scoping them
 removes the contest.
@@ -497,7 +481,7 @@ and it renders only in the hero phase — the host mounts that same seat inside 
 conversation, where the todo, queue and goal bars hang on it. The seat is scoped
 to a session, so the cold start screen (no session yet, the card waiting for a
 workspace) has none; there the skin mounts the same component on a
-`display: contents` element of its own (`.dsh-claude-home-seat`) and drops it
+`display: contents` element of its own (`.dsh-claude-style-plus-home-seat`) and drops it
 once the host's dock arrives. A window too short for the whole panel shrinks the
 panel, never the page: the greeting keeps the top edge, the chips and the card
 keep the bottom, and the panel scrolls between them with a 32px fade over its
@@ -653,7 +637,7 @@ plays its reaction.
 
 ## Implementation notes
 
-- Every rule is scoped under `body[data-dsh-claude-style]`.
+- Every rule is scoped under `body[data-dsh-claude-style-plus]`.
 - Dark tokens are the base; light overrides use `:not([data-ds-dark-theme])`.
 - A surface's stylesheet sits beside its feature under `packages/client/src/features/<feature>/`;
   the look no single feature owns is in `packages/client/src/theme/`, and the parts several

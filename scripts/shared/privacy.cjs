@@ -34,7 +34,7 @@ const BALANCE_RE_SOURCE = '\u00a5\\s?[0-9][0-9.,]*'
 /**
  * Replace sidebar titles with stand-ins; swap the username nodes for static
  * ones under a different class — the theme's footer sync re-writes any node
- * still carrying `.dsh-claude-account-user` with the inferred real name, so
+ * still carrying `.dsh-claude-style-plus-account-user` with the inferred real name, so
  * the stand-in must be invisible to that query. The name the account row
  * shows is replaced everywhere else too (the studio greeting says it).
  *
@@ -61,28 +61,28 @@ const SANITIZE_JS = `(() => {
   let swapped = 0
   swapped += swap([...document.querySelectorAll('[class*="projectRow"] [class*="projectText"]')], ${JSON.stringify(PROJECT_NAMES)})
   swapped += swap([...document.querySelectorAll('[class*="sessionRow"] [class*="title"]')], ${JSON.stringify(SESSION_NAMES)})
-  const shown = ((document.querySelector('.dsh-claude-account-user') || {}).textContent || '').trim()
+  const shown = ((document.querySelector('.dsh-claude-style-plus-account-user') || {}).textContent || '').trim()
   if (shown.length >= 2 && shown !== ${JSON.stringify(USERNAME)}) {
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT)
     while (walker.nextNode()) {
       const node = walker.currentNode
-      if ((node.nodeValue || '').includes(shown) && !node.parentElement.closest('.dsh-claude-account-user')) {
+      if ((node.nodeValue || '').includes(shown) && !node.parentElement.closest('.dsh-claude-style-plus-account-user')) {
         node.nodeValue = node.nodeValue.split(shown).join(${JSON.stringify(USERNAME)})
         swapped++
       }
     }
   }
-  document.querySelectorAll('.dsh-claude-account-user').forEach((el) => {
+  document.querySelectorAll('.dsh-claude-style-plus-account-user').forEach((el) => {
     const rep = document.createElement('span')
-    rep.className = 'dsh-claude-account-you'
+    rep.className = 'dsh-claude-style-plus-account-you'
     rep.style.cssText = 'font-weight:500;color:var(--dsw-alias-label-primary);'
     rep.textContent = ${JSON.stringify(USERNAME)}
     el.replaceWith(rep)
     swapped++
   })
-  document.querySelectorAll('.dsh-claude-account-popover-name').forEach((el) => {
+  document.querySelectorAll('.dsh-claude-style-plus-account-popover-name').forEach((el) => {
     const rep = document.createElement('div')
-    rep.className = 'dsh-claude-account-popover-name-static'
+    rep.className = 'dsh-claude-style-plus-account-popover-name-static'
     rep.style.cssText = 'font-size:14px;font-weight:600;line-height:18px;color:var(--dsw-alias-label-primary);'
     rep.textContent = ${JSON.stringify(USERNAME)}
     el.replaceWith(rep)

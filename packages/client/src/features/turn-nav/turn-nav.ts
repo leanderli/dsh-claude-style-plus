@@ -4,7 +4,7 @@ import { conversationSessionId, findConversationSession } from '../../core/host'
 import { motionReduced } from '../../core/prefs'
 import { createTurnNavHost } from './turn-nav-host'
 import type { TurnItem } from './turn-nav-host'
-import { CHAT_TURN_ATTRIBUTE, FOREGROUND_SELECTOR, PEER_SHEET_SELECTOR, TURN_RAIL_CURRENT_SELECTOR } from '@dsh-claude-style/contracts/dom'
+import { CHAT_TURN_ATTRIBUTE, FOREGROUND_SELECTOR, PEER_SHEET_SELECTOR, TURN_RAIL_CURRENT_SELECTOR } from '@dsh-claude-style-plus/contracts/dom'
 import { buildElement, closestFrom } from '../../shared/dom'
 import { POPOVER_CLOSE_DELAY, closeOtherPopovers, createHoverIntent, registerPopover, unregisterPopover } from '../../shared/popover'
 import { easeScrollFor, holdReader, scrollPositionFor, writeScroll } from '../../shared/scroll-owner'
@@ -44,11 +44,11 @@ import type manifest from './turn-nav.manifest'
  */
 export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
   /** On the host's rail while the skin's rail stands in for it: the stylesheet hides it, keeping its layout. */
-  const TURN_NAV_REPLACED_ATTR = 'data-dsh-claude-turn-nav-replaced'
+  const TURN_NAV_REPLACED_ATTR = 'data-dsh-claude-style-plus-turn-nav-replaced'
   /** On the skin's rail while the card is open over it: its marks step back. */
-  const TURN_NAV_OPEN_ATTR = 'data-dsh-claude-turn-nav-open'
+  const TURN_NAV_OPEN_ATTR = 'data-dsh-claude-style-plus-turn-nav-open'
   /** On the first row of the turn a jump landed on, while its line shows. */
-  const TURN_NAV_LANDED_ATTR = 'data-dsh-claude-turn-nav-landed'
+  const TURN_NAV_LANDED_ATTR = 'data-dsh-claude-style-plus-turn-nav-landed'
   /** The card's name in the popover registry (D16). */
   const TURN_NAV_POPOVER = 'turnNav'
   /** One turn's height on the rail and in the card: the two have to match for a row to sit on its mark. */
@@ -105,11 +105,11 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
   /** @returns the skin's rail, built the first time. */
   function ensureRail() {
     if (rail !== null) return rail
-    const built = buildElement('div', 'dsh-claude-turn-rail')
+    const built = buildElement('div', 'dsh-claude-style-plus-turn-rail')
     built.setAttribute('aria-hidden', 'true')
     // The marks change with the reading position; none of that is news to a pass.
     built.setAttribute(QUIET_ATTR, '')
-    track = buildElement('div', 'dsh-claude-turn-rail-track')
+    track = buildElement('div', 'dsh-claude-style-plus-turn-rail-track')
     built.appendChild(track)
     built.addEventListener('pointerenter', openCard)
     rail = built
@@ -148,14 +148,14 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     drawnItems = items
     const marks = document.createDocumentFragment()
     for (let i = 0; i < items.length; i++) {
-      const mark = buildElement('span', 'dsh-claude-turn-rail-mark')
+      const mark = buildElement('span', 'dsh-claude-style-plus-turn-rail-mark')
       mark.style.top = `${i * TURN_NAV_PITCH}px`
       if (!items[i].loaded) mark.setAttribute('data-unloaded', '')
       marks.appendChild(mark)
     }
     track!.replaceChildren(marks)
     track!.style.height = `${items.length * TURN_NAV_PITCH}px`
-    rail!.style.setProperty('--dsh-claude-turn-rail-height', `${items.length * TURN_NAV_PITCH}px`)
+    rail!.style.setProperty('--dsh-claude-style-plus-turn-rail-height', `${items.length * TURN_NAV_PITCH}px`)
     current = -1
     currentMark = null
   }
@@ -223,23 +223,23 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
 
   /** The rail, while a host rail it stands beside is found (the card opens from it). */
   function mountedRail() {
-    if (rail === null) throw new Error('dsh-claude-style: the turn rail is not built')
+    if (rail === null) throw new Error('dsh-claude-style-plus: the turn rail is not built')
     return rail
   }
 
   /** The card, once ensureCard built it. */
   function builtCard() {
-    if (card === null) throw new Error('dsh-claude-style: the turn card is not built')
+    if (card === null) throw new Error('dsh-claude-style-plus: the turn card is not built')
     return card
   }
 
   function ensureCard() {
     if (card !== null) return
-    const built = buildElement('div', 'dsh-claude-popover-card dsh-claude-turn-nav')
+    const built = buildElement('div', 'dsh-claude-style-plus-popover-card dsh-claude-style-plus-turn-nav')
     built.setAttribute('data-open', 'false')
     // Rows are rebuilt while the card is open; none of that is news to a pass.
     built.setAttribute(QUIET_ATTR, '')
-    const rows = buildElement('div', 'dsh-claude-turn-nav-list')
+    const rows = buildElement('div', 'dsh-claude-style-plus-turn-nav-list')
     built.appendChild(rows)
     built.addEventListener('mouseenter', () => { hoverIntent.cancel() })
     built.addEventListener('mouseleave', () => { hoverIntent.scheduleClose() })
@@ -260,14 +260,14 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     const rows = document.createDocumentFragment()
     for (let i = 0; i < items.length; i++) {
       const item = items[i]
-      const row = buildElement('button', 'dsh-claude-turn-nav-row')
+      const row = buildElement('button', 'dsh-claude-style-plus-turn-nav-row')
       row.type = 'button'
       row.dataset.index = String(i)
       row.setAttribute('aria-label', chat('chat.turnNavigation.jump', { turn: item.turn }))
       if (!item.loaded) row.setAttribute('data-unloaded', '')
       if (i === current) row.setAttribute('data-current', '')
-      row.appendChild(buildElement('span', 'dsh-claude-turn-nav-text', item.prompt !== '' ? item.prompt : chat('chat.turnNavigation.turn', { turn: item.turn })))
-      row.appendChild(buildElement('span', 'dsh-claude-turn-nav-dash'))
+      row.appendChild(buildElement('span', 'dsh-claude-style-plus-turn-nav-text', item.prompt !== '' ? item.prompt : chat('chat.turnNavigation.turn', { turn: item.turn })))
+      row.appendChild(buildElement('span', 'dsh-claude-style-plus-turn-nav-dash'))
       rows.appendChild(row)
     }
     list.replaceChildren(rows)
@@ -289,7 +289,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     // Only while the card is open: the rail is mounted in its slot and the card is built.
     const rail = mountedRail()
     const card = builtCard()
-    const list = card.querySelector<HTMLElement>(':scope > .dsh-claude-turn-nav-list')!
+    const list = card.querySelector<HTMLElement>(':scope > .dsh-claude-style-plus-turn-nav-list')!
     const slot = rail.parentElement!
     if (card.parentElement !== slot) slot.appendChild(card)
     const frame = slot.getBoundingClientRect()
@@ -336,7 +336,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
   const hoverIntent = createHoverIntent(openCard, closeCard, 0, POPOVER_CLOSE_DELAY)
 
   function onRowClick(event: MouseEvent) {
-    const row = closestFrom(event.target, '.dsh-claude-turn-nav-row')
+    const row = closestFrom(event.target, '.dsh-claude-style-plus-turn-nav-row')
     if (row === null || rowItems === null) return
     const item = rowItems[Number(row.dataset.index)]
     if (item !== undefined) jumpTo(item.turn)

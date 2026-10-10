@@ -2,7 +2,6 @@ import { MODEL_COPY_FALLBACK_LOCALE } from '../features/model/copy-fallbacks'
 import { hostCtx } from './host'
 import type { HostContext } from './host'
 import { modelCopy } from './model-copy'
-import { readPrefs } from './prefs'
 
 /** Values for a copy string's `{name}` slots. */
 export type CopyParams = Record<string, string | number>
@@ -55,22 +54,5 @@ export function copyLabel(key: string, fallback: string, params?: CopyParams) {
  */
 export function settingsCopy(key: string, fallback: string, params?: CopyParams) {
   const text = modelCopy === null || !modelCopy.settings ? '' : localized(modelCopy.settings[key])
-  return fillTemplate(text || fallback, params)
-}
-
-/**
- * One account-hold easter-egg string, in the language the `banLocale`
- * preference names — NOT the shell's language. The page reproduces a real
- * Claude screen, so it is read in the language Claude wrote it in whatever
- * the rest of the UI is set to; `localized` is bypassed on purpose rather
- * than fed a fake locale, so a missing translation still falls through the
- * document's own fallback locale.
- */
-export function banCopy(key: string, fallback: string, params?: CopyParams) {
-  const pair = modelCopy === null || !modelCopy.ban ? null : modelCopy.ban[key]
-  const want = readPrefs().banLocale
-  const wanted = pair && typeof pair === 'object' ? pair[want] : undefined
-  let text = typeof wanted === 'string' ? wanted : ''
-  if (!text) text = localized(pair)
   return fillTemplate(text || fallback, params)
 }

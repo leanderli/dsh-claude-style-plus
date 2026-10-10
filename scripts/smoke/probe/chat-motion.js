@@ -30,7 +30,7 @@
         await sleep(50)
       }
       r.chatFollow = {
-        marked: document.body.hasAttribute('data-dsh-claude-chat-follow'),
+        marked: document.body.hasAttribute('data-dsh-claude-style-plus-chat-follow'),
         overflowX: cappedBody === null ? null : getComputedStyle(cappedBody).overflowX,
         expandedOverflowX: expandedBody === null ? null : getComputedStyle(expandedBody).overflowX,
       }
@@ -91,10 +91,10 @@
       await sleep(30)
       r.chatFollow.glideEarly = endGap()
       r.chatFollow.glideDiag = {
-        motion: document.body.getAttribute('data-dsh-claude-motion'),
+        motion: document.body.getAttribute('data-dsh-claude-style-plus-motion'),
         streamMark: document.querySelector('[data-streaming]') !== null,
-        rolling: document.querySelector('[data-dsh-claude-rolling]') !== null,
-        buttonMarked: document.querySelector('[data-dsh-claude-stream-glide]') !== null,
+        rolling: document.querySelector('[data-dsh-claude-style-plus-rolling]') !== null,
+        buttonMarked: document.querySelector('[data-dsh-claude-style-plus-stream-glide]') !== null,
         followAttr: document.querySelector('[data-chat-following-tail]') !== null,
       }
       await sleep(120)
@@ -103,7 +103,7 @@
       r.chatFollow.glideDone = endGap()
       // The host's own button is kept out of sight while the glide follows: a
       // position held off the end reads to the host as a reader who left.
-      r.chatFollow.glideButtonMarked = document.querySelector('[data-dsh-claude-stream-glide]') !== null
+      r.chatFollow.glideButtonMarked = document.querySelector('[data-dsh-claude-style-plus-stream-glide]') !== null
       // A message the reader has just sent is not streaming content: the host's
       // jump to it stands, and the glide stands down around it. The streaming
       // mark is still on the page here, so without the stand-down the glide
@@ -125,7 +125,7 @@
       await sleep(120)
       followScroller.scrollTop = followScroller.scrollHeight
       await sleep(200)
-      r.chatFollow.glideButtonBack = document.querySelector('[data-dsh-claude-stream-glide]') === null
+      r.chatFollow.glideButtonBack = document.querySelector('[data-dsh-claude-style-plus-stream-glide]') === null
     })
     // The ported caret motion (packages/client/src/features/caret/): the focused composer
     // surface gets a drawn caret and the native one gives way; switching the
@@ -133,12 +133,12 @@
     await probe.onlyFor(['caret'], async function () {
       var caretEditor = document.querySelector('[data-composer-input]')
       var caretOf = function () {
-        var layer = document.querySelector('[data-dsh-claude-caret-layer]')
+        var layer = document.querySelector('[data-dsh-claude-style-plus-caret-layer]')
         return {
           layer: layer !== null,
-          visible: layer !== null && layer.hasAttribute('data-dsh-claude-caret-visible'),
+          visible: layer !== null && layer.hasAttribute('data-dsh-claude-style-plus-caret-visible'),
           transform: layer === null ? null : layer.style.transform,
-          marked: caretEditor.hasAttribute('data-dsh-claude-caret'),
+          marked: caretEditor.hasAttribute('data-dsh-claude-style-plus-caret'),
           nativeHidden: getComputedStyle(caretEditor).caretColor === 'rgba(0, 0, 0, 0)',
         }
       }
@@ -167,11 +167,11 @@
         answer.selectionEnd = answer.value.length
         document.dispatchEvent(new Event('selectionchange'))
         await sleep(250)
-        var answerLayer = answer.parentElement.querySelector('[data-dsh-claude-caret-layer]')
+        var answerLayer = answer.parentElement.querySelector('[data-dsh-claude-style-plus-caret-layer]')
         r.caret.plain = {
           layer: answerLayer !== null,
-          marked: answer.hasAttribute('data-dsh-claude-caret'),
-          visible: answerLayer !== null && answerLayer.hasAttribute('data-dsh-claude-caret-visible'),
+          marked: answer.hasAttribute('data-dsh-claude-style-plus-caret'),
+          visible: answerLayer !== null && answerLayer.hasAttribute('data-dsh-claude-style-plus-caret-visible'),
           nativeHidden: getComputedStyle(answer).caretColor === 'rgba(0, 0, 0, 0)',
         }
         caretSelect()
@@ -187,7 +187,7 @@
       // rule (caret.css), which is what D26's resolved attribute is for.
       window.__pushForm({ motion: 'reduced' })
       await sleep(250)
-      var reducedLayer = document.querySelector('[data-dsh-claude-caret-layer]')
+      var reducedLayer = document.querySelector('[data-dsh-claude-style-plus-caret-layer]')
       r.caret.reduced = reducedLayer === null ? null : {
         layer: true,
         transition: getComputedStyle(reducedLayer).transitionDuration,
@@ -210,11 +210,11 @@
       r.fold = {
         thinkOpen: foldThink.hasAttribute('data-expanded'),
         groupOpen: !foldBody.hasAttribute('hidden'),
-        openMark: foldGroup.hasAttribute('data-dsh-claude-open'),
-        liveDetail: foldGroup.hasAttribute('data-dsh-claude-live-detail'),
-        label: foldHeader.getAttribute('data-dsh-claude-label'),
+        openMark: foldGroup.hasAttribute('data-dsh-claude-style-plus-open'),
+        liveDetail: foldGroup.hasAttribute('data-dsh-claude-style-plus-live-detail'),
+        label: foldHeader.getAttribute('data-dsh-claude-style-plus-label'),
         labelName: foldHeader.getAttribute('aria-label'),
-        spread: foldHeader.style.getPropertyValue('--dsh-claude-label-spread'),
+        spread: foldHeader.style.getPropertyValue('--dsh-claude-style-plus-label-spread'),
         expandedUntouched: !foldExpandedBody.hasAttribute('hidden'),
         clicks: Object.assign({}, window.__foldClicks),
       }
@@ -231,8 +231,8 @@
       r.fold.after = {
         thinkOpen: foldThink.hasAttribute('data-expanded'),
         groupOpen: !foldBody.hasAttribute('hidden'),
-        openMark: foldGroup.hasAttribute('data-dsh-claude-open'),
-        liveDetail: foldGroup.hasAttribute('data-dsh-claude-live-detail'),
+        openMark: foldGroup.hasAttribute('data-dsh-claude-style-plus-open'),
+        liveDetail: foldGroup.hasAttribute('data-dsh-claude-style-plus-live-detail'),
         clicks: Object.assign({}, window.__foldClicks),
       }
       // The fold glide on the reader's own press: the click is intercepted, the
@@ -245,14 +245,14 @@
       await sleep(60)
       var rollingBody = disclosureBody()
       r.fold.glide = {
-        rolling: rollingBody !== null && rollingBody.hasAttribute('data-dsh-claude-rolling'),
+        rolling: rollingBody !== null && rollingBody.hasAttribute('data-dsh-claude-style-plus-rolling'),
         clipped: rollingBody !== null && rollingBody.style.overflow === 'hidden',
         clicksDuringRoll: window.__disclosureClicks - disclosureBefore,
       }
       await sleep(500)
       r.fold.glide.after = {
         bodyGone: disclosureBody() === null,
-        rollingAnywhere: document.querySelector('[data-dsh-claude-rolling]') !== null,
+        rollingAnywhere: document.querySelector('[data-dsh-claude-style-plus-rolling]') !== null,
         clicks: window.__disclosureClicks - disclosureBefore,
       }
       // The opening direction: the press is remembered as an intent, the host
@@ -262,13 +262,13 @@
       var openingBody = disclosureBody()
       r.fold.glide.open = {
         inserted: openingBody !== null,
-        rolling: openingBody !== null && openingBody.hasAttribute('data-dsh-claude-rolling'),
+        rolling: openingBody !== null && openingBody.hasAttribute('data-dsh-claude-style-plus-rolling'),
       }
       await sleep(450)
       var settledBody = disclosureBody()
       r.fold.glide.openAfter = {
         present: settledBody !== null,
-        rolling: settledBody !== null && settledBody.hasAttribute('data-dsh-claude-rolling'),
+        rolling: settledBody !== null && settledBody.hasAttribute('data-dsh-claude-style-plus-rolling'),
       }
       // The reader's own press in this phase: the module leaves it alone.
       foldHeader.click()
@@ -277,7 +277,7 @@
       // The switch covers the door and the entrance fade as well as the automatic
       // folding: off, a press reaches the host's own handler in the same turn and
       // an inserted body carries no transition (fold-motion.css rides
-      // data-dsh-claude-chat-fold).
+      // data-dsh-claude-style-plus-chat-fold).
       var foldFlow = document.getElementById('debugFlow')
       var entranceOf = function () {
         var row = document.createElement('button')
@@ -300,19 +300,19 @@
       var offImmediate = window.__disclosureClicks - offBefore
       await sleep(300)
       r.fold.animationsOff = {
-        mark: document.body.hasAttribute('data-dsh-claude-chat-fold'),
+        mark: document.body.hasAttribute('data-dsh-claude-style-plus-chat-fold'),
         entrance: entranceOf(),
         immediateClicks: offImmediate,
-        rolling: document.querySelector('[data-dsh-claude-rolling]') !== null,
+        rolling: document.querySelector('[data-dsh-claude-style-plus-rolling]') !== null,
       }
       window.__pushForm({ chatAnimations: true })
       await sleep(200)
-      r.fold.animationsBack = { mark: document.body.hasAttribute('data-dsh-claude-chat-fold') }
+      r.fold.animationsBack = { mark: document.body.hasAttribute('data-dsh-claude-style-plus-chat-fold') }
       // The Redraw choice runs the other effect set, which the fold is not part
       // of: its mark goes the same way Off takes it.
       window.__pushForm({ chatAnimations: 'redraw' })
       await sleep(200)
-      r.fold.animationsRedraw = { mark: document.body.hasAttribute('data-dsh-claude-chat-fold') }
+      r.fold.animationsRedraw = { mark: document.body.hasAttribute('data-dsh-claude-style-plus-chat-fold') }
       window.__pushForm({ chatAnimations: 'enhanced' })
       await sleep(200)
     })
@@ -327,13 +327,13 @@
         var steps = 0
         if (registry) {
           for (var step = 0; step < 24; step += 1) {
-            var found = registry.get('dsh-claude-tok-' + step)
+            var found = registry.get('dsh-claude-style-plus-tok-' + step)
             var size = found ? found.size : 0
             total += size
             if (size > 0) steps += 1
           }
         }
-        return { total: total, steps: steps, mark: document.body.hasAttribute('data-dsh-claude-chat-reveal') }
+        return { total: total, steps: steps, mark: document.body.hasAttribute('data-dsh-claude-style-plus-chat-reveal') }
       }
       var revealContainer = document.createElement('div')
       revealContainer.setAttribute('data-streaming', '')
