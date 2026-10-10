@@ -12,8 +12,8 @@ import type { QuickProvidersHandle } from './quick-providers'
  * shell and the indented sub-row. Every tab builds its rows from these, so
  * the page reads as one control set whichever tab is open.
  *
- * The segmented controls reuse the shared `.dsh-claude-segments` /
- * `.dsh-claude-segment` classes and sliding highlight — the same control the
+ * The segmented controls reuse the shared `.dsh-claude-style-plus-segments` /
+ * `.dsh-claude-style-plus-segment` classes and sliding highlight — the same control the
  * composer's permission picker uses — so the two read as one design instead
  * of two lookalikes.
  */
@@ -107,7 +107,7 @@ export function managedDesc(text: string, managed: boolean): React.ReactNode {
   if (!managed) return text
   return [
     text,
-    React.createElement('span', { key: 'managed', className: 'dsh-claude-settings-row-managed' },
+    React.createElement('span', { key: 'managed', className: 'dsh-claude-style-plus-settings-row-managed' },
       settingsCopy('chatUxManaged', 'Managed by dsh-chat-ux')),
   ]
 }
@@ -173,14 +173,14 @@ export function createSettingsControls() {
       'button',
       {
         type: 'button',
-        className: 'dsh-claude-settings-switch',
+        className: 'dsh-claude-style-plus-settings-switch',
         role: 'switch',
         disabled: disabled === true,
         'aria-checked': on ? 'true' : 'false',
         'data-on': on ? '' : undefined,
         onClick() { onPick(!on) },
       },
-      React.createElement('span', { className: 'dsh-claude-settings-switch-knob' }),
+      React.createElement('span', { className: 'dsh-claude-style-plus-settings-switch-knob' }),
     )
   }
 
@@ -192,17 +192,17 @@ export function createSettingsControls() {
    * the next line when it does not (settings.css).
    */
   function row(key: string, title: string, description: React.ReactNode, control: React.ReactNode, block?: boolean) {
-    const classes = ['dsh-claude-settings-row']
-    if (block) classes.push('dsh-claude-settings-row-block')
-    else if (React.isValidElement(control) && control.type === ClaudeStyleSegmentGroup) classes.push('dsh-claude-settings-row-segment')
+    const classes = ['dsh-claude-style-plus-settings-row']
+    if (block) classes.push('dsh-claude-style-plus-settings-row-block')
+    else if (React.isValidElement(control) && control.type === ClaudeStyleSegmentGroup) classes.push('dsh-claude-style-plus-settings-row-segment')
     return React.createElement(
       'div',
       { className: classes.join(' '), key },
       React.createElement(
         'div',
-        { className: 'dsh-claude-settings-row-text' },
-        React.createElement('div', { className: 'dsh-claude-settings-row-title' }, title),
-        React.createElement('div', { className: 'dsh-claude-settings-row-desc' }, description),
+        { className: 'dsh-claude-style-plus-settings-row-text' },
+        React.createElement('div', { className: 'dsh-claude-style-plus-settings-row-title' }, title),
+        React.createElement('div', { className: 'dsh-claude-style-plus-settings-row-desc' }, description),
       ),
       control,
     )
@@ -217,16 +217,16 @@ export function createSettingsControls() {
     return React.createElement(
       'div',
       {
-        className: 'dsh-claude-settings-row dsh-claude-settings-row-sub',
+        className: 'dsh-claude-style-plus-settings-row dsh-claude-style-plus-settings-row-sub',
         key,
         'aria-disabled': enabled ? undefined : 'true',
         'data-disabled': enabled ? undefined : '',
       },
       React.createElement(
         'div',
-        { className: 'dsh-claude-settings-row-text' },
-        React.createElement('div', { className: 'dsh-claude-settings-row-title' }, title),
-        React.createElement('div', { className: 'dsh-claude-settings-row-desc' }, description),
+        { className: 'dsh-claude-style-plus-settings-row-text' },
+        React.createElement('div', { className: 'dsh-claude-style-plus-settings-row-title' }, title),
+        React.createElement('div', { className: 'dsh-claude-style-plus-settings-row-desc' }, description),
       ),
       control,
     )

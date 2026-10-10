@@ -1,4 +1,4 @@
-import { STREAMING_SELECTOR } from '@dsh-claude-style/contracts/dom'
+import { STREAMING_SELECTOR } from '@dsh-claude-style-plus/contracts/dom'
 import {
   CHAT_REVEAL_BURST_LIMIT,
   CHAT_REVEAL_FIRST_SIGHT_LIMIT,

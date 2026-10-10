@@ -19,8 +19,8 @@
   }
   window.fetch = function (input, init) {
     var url = typeof input === 'string' ? input : (input && input.url) || ''
-    if (url === '/dsh-claude-style/username') return Promise.resolve(jsonResponse({ ok: true, username: 'Tester' }))
-    if (url === '/dsh-claude-style/hdsl') {
+    if (url === '/dsh-claude-style-plus/username') return Promise.resolve(jsonResponse({ ok: true, username: 'Tester' }))
+    if (url === '/dsh-claude-style-plus/hdsl') {
       // Three launcher cases: the player's own atlas, a built-in figure (no
       // picture at all), and an atlas the player deleted before the page
       // loaded — the two fallbacks the account row has to survive.
@@ -31,7 +31,7 @@
           }
         : { ok: true, contract: false }))
     }
-    if (url === '/dsh-claude-style/usage' && CASE === 'studio') {
+    if (url === '/dsh-claude-style-plus/usage' && CASE === 'studio') {
       // A folded answer with the model dimension, so both tabs draw their data.
       // The all-time figures reach past the one listed day (history older than
       // any range window): all time peaks at 3 AM over 500k tokens, today alone
@@ -58,7 +58,7 @@
         totals: { input: 490000, output: 10000, cacheRead: 0, cacheWrite: 0, calls: 9, sessions: 4, activeDays: 3 },
       } }))
     }
-    if (url === '/dsh-claude-style/peakrate') {
+    if (url === '/dsh-claude-style-plus/peakrate') {
       // The rate catalog, in the shape the host half serves it: two profiles,
       // the second one a promotion that runs every day, so that row's badge
       // reads the same whatever the clock says when the case runs. The DeepSeek
@@ -88,7 +88,7 @@
         ],
       }))
     }
-    if (url === '/dsh-claude-style/hdsl-skin.png') {
+    if (url === '/dsh-claude-style-plus/hdsl-skin.png') {
       // An <img> or a canvas source loads this outside the fetch stub, so the
       // HTTP stand-in serves the bytes; this branch only keeps a stray request
       // from reaching the real network.

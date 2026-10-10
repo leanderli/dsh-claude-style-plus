@@ -1,36 +1,36 @@
 /* ---------- Settings dialog: modal panel background ---------- */
 /* In light mode, the host dialog defaults to var(--dsw-alias-bg-layer-2);
    align the dialog card with the main canvas (#fcfcfb). */
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) :is([class*="settingsArea"] [class*="_panel"], [class*="settingsArea"] [role="dialog"], [class*="_overlay"] > [class*="_panel"]) {
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) :is([class*="settingsArea"] [class*="_panel"], [class*="settingsArea"] [role="dialog"], [class*="_overlay"] > [class*="_panel"]) {
   background: var(--dsw-alias-bg-base) !important;
 }
 
 /* ---------- Settings dialog: Claude Style tab icon ---------- */
 /* Replace the host's default settings gear icon on the Claude Style nav tab
    with the monochrome Claude starburst icon (black in light mode). */
-body[data-dsh-claude-style] button[data-dsh-section="claude-style"] [class*="_navIcon"] {
+body[data-dsh-claude-style-plus] button[data-dsh-section="claude-style"] [class*="_navIcon"] {
   display: none !important;
 }
 
-body[data-dsh-claude-style] button[data-dsh-section="claude-style"]::before {
+body[data-dsh-claude-style-plus] button[data-dsh-section="claude-style"]::before {
   content: "";
   display: block;
   flex: none;
   width: 16px;
   height: 16px;
   background-color: currentColor;
-  -webkit-mask: var(--dsh-claude-image-claude-mark) center / contain no-repeat;
-  mask: var(--dsh-claude-image-claude-mark) center / contain no-repeat;
+  -webkit-mask: var(--dsh-claude-style-plus-image-claude-mark) center / contain no-repeat;
+  mask: var(--dsh-claude-style-plus-image-claude-mark) center / contain no-repeat;
 }
 
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) button[data-dsh-section="claude-style"]::before {
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) button[data-dsh-section="claude-style"]::before {
   background-color: #141413;
 }
 
 /* ---------- Claude Code layout: settings page ---------- */
 /* The skin's own page in the settings dialog and on the plugin page. Its
    segmented controls reuse the composer permission picker's classes
-   (`.dsh-claude-segments` / `.dsh-claude-segment`), so the two are literally one
+   (`.dsh-claude-style-plus-segments` / `.dsh-claude-style-plus-segment`), so the two are literally one
    control rather than two lookalikes; the switch and the brand cards are new
    here. The rows follow the host's own settings rows (ui-chat's PreferenceRow):
    full width, 16px above and below, a hairline between two rows.
@@ -38,7 +38,7 @@ body[data-dsh-claude-style]:not([data-ds-dark-theme]) button[data-dsh-section="c
    (`.options { padding: 0 24px 24px }`), and a second inset here set the skin's
    rows 24px inside every other page's. The 16px on top is the host's own row
    padding, so the page's heading lands where their first row's text does. */
-body[data-dsh-claude-style] .dsh-claude-settings {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -47,7 +47,7 @@ body[data-dsh-claude-style] .dsh-claude-settings {
   font-family: var(--dsw-font-family);
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-title {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-title {
   font-size: 15px;
   font-weight: 600;
   color: var(--dsw-alias-label-primary);
@@ -56,29 +56,29 @@ body[data-dsh-claude-style] .dsh-claude-settings-title {
 /* The tab strip is the segmented control itself, stretched across the page so
    every tab gets an equal share; the open tab's rows follow in their own
    column. */
-body[data-dsh-claude-style] .dsh-claude-settings-tabs {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-tabs {
   display: flex;
   align-self: stretch;
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-tabs > [role="tab"] {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-tabs > [role="tab"] {
   flex: 1 1 0;
   min-width: 0;
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-rows {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-rows {
   display: flex;
   flex-direction: column;
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-rows > :first-child {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-rows > :first-child {
   border-top: none;
 }
 
 /* A sub-row belongs to the row above it: no hairline between the two and no
    air above it, so they read as one group, and it greys out while its parent
    is off (its control is disabled as well, so the keyboard skips it). */
-body[data-dsh-claude-style] .dsh-claude-settings-row.dsh-claude-settings-row-sub {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-row.dsh-claude-style-plus-settings-row-sub {
   border-top: none;
   padding-top: 0;
 }
@@ -87,19 +87,19 @@ body[data-dsh-claude-style] .dsh-claude-settings-row.dsh-claude-settings-row-sub
    the plugin page) always keeps the scrollbar's room: a tab short enough to
    need no scrollbar then lays out at the same width as one that does. The
    page marks its nearest scrolling ancestor while it is mounted (settings.ts). */
-body[data-dsh-claude-style] [data-dsh-claude-settings-scroller] {
+body[data-dsh-claude-style-plus] [data-dsh-claude-style-plus-settings-scroller] {
   scrollbar-gutter: stable;
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-row-sub[data-disabled] {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-row-sub[data-disabled] {
   opacity: .5;
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-row-sub[data-disabled] :is(button, input) {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-row-sub[data-disabled] :is(button, input) {
   cursor: not-allowed;
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-row {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-row {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -113,16 +113,16 @@ body[data-dsh-claude-style] .dsh-claude-settings-row {
    fits beside the text. The text's basis is the whole decision: the control is
    `flex: none`, so the row wraps exactly when the text's room would fall under
    this. */
-body[data-dsh-claude-style] .dsh-claude-settings-row-segment {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-row-segment {
   flex-wrap: wrap;
   gap: 12px 8px;
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-row-segment > .dsh-claude-settings-row-text {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-row-segment > .dsh-claude-style-plus-settings-row-text {
   flex: 1 1 220px;
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-row-text {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-row-text {
   flex: 1;
   min-width: 0;
   display: flex;
@@ -134,18 +134,18 @@ body[data-dsh-claude-style] .dsh-claude-settings-row-text {
 /* A block row stacks its control under the text — the brand picker's cards
    and the four-way mascot choice need more room than an inline control slot
    gives. A control keeps its own width; only the brand cards span the row. */
-body[data-dsh-claude-style] .dsh-claude-settings-row-block {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-row-block {
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-row-block > .dsh-claude-settings-row-text {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-row-block > .dsh-claude-style-plus-settings-row-text {
   align-self: stretch;
   padding-right: 0;
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-row-block > .dsh-claude-brand-picker {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-row-block > .dsh-claude-style-plus-brand-picker {
   align-self: stretch;
 }
 
@@ -154,13 +154,13 @@ body[data-dsh-claude-style] .dsh-claude-settings-row-block > .dsh-claude-brand-p
    starburst, DeepSeek's whale in brand blue — inlined as CSS data URIs, so
    they read in full colour on either theme. A new brand adds one option in
    settings.ts and one [data-brand] rule here. */
-body[data-dsh-claude-style] .dsh-claude-brand-picker {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-brand-picker {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
   gap: 8px;
 }
 
-body[data-dsh-claude-style] .dsh-claude-brand-card {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-brand-card {
   appearance: none;
   margin: 0;
   display: flex;
@@ -178,20 +178,20 @@ body[data-dsh-claude-style] .dsh-claude-brand-card {
   transition: border-color .12s ease;
 }
 
-body[data-dsh-claude-style] .dsh-claude-brand-card:hover {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-brand-card:hover {
   border-color: var(--dsw-alias-border-l2);
 }
 
-body[data-dsh-claude-style] .dsh-claude-brand-card:focus-visible {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-brand-card:focus-visible {
   outline: 2px solid var(--dsw-alias-brand-primary, #d97757);
   outline-offset: 1px;
 }
 
-body[data-dsh-claude-style] .dsh-claude-brand-card[data-active] {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-brand-card[data-active] {
   border-color: var(--dsw-alias-brand-primary, #d97757);
 }
 
-body[data-dsh-claude-style] .dsh-claude-brand-card-logo {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-brand-card-logo {
   width: 32px;
   height: 32px;
   background-position: center;
@@ -199,15 +199,15 @@ body[data-dsh-claude-style] .dsh-claude-brand-card-logo {
   background-size: contain;
 }
 
-body[data-dsh-claude-style] .dsh-claude-brand-card-logo[data-brand="claude"] {
-  background-image: var(--dsh-claude-image-claude-mark-clay);
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-brand-card-logo[data-brand="claude"] {
+  background-image: var(--dsh-claude-style-plus-image-claude-mark-clay);
 }
 
-body[data-dsh-claude-style] .dsh-claude-brand-card-logo[data-brand="deepseek"] {
-  background-image: var(--dsh-claude-image-deepseek-mark);
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-brand-card-logo[data-brand="deepseek"] {
+  background-image: var(--dsh-claude-style-plus-image-deepseek-mark);
 }
 
-body[data-dsh-claude-style] .dsh-claude-brand-card-name {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-brand-card-name {
   font-size: 13px;
   font-weight: 600;
   line-height: 1.5;
@@ -215,7 +215,7 @@ body[data-dsh-claude-style] .dsh-claude-brand-card-name {
 
 /* The row title is UI text in the host's row metrics: the sans face, not the
    serif display face theme/typography.css gives every class naming a title. */
-body[data-dsh-claude-style] .dsh-claude-settings-row-title {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-row-title {
   font-family: var(--dsw-font-family);
   font-size: 14px;
   font-weight: 400;
@@ -224,7 +224,7 @@ body[data-dsh-claude-style] .dsh-claude-settings-row-title {
   color: var(--dsw-alias-label-primary);
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-row-desc {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-row-desc {
   font-size: 12px;
   line-height: 18px;
   color: var(--dsw-alias-label-tertiary);
@@ -234,18 +234,18 @@ body[data-dsh-claude-style] .dsh-claude-settings-row-desc {
    and dims, while the row's own copy stays readable and a line in the accent
    colour says who owns it. The reader's stored answer is what the control shows,
    so it already tells what will happen once that plugin goes away. */
-body[data-dsh-claude-style] .dsh-claude-settings-row button:disabled {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-row button:disabled {
   cursor: not-allowed;
   opacity: .45;
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-row-managed {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-row-managed {
   display: block;
   margin-top: 2px;
   color: var(--dsw-alias-state-business-primary);
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-error {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-error {
   font-size: 12px;
   line-height: 1.5;
   color: var(--dsw-alias-state-error-primary, #c0392b);
@@ -253,7 +253,7 @@ body[data-dsh-claude-style] .dsh-claude-settings-error {
 
 /* The switch borrows the segment track's palette and radius so a page of rows
    reads as one control set rather than two. */
-body[data-dsh-claude-style] .dsh-claude-settings-switch {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-switch {
   flex: none;
   appearance: none;
   margin: 0;
@@ -268,15 +268,15 @@ body[data-dsh-claude-style] .dsh-claude-settings-switch {
   transition: background-color .12s ease;
 }
 
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) .dsh-claude-settings-switch {
-  background: var(--dsh-claude-chip);
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) .dsh-claude-style-plus-settings-switch {
+  background: var(--dsh-claude-style-plus-chip);
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-switch[data-on] {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-switch[data-on] {
   background: var(--dsw-alias-brand-primary, #d97757);
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-switch-knob {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-switch-knob {
   display: block;
   width: 16px;
   height: 16px;
@@ -288,13 +288,13 @@ body[data-dsh-claude-style] .dsh-claude-settings-switch-knob {
   transition: transform .12s ease;
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-switch[data-on] .dsh-claude-settings-switch-knob {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-switch[data-on] .dsh-claude-style-plus-settings-switch-knob {
   transform: translateX(16px);
 }
 
 /* Custom username input: same row rhythm as the switch/segments, but wide
    enough to read a name and narrow enough not to push the description. */
-body[data-dsh-claude-style] .dsh-claude-settings-input {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-input {
   flex: none;
   width: 180px;
   max-width: 45%;
@@ -310,18 +310,18 @@ body[data-dsh-claude-style] .dsh-claude-settings-input {
   outline: none;
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-input:focus {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-input:focus {
   border-color: var(--dsw-alias-brand-primary, #d97757);
 }
 
-body[data-dsh-claude-style] .dsh-claude-settings-input::placeholder {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-input::placeholder {
   color: var(--dsw-alias-label-caption);
 }
 
 /* The quick-provider trigger belongs to the same control family as the username
    input: one bordered plate that opens a picker. Its card is the shared popover
    card (features/permissions/permissions.css), so only the trigger is styled here. */
-body[data-dsh-claude-style] .dsh-claude-settings-picker {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-picker {
   flex: none;
   min-width: 140px;
   max-width: 45%;
@@ -337,10 +337,10 @@ body[data-dsh-claude-style] .dsh-claude-settings-picker {
   text-align: left;
   cursor: pointer;
 }
-body[data-dsh-claude-style] .dsh-claude-settings-picker:hover {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-picker:hover {
   border-color: var(--dsw-alias-border-l2);
 }
-body[data-dsh-claude-style] .dsh-claude-settings-picker[aria-expanded="true"] {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-settings-picker[aria-expanded="true"] {
   border-color: var(--dsw-alias-brand-primary, #d97757);
 }
 
@@ -348,7 +348,7 @@ body[data-dsh-claude-style] .dsh-claude-settings-picker[aria-expanded="true"] {
    the shared popover card, anchored above the trigger and right-aligned with it
    (positionAnchoredPopover), so it grows from the corner nearest the trigger —
    the bottom right, as the model picker's card does. */
-body[data-dsh-claude-style] .dsh-claude-quick-popover {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-quick-popover {
   position: fixed !important;
   min-width: 248px !important;
   display: flex !important;

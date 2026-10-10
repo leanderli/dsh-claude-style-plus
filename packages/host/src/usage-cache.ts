@@ -1,5 +1,5 @@
 /**
- * Our own fold cache, under `$DSH_HOME/cache/dsh-claude-style/usage.json`.
+ * Our own fold cache, under `$DSH_HOME/cache/dsh-claude-style-plus/usage.json`.
  *
  * One entry per session: the fingerprint of the log it was folded from, that
  * session's day map and its hour histogram. Keying by the log's size and
@@ -16,9 +16,10 @@ import { dirname, join } from 'node:path'
 import type { DshContext } from './dsh.js'
 import { addBuckets, emptyBuckets } from './usage-ledger.js'
 import type { Buckets, DayBuckets } from './usage-ledger.js'
+import type { SkillDayCounts, SkillDays } from './usage-fold.js'
 
 /** Our own cache document version. */
-const CACHE_VERSION = 4
+const CACHE_VERSION = 6
 
 /** One stored session in the cache document. */
 export interface CacheSession {
@@ -26,17 +27,24 @@ export interface CacheSession {
   mtimeMs: number
   days: Map<string, DayBuckets>
   hours: number[]
+  skillDays: SkillDays
 }
 
 /** The cache document: the sessions it knows and the fingerprints it read them at. */
 interface CacheDocument {
   version?: number
-  sessions?: Record<string, { size?: number, mtimeMs?: number, days?: Record<string, Partial<Buckets> & { hours?: number[] }>, hours?: number[] }>
+  sessions?: Record<string, {
+    size?: number
+    mtimeMs?: number
+    days?: Record<string, Partial<Buckets> & { hours?: number[] }>
+    hours?: number[]
+    skillDays?: Record<string, Record<string, Partial<SkillDayCounts>>>
+  }>
 }
 
 /** The cache document's path under the harness home. */
 function cacheFile(home: string) {
-  return join(home, 'cache', 'dsh-claude-style', 'usage.json')
+  return join(home, 'cache', 'dsh-claude-style-plus', 'usage.json')
 }
 
 /** A stored 24-slot hour histogram, or an empty one when the entry has none. */
@@ -85,6 +93,37 @@ function daysFromObject(raw: unknown): Map<string, DayBuckets> {
   return days
 }
 
+function skillDaysToObject(days: SkillDays): Record<string, Record<string, SkillDayCounts>> {
+  const out: Record<string, Record<string, SkillDayCounts>> = {}
+  for (const [day, skills] of days) {
+    const byName: Record<string, SkillDayCounts> = {}
+    for (const [name, counts] of skills) byName[name] = { explicitCalls: counts.explicitCalls, modelCalls: counts.modelCalls }
+    out[day] = byName
+  }
+  return out
+}
+
+function skillDaysFromObject(raw: unknown): SkillDays {
+  const days: SkillDays = new Map()
+  if (raw === null || typeof raw !== 'object' || Array.isArray(raw)) return days
+  for (const [day, rawSkills] of Object.entries(raw as Record<string, unknown>)) {
+    if (rawSkills === null || typeof rawSkills !== 'object' || Array.isArray(rawSkills)) continue
+    const skills = new Map<string, SkillDayCounts>()
+    for (const [name, rawCounts] of Object.entries(rawSkills as Record<string, unknown>)) {
+      if (rawCounts === null || typeof rawCounts !== 'object' || Array.isArray(rawCounts)) continue
+      const counts = rawCounts as { explicitCalls?: unknown, modelCalls?: unknown }
+      const explicitCalls = Number(counts.explicitCalls)
+      const modelCalls = Number(counts.modelCalls)
+      skills.set(name, {
+        explicitCalls: Number.isFinite(explicitCalls) ? Math.max(0, explicitCalls) : 0,
+        modelCalls: Number.isFinite(modelCalls) ? Math.max(0, modelCalls) : 0,
+      })
+    }
+    days.set(day, skills)
+  }
+  return days
+}
+
 /**
  * The cached sessions by session id: empty when there is no cache, when the
  * document is not the version read here, or when it does not parse at all.
@@ -102,7 +141,7 @@ export function readCache(ctx: DshContext, home: string): Map<string, CacheSessi
     // The cache only saves work: a file that does not parse is reported, the
     // pass folds every session again and writes a whole new file over it
     // (docs/decisions D12).
-    ctx.logger?.warn?.(`dsh-claude-style: usage cache unreadable, folding again: ${(error as { message?: string }).message}`)
+    ctx.logger?.warn?.(`dsh-claude-style-plus: usage cache unreadable, folding again: ${(error as { message?: string }).message}`)
     return new Map()
   }
   if (parsed === null || typeof parsed !== 'object') return new Map()
@@ -113,13 +152,14 @@ export function readCache(ctx: DshContext, home: string): Map<string, CacheSessi
   if (rawSessions === null || typeof rawSessions !== 'object') return sessions
   for (const [id, value] of Object.entries(rawSessions as Record<string, unknown>)) {
     if (value === null || typeof value !== 'object') continue
-    const entry = value as { size?: unknown, mtimeMs?: unknown, days?: unknown, hours?: unknown }
+    const entry = value as { size?: unknown, mtimeMs?: unknown, days?: unknown, hours?: unknown, skillDays?: unknown }
     if (!Number.isFinite(entry.size) || !Number.isFinite(entry.mtimeMs)) continue
     sessions.set(id, {
       size: Number(entry.size),
       mtimeMs: Number(entry.mtimeMs),
       days: daysFromObject(entry.days),
       hours: hoursFrom(entry.hours),
+      skillDays: skillDaysFromObject(entry.skillDays),
     })
   }
   return sessions
@@ -136,7 +176,7 @@ export function readCache(ctx: DshContext, home: string): Map<string, CacheSessi
 export function writeCache(ctx: DshContext, home: string, sessions: Map<string, CacheSession>) {
   const document: { version: number, computedAt: number, sessions: Record<string, unknown> } = { version: CACHE_VERSION, computedAt: Date.now(), sessions: {} }
   for (const [id, entry] of sessions) {
-    document.sessions[id] = { size: entry.size, mtimeMs: entry.mtimeMs, days: daysToObject(entry.days), hours: entry.hours }
+    document.sessions[id] = { size: entry.size, mtimeMs: entry.mtimeMs, days: daysToObject(entry.days), hours: entry.hours, skillDays: skillDaysToObject(entry.skillDays) }
   }
   const path = cacheFile(home)
   const temp = `${path}.${process.pid}.tmp`
@@ -147,6 +187,6 @@ export function writeCache(ctx: DshContext, home: string, sessions: Map<string, 
   } catch (error) {
     // The cache only saves work: a write that fails is reported, and the
     // roll-up this pass computed is still served (docs/decisions D12).
-    ctx.logger?.warn?.(`dsh-claude-style: usage cache not written: ${(error as { message?: string }).message}`)
+    ctx.logger?.warn?.(`dsh-claude-style-plus: usage cache not written: ${(error as { message?: string }).message}`)
   }
 }

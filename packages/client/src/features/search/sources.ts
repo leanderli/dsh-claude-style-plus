@@ -2,8 +2,8 @@ import { SESSION_SEARCH_ROUTE } from '../../constants'
 import { currentSessionId } from '../../core/host'
 import { copyLabel } from '../../core/i18n'
 import type { HostContext, HostValue } from '../../core/host'
-import type { ContentHit, SearchAnswer } from '@dsh-claude-style/contracts/usage'
-import type { HostBundleListAnswer, HostConversationInput, HostConversationService, HostInventoryAnswer, HostPluginBundle, HostSessionBinding, HostSessionSummary, HostShortcutRow, HostShortcutsService, HostSkill, HostSkillListAnswer, HostSlotsService, HostSlotStore, HostWorkspaceListSnapshot } from '@dsh-claude-style/contracts/services'
+import type { ContentHit, SearchAnswer } from '@dsh-claude-style-plus/contracts/usage'
+import type { HostBundleListAnswer, HostConversationInput, HostConversationService, HostInventoryAnswer, HostPluginBundle, HostSessionBinding, HostSessionSummary, HostShortcutRow, HostShortcutsService, HostSkill, HostSkillListAnswer, HostSlotsService, HostSlotStore, HostWorkspaceListSnapshot } from '@dsh-claude-style-plus/contracts/services'
 
 /** The kinds of thing the palette lists, and the filter that shows them all. */
 export type SearchKind = 'session' | 'project' | 'plugin' | 'skill' | 'shortcut' | 'action'
@@ -25,7 +25,7 @@ export interface SearchRow {
 }
 
 /** One content hit from the host half's message search: the session, the excerpt, the match within it. */
-export type { ContentHit } from '@dsh-claude-style/contracts/usage'
+export type { ContentHit } from '@dsh-claude-style-plus/contracts/usage'
 
 /** One section of the palette. */
 export interface SearchSection {
@@ -444,15 +444,15 @@ export function createSearchSources(ctx: HostContext) {
     // The host half reads every stored session once before its first
     // answer; starting that as the palette opens keeps the first query quick.
     searchContent('', undefined).then(() => {}, reason => {
-      console.warn('dsh-claude-style: session content search could not prepare:', reason)
+      console.warn('dsh-claude-style-plus: session content search could not prepare:', reason)
     })
     loadPlugins(owner).then(settle, reason => {
-      console.warn('dsh-claude-style: search could not list plugins:', reason)
+      console.warn('dsh-claude-style-plus: search could not list plugins:', reason)
       if (owner === generation) plugins = []
       settle()
     })
     loadSkills(owner).then(settle, reason => {
-      console.warn('dsh-claude-style: search could not list skills:', reason)
+      console.warn('dsh-claude-style-plus: search could not list skills:', reason)
       if (owner === generation) skills = []
       settle()
     })

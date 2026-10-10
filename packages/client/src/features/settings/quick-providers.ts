@@ -68,7 +68,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
   function buildRow(provider: CatalogProvider, chosen: boolean, stale: boolean) {
     const built = buildPopoverItem({ role: 'menuitemcheckbox', badge: true, check: true })
     const row = built.row
-    if (stale) row.classList.add('dsh-claude-popover-item-stale')
+    if (stale) row.classList.add('dsh-claude-style-plus-popover-item-stale')
     row.setAttribute('aria-checked', chosen ? 'true' : 'false')
     built.text.textContent = provider.name
     // badge and check were both asked for above.
@@ -90,7 +90,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     if (cardBody === null) return
     while (cardBody.firstChild) cardBody.removeChild(cardBody.firstChild)
     if (providers.length === 0) {
-      cardBody.appendChild(buildElement('div', 'dsh-claude-popover-status', settingsCopy('quickLoading', 'Loading providers…')))
+      cardBody.appendChild(buildElement('div', 'dsh-claude-style-plus-popover-status', settingsCopy('quickLoading', 'Loading providers…')))
       return
     }
     const chosen = readPrefs().quickProviders
@@ -117,9 +117,9 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     anchor.setAttribute('aria-expanded', 'true')
     onWrite = write
     providers = typeof ui.model?.providers === 'function' ? ui.model.providers() : []
-    card = buildElement('div', 'dsh-claude-popover-card dsh-claude-quick-popover')
+    card = buildElement('div', 'dsh-claude-style-plus-popover-card dsh-claude-style-plus-quick-popover')
     setMenuPopoverOpen(card, true)
-    cardBody = buildElement('div', 'dsh-claude-popover-body')
+    cardBody = buildElement('div', 'dsh-claude-style-plus-popover-body')
     card.appendChild(cardBody)
     renderBody()
     document.body.appendChild(card)

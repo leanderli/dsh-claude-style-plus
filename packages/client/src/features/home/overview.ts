@@ -20,9 +20,9 @@ export function createHomeOverview() {
   function statCell(key: string, label: string, text: string, skeleton: boolean) {
     return React.createElement(
       'div',
-      { key, className: 'dsh-claude-home-stat', 'data-stat': key, 'data-skeleton': skeleton ? '' : undefined },
-      React.createElement('span', { className: 'dsh-claude-home-stat-label' }, label),
-      React.createElement('span', { className: 'dsh-claude-home-stat-value', title: skeleton ? undefined : text }, skeleton ? '' : text),
+      { key, className: 'dsh-claude-style-plus-home-stat', 'data-stat': key, 'data-skeleton': skeleton ? '' : undefined },
+      React.createElement('span', { className: 'dsh-claude-style-plus-home-stat-label' }, label),
+      React.createElement('span', { className: 'dsh-claude-style-plus-home-stat-value', title: skeleton ? undefined : text }, skeleton ? '' : text),
     )
   }
 
@@ -49,7 +49,7 @@ export function createHomeOverview() {
       null,
       React.createElement(
         'div',
-        { className: 'dsh-claude-home-stats' },
+        { className: 'dsh-claude-style-plus-home-stats' },
         statCell('sessions', copyLabel('homeSessions', 'Sessions'), data.sessions === null ? '—' : formatHomeCount(data.sessions), skeleton),
         statCell('calls', copyLabel('homeCalls', 'Messages'), data.calls === null ? '—' : formatHomeCount(data.calls), skeleton),
         statCell('tokens', copyLabel('homeTokens', 'Total tokens'), formatCompactTokens(data.tokens), skeleton),
@@ -59,13 +59,13 @@ export function createHomeOverview() {
       ),
       React.createElement(
         'div',
-        { className: 'dsh-claude-home-heat', 'data-skeleton': data.known ? undefined : '' },
+        { className: 'dsh-claude-style-plus-home-heat', 'data-skeleton': data.known ? undefined : '' },
         data.grid.cells.map((cell, index) => {
           const tip = skeleton ? undefined : heatTip(format, cell)
           const column = Math.floor(index / 7)
           return React.createElement('span', {
             key: cell.date,
-            className: 'dsh-claude-home-heat-cell',
+            className: 'dsh-claude-style-plus-home-heat-cell',
             'data-level': cell.level,
             'data-tip': tip,
             'aria-label': tip,
@@ -76,7 +76,7 @@ export function createHomeOverview() {
           })
         }),
       ),
-      data.fun === null ? null : React.createElement('span', { className: 'dsh-claude-home-fun' }, data.fun),
+      data.fun === null ? null : React.createElement('span', { className: 'dsh-claude-style-plus-home-fun' }, data.fun),
     )
   }
 

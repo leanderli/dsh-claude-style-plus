@@ -3,7 +3,7 @@
    provider's models, a divider, the effort row and a More models row; both
    rows open their level 2 beside this popover. The card is the shared popover
    card (shared/popover.css); what is the picker's own is below. */
-body[data-dsh-claude-style] .dsh-claude-model-popover {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-popover {
   position: fixed;
   min-width: 248px;
   max-width: min(360px, calc(100vw - 16px));
@@ -22,15 +22,15 @@ body[data-dsh-claude-style] .dsh-claude-model-popover {
    scroll under the divider / effort / more-models rows, which never leave the
    viewport edge of the card. Only the first level does this — the sub popover
    keeps scrolling as one card, with its provider labels pinned (below). */
-body[data-dsh-claude-style] .dsh-claude-model-popover:not(.dsh-claude-model-popover-sub) {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-popover:not(.dsh-claude-style-plus-model-popover-sub) {
   overflow: hidden;
 }
-body[data-dsh-claude-style] .dsh-claude-model-popover:not(.dsh-claude-model-popover-sub) .dsh-claude-popover-body {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-popover:not(.dsh-claude-style-plus-model-popover-sub) .dsh-claude-style-plus-popover-body {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
 }
-body[data-dsh-claude-style] .dsh-claude-model-footer {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-footer {
   flex: none;
   display: flex;
   flex-direction: column;
@@ -40,11 +40,11 @@ body[data-dsh-claude-style] .dsh-claude-model-footer {
 /* The sub popover is taller than the first level and sized by its content: the
    cap is only the viewport, so a short provider list does not leave a tall empty
    card. Provider labels stay pinned to the top while the list scrolls. */
-body[data-dsh-claude-style] .dsh-claude-model-popover-sub {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-popover-sub {
   padding-top: 0;
 }
 
-body[data-dsh-claude-style] .dsh-claude-model-group-section {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-group-section {
   position: relative !important;
   display: flex !important;
   flex-direction: column !important;
@@ -54,7 +54,7 @@ body[data-dsh-claude-style] .dsh-claude-model-group-section {
   min-width: 0 !important;
 }
 
-body[data-dsh-claude-style] .dsh-claude-model-group-row {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-group-row {
   position: sticky !important;
   top: 0 !important;
   z-index: 6 !important;
@@ -64,18 +64,18 @@ body[data-dsh-claude-style] .dsh-claude-model-group-row {
   background: var(--dsw-alias-bg-overlay, #ffffff) !important;
 }
 
-body[data-dsh-claude-style][data-ds-dark-theme] .dsh-claude-model-group-row {
-  background: var(--dsh-claude-raised) !important;
+body[data-dsh-claude-style-plus][data-ds-dark-theme] .dsh-claude-style-plus-model-group-row {
+  background: var(--dsh-claude-style-plus-raised) !important;
 }
 
-body[data-dsh-claude-style] .dsh-claude-model-group {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-group {
   display: inline-flex !important;
   align-items: center !important;
   gap: 5px !important;
   margin: 0 !important;
   padding: 1px 7px !important;
-  background: var(--dsh-claude-inverse-fill) !important;
-  color: var(--dsh-claude-inverse-ink) !important;
+  background: var(--dsh-claude-style-plus-inverse-fill) !important;
+  color: var(--dsh-claude-style-plus-inverse-ink) !important;
   border-radius: 6px !important;
   font-size: 11px !important;
   font-weight: 600 !important;
@@ -83,7 +83,7 @@ body[data-dsh-claude-style] .dsh-claude-model-group {
 }
 
 /* Model / effort option: same row metrics and hover as the drawer items. */
-body[data-dsh-claude-style] .dsh-claude-model-option {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-option {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -99,25 +99,25 @@ body[data-dsh-claude-style] .dsh-claude-model-option {
   cursor: pointer;
   box-sizing: border-box;
 }
-body[data-dsh-claude-style] .dsh-claude-model-option:hover {
-  background: var(--dsh-claude-hover-bg, rgba(0, 0, 0, 0.08)) !important;
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-option:hover {
+  background: var(--dsh-claude-style-plus-hover-bg, rgba(0, 0, 0, 0.08)) !important;
 }
-body[data-dsh-claude-style] .dsh-claude-model-copy {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-copy {
   display: flex;
   flex-direction: column;
   gap: 2px;
   flex: 1;
   min-width: 0;
 }
-body[data-dsh-claude-style] .dsh-claude-model-name {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-name {
   font-size: 13px;
   font-weight: 500;
   line-height: 16px;
 }
 /* Claude's wordmark is set in Anthropic's serif, so the rest of the label follows
    it — the row reads as one piece of lettering rather than serif art beside sans. */
-body[data-dsh-claude-style] .dsh-claude-model-option[data-brand='claude'] .dsh-claude-model-name {
-  font-family: var(--dsh-claude-font-brand) !important;
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-option[data-brand='claude'] .dsh-claude-style-plus-model-name {
+  font-family: var(--dsh-claude-style-plus-font-brand) !important;
 }
 /* A vendor lockup: the mark and the vendor's own wordmark as one piece of art,
    drawn in place of the vendor's name in the label. Its viewBox is the wordmark's
@@ -127,14 +127,14 @@ body[data-dsh-claude-style] .dsh-claude-model-option[data-brand='claude'] .dsh-c
    the mono one in currentColor on the warm black canvas, where a brand colour
    like #000 or #F1F0E8 would disappear. A vendor with no colour artwork carries
    both classes on its single layer, so it shows on either canvas. */
-body[data-dsh-claude-style] .dsh-claude-model-combine {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-combine {
   display: inline-block !important;
   height: 0.72em !important;
   height: 1cap !important;
   margin-right: 0.25em !important;
   vertical-align: baseline !important;
 }
-body[data-dsh-claude-style] .dsh-claude-model-combine svg {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-combine svg {
   display: block;
   height: 100%;
   width: auto;
@@ -144,17 +144,17 @@ body[data-dsh-claude-style] .dsh-claude-model-combine svg {
    a hand-provided lockup is one layer carrying both classes so it shows on either
    canvas, and a bare `.dsh-combine-mark-color` rule would hide it on the dark one
    (which is how the ChatGPT knot went missing on warm black). */
-body[data-dsh-claude-style] .dsh-claude-model-combine .dsh-combine-mark-color:not(.dsh-combine-mark-mono) {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-combine .dsh-combine-mark-color:not(.dsh-combine-mark-mono) {
   display: none;
 }
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) .dsh-claude-model-combine .dsh-combine-mark-color {
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) .dsh-claude-style-plus-model-combine .dsh-combine-mark-color {
   display: block;
 }
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) .dsh-claude-model-combine .dsh-combine-mark-mono:not(.dsh-combine-mark-color) {
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) .dsh-claude-style-plus-model-combine .dsh-combine-mark-mono:not(.dsh-combine-mark-color) {
   display: none;
 }
 /* The word the lockup stands in for stays in the accessibility tree. */
-body[data-dsh-claude-style] .dsh-claude-model-combine-alt {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-combine-alt {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -165,7 +165,7 @@ body[data-dsh-claude-style] .dsh-claude-model-combine-alt {
 /* The row carries one description line, in the shell's language: the copy
    document is localized rather than stacked, so there is no second-language
    rule to style. */
-body[data-dsh-claude-style] .dsh-claude-model-desc {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-desc {
   font-size: 11px;
   line-height: 14px;
   color: var(--dsw-alias-label-tertiary, #8f8d84);
@@ -174,12 +174,12 @@ body[data-dsh-claude-style] .dsh-claude-model-desc {
    and the divider that closes the model list. Same colour, same thickness, same
    insets — the only difference left is that the header's line starts after the
    provider's name, which is the point of that row. */
-body[data-dsh-claude-style] .dsh-claude-model-divider,
-body[data-dsh-claude-style] .dsh-claude-model-rule::after {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-divider,
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-rule::after {
   height: 1px !important;
   background: var(--dsw-alias-border-l1, #e8e6dc) !important;
 }
-body[data-dsh-claude-style] .dsh-claude-model-divider {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-divider {
   margin: 2px 4px !important;
   flex: none !important;
 }
@@ -188,18 +188,18 @@ body[data-dsh-claude-style] .dsh-claude-model-divider {
    — one rule per provider boundary, and nothing more. An empty label leaves the
    bare rule, which is how a provider that needs no naming (the official source)
    is separated. */
-body[data-dsh-claude-style] .dsh-claude-model-rule {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-rule {
   display: flex !important;
   align-items: center !important;
   gap: 6px !important;
   margin: 2px 4px !important;
   flex: none !important;
 }
-body[data-dsh-claude-style] .dsh-claude-model-rule::after {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-rule::after {
   content: "" !important;
   flex: 1 !important;
 }
-body[data-dsh-claude-style] .dsh-claude-model-rule-name {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-rule-name {
   flex: none !important;
   font-size: 11px !important;
   line-height: 14px !important;
@@ -207,7 +207,7 @@ body[data-dsh-claude-style] .dsh-claude-model-rule-name {
   letter-spacing: 0.02em !important;
 }
 /* Level-2 row: label + chevron; hover opens its own level. */
-body[data-dsh-claude-style] .dsh-claude-model-cell {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-cell {
   display: flex !important;
   align-items: center !important;
   gap: 8px !important;
@@ -223,14 +223,14 @@ body[data-dsh-claude-style] .dsh-claude-model-cell {
   cursor: pointer !important;
   box-sizing: border-box !important;
 }
-body[data-dsh-claude-style] .dsh-claude-model-cell:hover {
-  background: var(--dsh-claude-hover-bg, rgba(0, 0, 0, 0.08)) !important;
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-cell:hover {
+  background: var(--dsh-claude-style-plus-hover-bg, rgba(0, 0, 0, 0.08)) !important;
 }
-body[data-dsh-claude-style] .dsh-claude-model-cell-label {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-cell-label {
   flex: 1 !important;
   min-width: 0 !important;
 }
-body[data-dsh-claude-style] .dsh-claude-model-cell-chevron {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-model-cell-chevron {
   flex: none !important;
   display: inline-flex !important;
   align-items: center !important;

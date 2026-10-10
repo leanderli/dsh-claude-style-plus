@@ -142,6 +142,8 @@ export const PERMISSION_TRIGGER_SELECTOR = '[data-slot="conversation.input.permi
 export const DIALOG_TRIGGER_SELECTOR = 'button[aria-haspopup="dialog"]'
 /** The sidebar footer block; the skin's account entry lives inside it. */
 export const FOOT_AREA_SELECTOR = '[class*="footArea"]'
+/** The sidebar's New Session action; the persistent Search entry follows this row. */
+export const SIDEBAR_NEW_SESSION_SELECTOR = '[data-slot="sidebar"] button[class*="newSession"]'
 /** The host's own composer is replaced by a panel of its own choice; this is that panel's seat. */
 export const CHAIN_OVERLAY_FALLBACK_ATTRIBUTE = 'data-chain-overlay-fallback'
 /** The host's own open menus and modal dialogs: the foreground the skin must not walk over. */

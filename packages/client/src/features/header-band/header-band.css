@@ -6,7 +6,7 @@
    the shell's own drag region, so every piece placed in it declares itself
    no-drag: a control that cannot be pressed is not a control. */
 
-body[data-dsh-claude-style][data-dsh-header-band~="title"] [data-dsh-header-title] {
+body[data-dsh-claude-style-plus][data-dsh-header-band~="title"] [data-dsh-header-title] {
   position: fixed !important;
   /* The pass centres the box on the row's middle plus its own optical nudge. */
   top: var(--dsh-header-band-title-top, calc(var(--dsh-windows-titlebar-height, 40px) / 2)) !important;
@@ -25,7 +25,7 @@ body[data-dsh-claude-style][data-dsh-header-band~="title"] [data-dsh-header-titl
    title and the controls standing on either side of it that no longer reads as
    the middle of the row. The pass hands it the middle of what is left between
    them, and the strip's own translate keeps it centred on that value. */
-body[data-dsh-claude-style][data-dsh-titlebar-tabs] [data-dsh-header-band-tabs] {
+body[data-dsh-claude-style-plus][data-dsh-titlebar-tabs] [data-dsh-header-band-tabs] {
   left: var(--dsh-header-band-tabs-left, 50%) !important;
 }
 
@@ -37,7 +37,7 @@ body[data-dsh-claude-style][data-dsh-titlebar-tabs] [data-dsh-header-band-tabs] 
    where the host put it. The pass writes the rise it measured, so the host's
    inset is not assumed, and the row declares itself no-drag: its top now lies
    inside the shell's drag strip. */
-body[data-dsh-claude-style][data-dsh-header-band~="title"] [data-dsh-header-row] {
+body[data-dsh-claude-style-plus][data-dsh-header-band~="title"] [data-dsh-header-row] {
   position: relative !important;
   top: var(--dsh-header-band-row-lift, 0px) !important;
   -webkit-app-region: no-drag !important;
@@ -46,12 +46,12 @@ body[data-dsh-claude-style][data-dsh-header-band~="title"] [data-dsh-header-row]
    width, which protects the title when the two share it. In the caption row the
    title takes no width, so the row has room and the control would only be
    missing; the label stays. */
-body[data-dsh-claude-style][data-dsh-header-band~="title"] [data-dsh-header-row] [class*="_label"] {
+body[data-dsh-claude-style-plus][data-dsh-header-band~="title"] [data-dsh-header-row] [class*="_label"] {
   display: flex !important;
 }
 
-body[data-dsh-claude-style][data-dsh-header-band~="actions"] [data-dsh-header-actions],
-body[data-dsh-claude-style][data-dsh-header-band~="actions"] [data-dsh-header-corner] {
+body[data-dsh-claude-style-plus][data-dsh-header-band~="actions"] [data-dsh-header-actions],
+body[data-dsh-claude-style-plus][data-dsh-header-band~="actions"] [data-dsh-header-corner] {
   position: fixed !important;
   top: calc(var(--dsh-windows-titlebar-height, 40px) / 2) !important;
   /* Both clusters keep their order and their air through this offset alone:

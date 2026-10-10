@@ -22,7 +22,7 @@
  *                                authors file, copied to lib/fonts/ (buildFonts)
  *
  * What the build produces for the browser half reaches the source as one
- * generated module, `virtual:dsh-claude-style/generated` (typed in
+ * generated module, `virtual:dsh-claude-style-plus/generated` (typed in
  * packages/client/src/generated.d.ts): the stylesheet, the asset addresses, the lockups, the
  * build id.
  *
@@ -185,7 +185,7 @@ const CONSTANTS = (() => {
 
 /**
  * The brand marks the stylesheets paint, each as the custom property
- * `--dsh-claude-image-<name>` the token sheet declares (the skin has no asset
+ * `--dsh-claude-style-plus-image-<name>` the token sheet declares (the skin has no asset
  * URLs: the DSH loader exposes none, so a mark is a data URI or a route
  * address, whichever the asset manifest decided).
  */
@@ -318,7 +318,7 @@ async function main() {
     COMBINE_SVGS: Object.fromEntries(Object.entries(combines).map(([id, item]) => [id, item.svg])),
     COMBINE_WORDS: Object.fromEntries(Object.entries(combines).map(([id, item]) => [id, item.word])),
     // The build id: a hash of the bundle itself, written into it below. The
-    // skin puts it on <body data-dsh-claude-style>, so a live page can be
+    // skin puts it on <body data-dsh-claude-style-plus>, so a live page can be
     // matched to the lib/client.js it runs — a hot reload swaps the bundle
     // without reloading the page, so the page's load time says nothing about
     // its code.

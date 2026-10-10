@@ -32,7 +32,7 @@
     // container around them before, so both marks are checked.
     var statsFigures = Array.prototype.slice.call(document.querySelectorAll('[data-composer-stat], [data-composer-stats]'))
     r.statsHidden = statsFigures.length > 0 && statsFigures.every(function (el) { return getComputedStyle(el).display === 'none' })
-    r.statsStrayCards = document.querySelectorAll('.dsh-claude-stats-popover').length
+    r.statsStrayCards = document.querySelectorAll('.dsh-claude-style-plus-stats-popover').length
     // The session list's leading seat. The host's newer rows render it through a
     // slot outlet, so an idle row's seat is not :empty — the circle has to hang
     // on the empty outlet anchor. A seat carrying the running status dot keeps

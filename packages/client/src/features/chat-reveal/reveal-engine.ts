@@ -1,6 +1,6 @@
 import { subscribeMutations } from '../../core/bus'
 import { isChatFoldToggle } from '../chat-fold/fold-toggle'
-import { STREAMING_ATTRIBUTE, STREAMING_SELECTOR } from '@dsh-claude-style/contracts/dom'
+import { STREAMING_ATTRIBUTE, STREAMING_SELECTOR } from '@dsh-claude-style-plus/contracts/dom'
 import { createRevealScanner } from './reveal-diff'
 import { createRevealHighlights, createRunColorPublisher } from './reveal-highlights'
 import { createRevealPainter } from './reveal-paint'

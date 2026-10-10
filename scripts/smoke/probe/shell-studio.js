@@ -49,7 +49,7 @@
             if (Array.isArray(node)) { node.forEach(collect); return }
             if (node.props && typeof node.props.className === 'string') classes.push(node.props.className)
             if (node.props) collect(node.props.children)
-          })(window.__slotComponents['claude-style-usage']({}))
+          })(window.__slotComponents['claude-style-plus-usage']({}))
           r.panelRenders[tab] = { error: null, classes: classes, texts: texts }
         } catch (e) {
           r.panelRenders[tab] = { error: String((e && e.stack) || e), classes: [], texts: [] }
@@ -63,11 +63,11 @@
       // back to idle on the browser's animation engine, so no frame wakes a
       // pass. With the animation choice on "reduced" it holds the idle
       // sheet's still frame; a click still plays the poke.
-      var crab = document.querySelector('[data-composer-card] > .dsh-claude-crab')
+      var crab = document.querySelector('[data-composer-card] > .dsh-claude-style-plus-crab')
       r.mascot = { mounted: crab !== null }
       if (crab !== null) {
-        var crabStrip = crab.querySelector('.dsh-claude-crab-strip')
-        var crabHit = crab.querySelector('.dsh-claude-crab-hit')
+        var crabStrip = crab.querySelector('.dsh-claude-style-plus-crab-strip')
+        var crabHit = crab.querySelector('.dsh-claude-style-plus-crab-hit')
         r.mascot.ready = crab.hasAttribute('data-ready')
         r.mascot.animation = crab.getAttribute('data-animation')
         r.mascot.body = getComputedStyle(crabStrip).backgroundImage.indexOf('data:image/png') !== -1
@@ -96,7 +96,7 @@
         // settings row does.
         window.__pushForm({ motion: 'reduced' })
         await sleep(150)
-        r.mascot.reducedAttr = document.body.getAttribute('data-dsh-claude-motion')
+        r.mascot.reducedAttr = document.body.getAttribute('data-dsh-claude-style-plus-motion')
         r.mascot.stillFrame = crabStrip.style.transform
         r.mascot.stillAnimations = crabStrip.getAnimations().length
         pokeCrab()
@@ -118,16 +118,16 @@
         '<div class="_x_row_1"><div class="_x_tools_1"><div class="_x_modes_1"></div></div></div></div>'
       heroRoot.appendChild(coldStack)
       await sleep(200)
-      var coldSeat = coldStack.querySelector(':scope > .dsh-claude-home-seat')
+      var coldSeat = coldStack.querySelector(':scope > .dsh-claude-style-plus-home-seat')
       var coldRoot = window.__roots.filter(function (root) { return root.element === coldSeat })[0]
       r.coldStart = {
         seat: coldSeat !== null,
         rendered: coldRoot !== undefined && coldRoot.renders > 0,
-        segments: Array.prototype.map.call(coldStack.querySelectorAll('._x_modes_1 > .dsh-claude-segments > .dsh-claude-segment'), function (item) {
+        segments: Array.prototype.map.call(coldStack.querySelectorAll('._x_modes_1 > .dsh-claude-style-plus-segments > .dsh-claude-style-plus-segment'), function (item) {
           return { label: item.textContent, disabled: item.disabled, active: item.hasAttribute('data-active') }
         }),
       }
-      var coldGroup = coldStack.querySelector('._x_modes_1 > .dsh-claude-segments')
+      var coldGroup = coldStack.querySelector('._x_modes_1 > .dsh-claude-style-plus-segments')
       var coldActive = coldGroup === null ? null : coldGroup.querySelector('[data-active]')
       r.coldStart.pill = coldActive === null ? null : pillState(coldGroup, coldActive)
       // The session arrives: the host renders its dock, and the skin's seat
@@ -136,12 +136,12 @@
       coldDock.setAttribute('data-slot', 'conversation.input.dock')
       coldStack.insertBefore(coldDock, coldStack.firstChild)
       await sleep(200)
-      r.coldStart.seatAfterDock = coldStack.querySelector('.dsh-claude-home-seat') !== null
+      r.coldStart.seatAfterDock = coldStack.querySelector('.dsh-claude-style-plus-home-seat') !== null
       r.coldStart.unmountedAfterDock = coldRoot !== undefined && coldRoot.unmounted
       coldStack.remove()
       accessParent.appendChild(access)
       await sleep(200)
-      r.homeHero = { onHero: document.body.hasAttribute('data-dsh-claude-home-hero') }
+      r.homeHero = { onHero: document.body.hasAttribute('data-dsh-claude-style-plus-home-hero') }
       // The studio rules reach the hero stack through that mark: the stack
       // takes the studio column's 720px cap.
       var studioStack = document.createElement('div')
@@ -151,8 +151,8 @@
       studioStack.remove()
       heroRoot.remove()
       await sleep(200)
-      r.homeHero.offHero = document.body.hasAttribute('data-dsh-claude-home-hero')
-      r.mascot.afterHero = document.querySelector('.dsh-claude-crab') !== null
+      r.homeHero.offHero = document.body.hasAttribute('data-dsh-claude-style-plus-home-hero')
+      r.mascot.afterHero = document.querySelector('.dsh-claude-style-plus-crab') !== null
       // The stylesheet alone decides where a panel may draw: under the hero
       // stack's dock it shows, and the moment the host drops the stack's hero
       // class (the first message sent) it is gone, before any pass runs.
@@ -160,10 +160,10 @@
         var stack = document.createElement('div')
         stack.className = stackClass
         var dock = document.createElement('div')
-        if (coldStart) dock.className = 'dsh-claude-home-seat'
+        if (coldStart) dock.className = 'dsh-claude-style-plus-home-seat'
         else dock.setAttribute('data-slot', 'conversation.input.dock')
         var panel = document.createElement('section')
-        panel.className = 'dsh-claude-home-panel'
+        panel.className = 'dsh-claude-style-plus-home-panel'
         dock.appendChild(panel)
         stack.appendChild(dock)
         document.body.appendChild(stack)

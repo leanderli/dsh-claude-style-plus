@@ -1,5 +1,5 @@
 import { normalizeModelId } from '../../core/model-copy'
-import type { RateProfile } from '@dsh-claude-style/contracts/peakrate'
+import type { RateProfile } from '@dsh-claude-style-plus/contracts/peakrate'
 
 /**
  * Which billing profile applies to one provider and model (D54).

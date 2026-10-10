@@ -3,7 +3,7 @@
  *
  * The host's own styles carry a handful of `!important` and sit in no cascade
  * layer, so the skin's selectors — every one starting at
- * `body[data-dsh-claude-style]` — already outweigh the host's single-class rules
+ * `body[data-dsh-claude-style-plus]` — already outweigh the host's single-class rules
  * on specificity. A skin `!important` is needed where it beats a host
  * `!important`, an inline style, or another skin rule; everywhere else it only
  * adds weight. Which is which is decided on the real page, never by reading:
@@ -48,7 +48,7 @@ const ROOT = path.resolve(__dirname, '..', '..')
 /** The marker declaration carrying each rule's index into the page's CSSOM. */
 const MARK = '--dsh-audit-rule'
 /** The skin's stylesheet, by the tag it wears (D33). */
-const SHEET = 'style[data-plugin-css="dsh-claude-style/client.css"]'
+const SHEET = 'style[data-plugin-css="dsh-claude-style-plus/client.css"]'
 /** Pseudo-elements the page can read a computed style for. */
 const READABLE_PSEUDO = new Set(['::before', '::after', '::marker', '::placeholder'])
 
@@ -480,11 +480,11 @@ async function createImportanceAudit(page, reference) {
 
 /** The skin's own triggers, each opening the surface its rules paint. */
 const SURFACES = [
-  ['model picker', '.dsh-claude-model-btn'],
-  ['effort picker', '.dsh-claude-effort-btn'],
-  ['permission picker', '.dsh-claude-perm-btn'],
-  ['account card', '.dsh-claude-account-btn'],
-  ['search panel', '.dsh-claude-search-trigger'],
+  ['model picker', '.dsh-claude-style-plus-model-btn'],
+  ['effort picker', '.dsh-claude-style-plus-effort-btn'],
+  ['permission picker', '.dsh-claude-style-plus-perm-btn'],
+  ['account card', '.dsh-claude-style-plus-account-btn'],
+  ['search panel', '.dsh-claude-style-plus-search-trigger'],
 ]
 
 /**
@@ -584,7 +584,7 @@ function importanceScenario(lane) {
       await audit.state('streaming')
       await second
       await lane.waitForTurn(page)
-      const rail = await page.evaluate(pointAtInPage, ['.dsh-claude-turn-rail'])
+      const rail = await page.evaluate(pointAtInPage, ['.dsh-claude-style-plus-turn-rail'])
       if (rail !== null) {
         await page.mouse.move(rail.x, rail.y)
         await page.waitForTimeout(400)
@@ -613,16 +613,16 @@ function importanceScenario(lane) {
       // palette and typefaces.
       await attribute(page, 'data-ds-dark-theme', '')
       await audit.state('dark')
-      await attribute(page, 'data-dsh-claude-brand', 'deepseek')
+      await attribute(page, 'data-dsh-claude-style-plus-brand', 'deepseek')
       await audit.state('deepseek dark')
       await attribute(page, 'data-ds-dark-theme', null)
       await audit.state('deepseek light')
-      await attribute(page, 'data-dsh-claude-brand', 'claude')
-      await attribute(page, 'data-dsh-claude-palette', 'host')
-      await attribute(page, 'data-dsh-claude-typeface', 'host')
+      await attribute(page, 'data-dsh-claude-style-plus-brand', 'claude')
+      await attribute(page, 'data-dsh-claude-style-plus-palette', 'host')
+      await attribute(page, 'data-dsh-claude-style-plus-typeface', 'host')
       await audit.state('host palette')
-      await attribute(page, 'data-dsh-claude-palette', 'claude')
-      await attribute(page, 'data-dsh-claude-typeface', 'claude')
+      await attribute(page, 'data-dsh-claude-style-plus-palette', 'claude')
+      await attribute(page, 'data-dsh-claude-style-plus-typeface', 'claude')
     },
     async assert({ session, audit, out }) {
       const { states, declarations, drift, sheet } = audit.result()

@@ -36,8 +36,8 @@
       var seen = chatRows.slice().sort(function (a, b) { return a.getBoundingClientRect().top - b.getBoundingClientRect().top })
       var lineOf = function (button) {
         return {
-          state: button.getAttribute('data-dsh-claude-turn-state'),
-          text: button.getAttribute('data-dsh-claude-turn-status'),
+          state: button.getAttribute('data-dsh-claude-style-plus-turn-state'),
+          text: button.getAttribute('data-dsh-claude-style-plus-turn-status'),
           drawn: getComputedStyle(button, '::after').content,
           label: getComputedStyle(button.querySelector('span')).display,
           turning: getComputedStyle(button, '::before').animationName,

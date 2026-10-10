@@ -8,7 +8,7 @@ import { removeStrayNodes } from '../../shared/popover'
 import type { HostAnswer } from '../../shared/resource'
 import { createSlidingPill } from '../../shared/sliding-pill'
 import type { HostContext, HostValue } from '../../core/host'
-import type { HostSessionsService, HostWorkspacesService } from '@dsh-claude-style/contracts/services'
+import type { HostSessionsService, HostWorkspacesService } from '@dsh-claude-style-plus/contracts/services'
 import type { FeatureUi } from '../../core/feature'
 import type manifest from './workspace-view.manifest'
 
@@ -44,9 +44,9 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
   let noticeRoot: reactDom.Root | null = null
   let noticeSeq = 0
   /** The section's view (active / archived), its heading and the host's tree, marked for workspace.css. */
-  const viewStamp = createStamp('data-dsh-claude-ws-view')
-  const labelStamp = createStamp('data-dsh-claude-ws-label')
-  const treeStamp = createStamp('data-dsh-claude-ws-tree')
+  const viewStamp = createStamp('data-dsh-claude-style-plus-ws-view')
+  const labelStamp = createStamp('data-dsh-claude-style-plus-ws-label')
+  const treeStamp = createStamp('data-dsh-claude-style-plus-ws-tree')
   const SEGMENTS = [
     { id: 'active', key: 'archiveActive', fallback: 'Active' },
     { id: 'archived', key: 'archiveArchived', fallback: 'Archived' }
@@ -237,7 +237,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
       refusal.status = status
       throw refusal
     }).catch((reason: { status?: number, message?: string }) => {
-      console.warn('dsh-claude-style: session delete rejected:', reason)
+      console.warn('dsh-claude-style-plus: session delete rejected:', reason)
       notifyToast(reason?.status === 409
         ? copyLabel('archiveDeleteOpen', 'The conversation is still held open by this app; restart it, then delete again')
         : copyLabel('archiveDeleteFailed', 'Delete failed: {detail}', { detail: reason?.message ?? String(reason) }))
@@ -259,7 +259,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     if (followed === null || typeof followed.refresh !== 'function') return
     // Best effort against the host's sessions service: a rejection leaves the list as it stands (D12).
     followed.refresh().catch((reason: unknown) => {
-      console.warn('dsh-claude-style: session baseline refresh rejected:', reason)
+      console.warn('dsh-claude-style-plus: session baseline refresh rejected:', reason)
     })
   }
 
@@ -272,14 +272,14 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     if (followed === null) return
     // A refused unarchive keeps the row in the archive set; the host stays the owner of the verdict (D12).
     Promise.resolve(followed.unarchiveSession(id)).catch((reason: unknown) => {
-      console.warn('dsh-claude-style: session unarchive rejected:', reason)
+      console.warn('dsh-claude-style-plus: session unarchive rejected:', reason)
     })
   }
 
   /** One row action: the host's icon inside the host's tooltip. */
   function actionButton(kind: 'restore' | 'delete', label: string, onClick: (event: React.MouseEvent) => void) {
-    const wrapper = buildElement('span', 'dsh-claude-archive-action')
-    const className = kind === 'restore' ? 'dsh-claude-archive-restore' : 'dsh-claude-archive-delete'
+    const wrapper = buildElement('span', 'dsh-claude-style-plus-archive-action')
+    const className = kind === 'restore' ? 'dsh-claude-style-plus-archive-restore' : 'dsh-claude-style-plus-archive-delete'
     const Icon = kind === 'restore' ? primitives.IconUnarchiveOutlineRegular : primitives.IconTrashOutlineRegular
     const root = reactDom.createRoot(wrapper)
     actionRoots.push(root)
@@ -294,12 +294,12 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
   }
 
   function buildArchivedRow(item: { id: string, title: string, at: number }) {
-    const row = buildElement('div', 'dsh-claude-archive-row')
+    const row = buildElement('div', 'dsh-claude-style-plus-archive-row')
     row.setAttribute('role', 'button')
     row.setAttribute('tabindex', '0')
     row.setAttribute('data-session-id', item.id)
-    row.appendChild(buildElement('span', 'dsh-claude-archive-title', item.title))
-    row.appendChild(buildElement('span', 'dsh-claude-archive-time', relativeTime(item.at)))
+    row.appendChild(buildElement('span', 'dsh-claude-style-plus-archive-title', item.title))
+    row.appendChild(buildElement('span', 'dsh-claude-style-plus-archive-time', relativeTime(item.at)))
     // The host's archived rows offer an unarchive action; the skin's list
     // carries the same pair, so leaving the archived view is not the only way
     // back to a conversation.
@@ -325,28 +325,28 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     actionRoots = []
     while (listHost.firstChild) listHost.removeChild(listHost.firstChild)
     if (items === null) {
-      listHost.appendChild(buildElement('div', 'dsh-claude-archive-status', copyLabel('archiveLoading', 'Loading…')))
+      listHost.appendChild(buildElement('div', 'dsh-claude-style-plus-archive-status', copyLabel('archiveLoading', 'Loading…')))
       return
     }
     if (items.length === 0) {
-      listHost.appendChild(buildElement('div', 'dsh-claude-archive-status', copyLabel('archiveEmpty', 'No archived conversations')))
+      listHost.appendChild(buildElement('div', 'dsh-claude-style-plus-archive-status', copyLabel('archiveEmpty', 'No archived conversations')))
       return
     }
     for (let i = 0; i < items.length; i++) listHost.appendChild(buildArchivedRow(items[i]))
   }
 
   function buildControl() {
-    const group = buildElement('div', 'dsh-claude-ws-segments')
+    const group = buildElement('div', 'dsh-claude-style-plus-ws-segments')
     group.setAttribute('role', 'radiogroup')
     for (let i = 0; i < SEGMENTS.length; i++) {
-      const item = buildElement('button', 'dsh-claude-ws-segment', '')
+      const item = buildElement('button', 'dsh-claude-style-plus-ws-segment', '')
       item.type = 'button'
       item.setAttribute('role', 'radio')
       item.setAttribute('data-view', SEGMENTS[i].id)
       group.appendChild(item)
     }
     group.addEventListener('click', event => {
-      const item = closestFrom(event.target, '.dsh-claude-ws-segment')
+      const item = closestFrom(event.target, '.dsh-claude-style-plus-ws-segment')
       if (item === null) return
       event.stopPropagation()
       event.preventDefault()
@@ -394,7 +394,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     if (host === null) return
     if (listHost === null || listHost.parentElement !== host) {
       if (listHost !== null && listHost.parentElement !== null) listHost.parentElement.removeChild(listHost)
-      listHost = buildElement('div', 'dsh-claude-archive-list')
+      listHost = buildElement('div', 'dsh-claude-style-plus-archive-list')
       host.insertBefore(listHost, tree.nextSibling)
       renderList()
     }
@@ -402,7 +402,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     // that held the list, the old copy can stay in the document while a new
     // one is built elsewhere. Sweep every copy but the live one, the same way
     // the stats popover sweeps its strays.
-    removeStrayNodes(document, '.dsh-claude-archive-list', [listHost])
+    removeStrayNodes(document, '.dsh-claude-style-plus-archive-list', [listHost])
     viewStamp.mark(host, view)
   }
 

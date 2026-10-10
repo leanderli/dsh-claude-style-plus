@@ -35,9 +35,20 @@ interface UsageEvent {
     turn?: number
     step?: number
     stream?: { type?: string, chunk?: { type?: string, usage?: UsageSample } }[]
-    message?: { source?: { model?: unknown }, usage?: UsageSample }
+    message?: { source?: { model?: unknown, kind?: unknown, name?: unknown }, usage?: UsageSample }
+    source?: { kind?: unknown, name?: unknown }
+    name?: unknown
+    arguments?: unknown
   }
 }
+
+/** Per-skill invocation counts for one local day in a single Session log. */
+export interface SkillDayCounts {
+  explicitCalls: number
+  modelCalls: number
+}
+
+export type SkillDays = Map<string, Map<string, SkillDayCounts>>
 
 /** One usage sample, in the host's own token names. */
 interface UsageSample {
@@ -59,6 +70,7 @@ export interface SessionLog {
 interface FoldedSession {
   days: Map<string, DayBuckets>
   hours: number[]
+  skillDays: SkillDays
 }
 
 /**
@@ -123,18 +135,56 @@ function modelOf(event: UsageEvent): string | null {
   return typeof model === 'string' && model !== '' ? model : null
 }
 
+type SkillCall = { name: string, kind: 'explicit' | 'model' }
+
+/** Read only the two durable skill-call forms; catalog and unrelated tool events do not count. */
+function skillCallOf(event: UsageEvent): SkillCall | null {
+  if (event.type === 'user/message') {
+    const source = event.data?.source
+    if (source?.kind === 'skill-invocation' && typeof source.name === 'string' && source.name !== '') {
+      return { name: source.name, kind: 'explicit' }
+    }
+  }
+  if (event.type !== 'tool/call' || event.data?.name !== 'skill' || typeof event.data.arguments !== 'string') return null
+  // A malformed model argument has no attributable skill name and must not break the usage pass.
+  let args: unknown
+  try {
+    args = JSON.parse(event.data.arguments)
+  } catch {
+    return null
+  }
+  if (args === null || typeof args !== 'object') return null
+  const name = (args as { name?: unknown }).name
+  return typeof name === 'string' && name !== '' ? { name, kind: 'model' } : null
+}
+
 /**
  * Fold one session's events into per-day buckets, plus a settlement count per
  * hour of day — the dashboard's peak-hour cell — both for the whole session and
  * for each day, so a range window can sum its own days' hours. A replaced
- * sample leaves its hour the same way it leaves its day.
+ * sample leaves its hour the same way it leaves its day. Skill counts omit the
+ * exact fork-inherited prefix supplied by `sessionQuery.readSession()`.
  *
  * @param events - the session's durable events, in sequence order.
- * @returns a map of local day key to buckets, and a 24-slot hour histogram.
+ * @param inheritedEventCount - the number of prefix events copied from a parent Session.
+ * @returns day buckets, an hour histogram, and Skill call buckets.
  */
-export function foldSession(events: UsageEvent[]): FoldedSession {
+export function foldSession(events: UsageEvent[], inheritedEventCount = 0): FoldedSession {
+  const inheritedCut = Number.isFinite(inheritedEventCount) ? Math.max(0, inheritedEventCount) : 0
   const days = new Map<string, DayBuckets>()
   const hours = new Array(24).fill(0) as number[]
+  const skillDays: SkillDays = new Map()
+  const recordSkill = (day: string, skill: SkillCall) => {
+    let byName = skillDays.get(day)
+    if (byName === undefined) {
+      byName = new Map<string, SkillDayCounts>()
+      skillDays.set(day, byName)
+    }
+    const counts = byName.get(skill.name) ?? { explicitCalls: 0, modelCalls: 0 }
+    if (skill.kind === 'explicit') counts.explicitCalls++
+    else counts.modelCalls++
+    byName.set(skill.name, counts)
+  }
   const bump = (day: string, hour: number, buckets: Buckets, sign: number, model: string | null) => {
     hours[hour] += sign
     let target = days.get(day)
@@ -170,6 +220,12 @@ export function foldSession(events: UsageEvent[]): FoldedSession {
   type Settlement = { turn?: number, step?: number, buckets: Buckets, day: string, hour: number, model: string | null }
   let last: Settlement | null = null
   for (const event of events) {
+    const ownEvent = inheritedCut === 0 || (typeof event.seq === 'number' && event.seq >= inheritedCut)
+    const skill = ownEvent ? skillCallOf(event) : null
+    if (skill !== null && typeof event.time === 'number') {
+      const skillDay = dayKey(event.time)
+      if (skillDay !== null) recordSkill(skillDay, skill)
+    }
     const type = event?.type
     if (type === 'llm/retry-started') {
       const data = event.data
@@ -194,7 +250,7 @@ export function foldSession(events: UsageEvent[]): FoldedSession {
     bump(day, hour, buckets, 1, model)
     last = { turn, step, buckets, day, hour, model }
   }
-  return { days, hours }
+  return { days, hours, skillDays }
 }
 
 /** The newest generation of a session directory's log, with its fingerprint. */
@@ -255,9 +311,14 @@ export async function readEvents(ctx: DshContext, sessionId: string) {
     // skipped and retried on the next pass (docs/decisions D12).
     const failure = error as { code?: string, message?: string }
     if (failure?.code !== 'SESSION_QUERY_CORRUPT_SESSION' && failure?.code !== 'SESSION_QUERY_SESSION_NOT_FOUND') throw error
-    ctx.logger?.warn?.(`dsh-claude-style: session ${sessionId} left out of the usage roll-up: ${failure.message}`)
+    ctx.logger?.warn?.(`dsh-claude-style-plus: session ${sessionId} left out of the usage roll-up: ${failure.message}`)
     return null
   }
   const events = snapshot?.events
-  return Array.isArray(events) ? events as UsageEvent[] : null
+  if (!Array.isArray(events)) return null
+  const inherited = Number(snapshot?.inheritedEventCount)
+  return {
+    events: events as UsageEvent[],
+    inheritedEventCount: Number.isFinite(inherited) ? Math.max(0, inherited) : 0,
+  }
 }

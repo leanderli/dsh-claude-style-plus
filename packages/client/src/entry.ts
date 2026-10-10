@@ -11,8 +11,8 @@ import { externalOwnerActive, subscribeExternalOwner } from './shared/visual-own
 import { loadFeatureChunk } from './core/chunks'
 import { handleName, setFeatureRegistry } from './core/feature'
 import type { Feature, FeatureInstall } from './core/feature'
-import { FEATURES } from 'virtual:dsh-claude-style/features'
-import { BUILD_ID } from 'virtual:dsh-claude-style/generated'
+import { FEATURES } from 'virtual:dsh-claude-style-plus/features'
+import { BUILD_ID } from 'virtual:dsh-claude-style-plus/generated'
 
 // At module scope on purpose: the sweep runs right after this factory
 // returns, so an `apply()` body would be too late. The head watch
@@ -91,7 +91,7 @@ export function apply(ctx: HostContext) {
     // Each body attribute goes with whoever writes it: a feature's own with
     // its teardown above, the preference mirror's here, the stamps last.
     clearPrefsAttributes()
-    body.removeAttribute('data-dsh-claude-style')
+    body.removeAttribute('data-dsh-claude-style-plus')
     body.removeAttribute(HANDOFF_ATTR)
     // This generation's own sheet, handed over rather than taken away when a
     // newer generation has mounted after it (mountStylesheet).
@@ -125,7 +125,7 @@ export function apply(ctx: HostContext) {
   // Registered before anything is installed: registered last, a feature that
   // threw half-way through left the stylesheet and every listener installed
   // so far on the page with no teardown the host could ever run.
-  ctx.effect(() => teardown, 'dsh-claude-style: Claude Code desktop theme')
+  ctx.effect(() => teardown, 'dsh-claude-style-plus: Claude Code desktop theme')
 
   /**
    * Switch one feature off for the rest of this generation: run its own
@@ -278,7 +278,7 @@ export function apply(ctx: HostContext) {
   function own() {
     // The value is the build id (scripts/build.mjs): the stylesheet keys on
     // the attribute alone, and a live page reads which lib/client.js it runs.
-    body.setAttribute('data-dsh-claude-style', BUILD_ID)
+    body.setAttribute('data-dsh-claude-style-plus', BUILD_ID)
     // The handoff marker rides the live stamp: its presence is what lets the
     // skin center offer this theme as a selectable look (D49).
     body.setAttribute(HANDOFF_ATTR, BUILD_ID)

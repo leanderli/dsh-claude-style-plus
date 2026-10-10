@@ -32,7 +32,7 @@ export function createMascotWhale(ctx: HostContext, ui: FeatureUi<typeof manifes
         ready: sheets.ready,
         failed: sheets.failed,
         paint(style, key) {
-          style.setProperty('--dsh-claude-deepy-sheet', `url("${sheets.url(key)}")`)
+          style.setProperty('--dsh-claude-style-plus-deepy-sheet', `url("${sheets.url(key)}")`)
         },
         dispose: sheets.dispose,
       }

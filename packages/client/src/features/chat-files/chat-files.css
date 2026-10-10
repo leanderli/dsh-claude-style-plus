@@ -14,31 +14,31 @@
    while the marker pair is split for exactly that — light rgb(1,162,65) /
    rgb(186,39,35), dark rgb(65,201,119) / rgb(250,66,62). Retuning means these two
    lines, one per theme. */
-body[data-dsh-claude-style] {
-  --dsh-claude-diff-added: var(--dsw-alias-file-diff-added-marker);
-  --dsh-claude-diff-deleted: var(--dsw-alias-file-diff-deleted-marker);
+body[data-dsh-claude-style-plus] {
+  --dsh-claude-style-plus-diff-added: var(--dsw-alias-file-diff-added-marker);
+  --dsh-claude-style-plus-diff-deleted: var(--dsw-alias-file-diff-deleted-marker);
 }
 
-body[data-dsh-claude-style] .dsh-claude-file-root {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-root {
   display: flex;
   flex-direction: column;
 }
 
-body[data-dsh-claude-style] .dsh-claude-file-leading {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-leading {
   flex-shrink: 0;
 }
 
-body[data-dsh-claude-style] .dsh-claude-file-chevron {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-chevron {
   color: var(--dsw-alias-label-secondary);
 }
 
-body[data-dsh-claude-style] .dsh-claude-file-title {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-title {
   font-weight: 400;
   transition: color 100ms ease;
 }
 
 /* A 2 by 2 dot: the light separator between the title and the summary. */
-body[data-dsh-claude-style] .dsh-claude-file-sep {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-sep {
   flex: none;
   width: 2px;
   height: 2px;
@@ -47,7 +47,7 @@ body[data-dsh-claude-style] .dsh-claude-file-sep {
   background: var(--dsw-alias-label-caption);
 }
 
-body[data-dsh-claude-style] .dsh-claude-file-summary {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-summary {
   flex: 1 1 auto;
   min-width: 0;
   overflow: hidden;
@@ -62,7 +62,7 @@ body[data-dsh-claude-style] .dsh-claude-file-summary {
 /* The tail: it sits outside the summary's ellipsis, so it carries the same type
    size of its own. A fixed gap sits between the two numbers — wider than a space,
    so "+12" and "-3" do not read as one number. */
-body[data-dsh-claude-style] .dsh-claude-file-suffix {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-suffix {
   flex: none;
   display: inline-flex;
   align-items: baseline;
@@ -73,33 +73,33 @@ body[data-dsh-claude-style] .dsh-claude-file-suffix {
 
 /* The numbers: the code face, two steps below the path, with half a pixel pushing
    the baseline back to the middle of the line box. */
-body[data-dsh-claude-style] .dsh-claude-file-stat {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-stat {
   font-family: var(--ds-font-family-code);
   font-size: calc(var(--dsh-content-font-size-secondary, 13px) - 2px);
   line-height: calc(24px + var(--dsh-content-font-delta, 0px));
   transform: translateY(0.5px);
 }
 
-body[data-dsh-claude-style] .dsh-claude-file-add {
-  color: var(--dsh-claude-diff-added);
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-add {
+  color: var(--dsh-claude-style-plus-diff-added);
 }
 
-body[data-dsh-claude-style] .dsh-claude-file-del {
-  color: var(--dsh-claude-diff-deleted);
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-del {
+  color: var(--dsh-claude-style-plus-diff-deleted);
 }
 
 /* Hovering the row lifts it, but the two numbers do not follow: they are this
    row's conclusion, their colour is the information, and turning them into body
    colour would rub the conclusion out. */
-body[data-dsh-claude-style] .dsh-claude-file-row:hover .dsh-claude-file-title,
-body[data-dsh-claude-style] .dsh-claude-file-row:hover .dsh-claude-file-summary:not(.dsh-claude-file-error):not(.dsh-claude-file-stopped) {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-row:hover .dsh-claude-style-plus-file-title,
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-row:hover .dsh-claude-style-plus-file-summary:not(.dsh-claude-style-plus-file-error):not(.dsh-claude-style-plus-file-stopped) {
   color: var(--dsw-alias-label-primary);
 }
 
 /* The file path: same type size, a dotted underline saying it can be pressed. It
    shrinks to the width of its text, so the blank space left in the row still
    belongs to the open and close target. */
-body[data-dsh-claude-style] .dsh-claude-file-link {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-link {
   flex: 0 1 auto;
   min-width: 0;
   overflow: hidden;
@@ -122,35 +122,35 @@ body[data-dsh-claude-style] .dsh-claude-file-link {
   transition: color 100ms ease;
 }
 
-body[data-dsh-claude-style] .dsh-claude-file-row:hover .dsh-claude-file-link,
-body[data-dsh-claude-style] .dsh-claude-file-link:hover {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-row:hover .dsh-claude-style-plus-file-link,
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-link:hover {
   color: var(--dsw-alias-label-primary);
   text-decoration-color: currentColor;
 }
 
-body[data-dsh-claude-style] .dsh-claude-file-error {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-error {
   color: var(--dsw-alias-state-error-primary);
 }
 
-body[data-dsh-claude-style] .dsh-claude-file-stopped {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-stopped {
   color: var(--dsw-alias-state-warn-label);
 }
 
-body[data-dsh-claude-style] .dsh-claude-file-body {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-body {
   display: flex;
   flex-direction: column;
 }
 
 /* The expanded body: the diff card and the IN/OUT card share one left indent and
    one rhythm between rows. */
-body[data-dsh-claude-style] .dsh-claude-file-diff,
-body[data-dsh-claude-style] .dsh-claude-file-io {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-diff,
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-io {
   margin: 4px 0 4px 4px;
 }
 
 /* The IN/OUT card: the code block's surface and corner, each section scrolling on
    its own with a hairline between them. */
-body[data-dsh-claude-style] .dsh-claude-file-io {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-io {
   display: flex;
   flex-direction: column;
   border: 0.5px solid var(--dsw-alias-border-l1);
@@ -159,7 +159,7 @@ body[data-dsh-claude-style] .dsh-claude-file-io {
   font: var(--dsw-font-markdown-code-block-small);
 }
 
-body[data-dsh-claude-style] .dsh-claude-file-io-section {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-io-section {
   display: grid;
   grid-template-columns: max-content 1fr;
   column-gap: 14px;
@@ -169,33 +169,33 @@ body[data-dsh-claude-style] .dsh-claude-file-io-section {
   overflow-y: auto;
 }
 
-body[data-dsh-claude-style] .dsh-claude-file-io-divider {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-io-divider {
   flex: none;
   height: 0.5px;
   background: var(--dsw-alias-border-l2);
 }
 
-body[data-dsh-claude-style] .dsh-claude-file-io-label {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-io-label {
   position: sticky;
   top: 0;
   align-self: start;
   color: var(--dsw-alias-label-caption);
 }
 
-body[data-dsh-claude-style] .dsh-claude-file-io-text {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-io-text {
   min-width: 0;
   white-space: pre-wrap;
   word-break: break-word;
   color: var(--dsw-alias-label-secondary);
 }
 
-body[data-dsh-claude-style] .dsh-claude-file-io-text[data-error] {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-io-text[data-error] {
   color: var(--dsw-alias-state-error-primary);
 }
 
 /* The trajectory entrance: it appears when the row (its title line included) is
    hovered or when it takes keyboard focus, and takes no room otherwise. */
-body[data-dsh-claude-style] .dsh-claude-file-inspect {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-inspect {
   display: inline-flex;
   align-self: flex-start;
   align-items: center;
@@ -214,19 +214,19 @@ body[data-dsh-claude-style] .dsh-claude-file-inspect {
   transition: opacity 100ms ease;
 }
 
-body[data-dsh-claude-style] .dsh-claude-file-root:hover .dsh-claude-file-inspect,
-body[data-dsh-claude-style] .dsh-claude-file-inspect:focus-visible {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-root:hover .dsh-claude-style-plus-file-inspect,
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-inspect:focus-visible {
   opacity: 1;
 }
 
-body[data-dsh-claude-style] .dsh-claude-file-inspect:hover {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-inspect:hover {
   background: var(--dsw-alias-interactive-bg-hover-solid);
   color: var(--dsw-alias-label-primary);
 }
 
 /* The running state is carried by the icon and its sweep alone, so the state
    itself needs a sentence for a screen reader. */
-body[data-dsh-claude-style] .dsh-claude-file-hidden {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-file-hidden {
   position: absolute;
   width: 1px;
   height: 1px;

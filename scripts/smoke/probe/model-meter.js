@@ -27,14 +27,14 @@
       var readRows = function (card) {
         var rows = []
         if (card === null) return rows
-        var options = card.querySelectorAll('.dsh-claude-model-option')
+        var options = card.querySelectorAll('.dsh-claude-style-plus-model-option')
         for (var i = 0; i < options.length; i++) {
           var option = options[i]
-          var meter = option.querySelector('.dsh-claude-peakrate')
-          var check = option.querySelector('.dsh-claude-popover-check')
-          var name = option.querySelector('.dsh-claude-model-name')
-          var value = meter === null ? null : meter.querySelector('.dsh-claude-peakrate-value')
-          var countdown = meter === null ? null : meter.querySelector('.dsh-claude-peakrate-countdown')
+          var meter = option.querySelector('.dsh-claude-style-plus-peakrate')
+          var check = option.querySelector('.dsh-claude-style-plus-popover-check')
+          var name = option.querySelector('.dsh-claude-style-plus-model-name')
+          var value = meter === null ? null : meter.querySelector('.dsh-claude-style-plus-peakrate-value')
+          var countdown = meter === null ? null : meter.querySelector('.dsh-claude-style-plus-peakrate-countdown')
           var box = option.getBoundingClientRect()
           var style = getComputedStyle(option)
           rows.push({
@@ -61,13 +61,13 @@
         return rows
       }
 
-      var trigger = document.querySelector('.dsh-claude-model-btn')
+      var trigger = document.querySelector('.dsh-claude-style-plus-model-btn')
       if (trigger !== null) trigger.click()
       await sleep(400)
-      var levelOne = readRows(document.querySelector('.dsh-claude-model-popover:not(.dsh-claude-model-popover-sub)'))
+      var levelOne = readRows(document.querySelector('.dsh-claude-style-plus-model-popover:not(.dsh-claude-style-plus-model-popover-sub)'))
 
       // The More-models cell opens the second level, beside the first.
-      var cell = document.querySelector('.dsh-claude-model-cell')
+      var cell = document.querySelector('.dsh-claude-style-plus-model-cell')
       if (cell !== null) cell.click()
       await sleep(300)
 
@@ -77,7 +77,7 @@
         // The last row of level 1 is the seat's own: a provider level 1 does
         // not list, so the picker adds that row under the list.
         currentRow: levelOne.length === 0 ? null : levelOne[levelOne.length - 1],
-        levelTwo: readRows(document.querySelector('.dsh-claude-model-popover-sub')),
+        levelTwo: readRows(document.querySelector('.dsh-claude-style-plus-model-popover-sub')),
       }
       card.remove()
     })

@@ -7,8 +7,8 @@ import { observeSize } from '../core/bus'
  * The conversation view tabs, the permission segments and the workspace
  * section's 进行中 / 已归档 control all place it through this one factory.
  *
- * The control gets `data-dsh-claude-pill` and two custom properties,
- * `--dsh-claude-pill-x` and `--dsh-claude-pill-w`, measured from the active
+ * The control gets `data-dsh-claude-style-plus-pill` and two custom properties,
+ * `--dsh-claude-style-plus-pill-x` and `--dsh-claude-style-plus-pill-w`, measured from the active
  * item's box against the control's padding box — the box the absolutely
  * placed pseudo-element is laid out in. Any transform on the control moves
  * both boxes alike, so it cancels out. The attribute and the first placement
@@ -26,7 +26,7 @@ import { observeSize } from '../core/bus'
  *   one; null just takes it off); `release` takes it off and stops watching.
  */
 export function createSlidingPill(activeSelector: string) {
-  const PILL_ATTR = 'data-dsh-claude-pill'
+  const PILL_ATTR = 'data-dsh-claude-style-plus-pill'
   let control: HTMLElement | null = null
   /** The last written offset and width, so an unchanged placement writes nothing. */
   let lastX: number | null = null
@@ -36,8 +36,8 @@ export function createSlidingPill(activeSelector: string) {
 
   function clear(el: HTMLElement) {
     el.removeAttribute(PILL_ATTR)
-    el.style.removeProperty('--dsh-claude-pill-x')
-    el.style.removeProperty('--dsh-claude-pill-w')
+    el.style.removeProperty('--dsh-claude-style-plus-pill-x')
+    el.style.removeProperty('--dsh-claude-style-plus-pill-w')
     lastX = null
     lastW = null
   }
@@ -55,8 +55,8 @@ export function createSlidingPill(activeSelector: string) {
     if (x === lastX && w === lastW && control.hasAttribute(PILL_ATTR)) return
     lastX = x
     lastW = w
-    control.style.setProperty('--dsh-claude-pill-x', `${x}px`)
-    control.style.setProperty('--dsh-claude-pill-w', `${w}px`)
+    control.style.setProperty('--dsh-claude-style-plus-pill-x', `${x}px`)
+    control.style.setProperty('--dsh-claude-style-plus-pill-w', `${w}px`)
     if (!control.hasAttribute(PILL_ATTR)) control.setAttribute(PILL_ATTR, '')
   }
 

@@ -104,14 +104,14 @@ async function start(options = {}) {
   // package (D11): the lane plants this checkout's copies in the scratch home's
   // drop point, so a capture shows the intended typography instead of falling
   // back per face and logging a 404 for each.
-  const dropPoint = path.join(home, 'dsh-claude-style', 'fonts')
+  const dropPoint = path.join(home, 'dsh-claude-style-plus', 'fonts')
   const faces = path.join(ROOT, 'packages', 'assets', 'src', 'fonts', 'anthropic')
   if (fs.existsSync(faces)) {
     fs.mkdirSync(dropPoint, { recursive: true })
     for (const name of fs.readdirSync(faces)) fs.copyFileSync(path.join(faces, name), path.join(dropPoint, name))
   }
   if (options.resetState === true) {
-    for (const entry of ['sessions', path.join('storages', 'session_projcache'), path.join('cache', 'dsh-claude-style', 'usage.json')]) {
+    for (const entry of ['sessions', path.join('storages', 'session_projcache'), path.join('cache', 'dsh-claude-style-plus', 'usage.json')]) {
       fs.rmSync(path.join(home, entry), { recursive: true, force: true })
     }
   }
@@ -192,7 +192,7 @@ async function openPage(url, options = {}) {
 
 /** Wait until the skin has taken the page (its build id is on `<body>`). */
 async function waitForSkin(page, timeoutMs = 30000) {
-  await page.waitForFunction(() => document.body.hasAttribute('data-dsh-claude-style'), undefined, { timeout: timeoutMs })
+  await page.waitForFunction(() => document.body.hasAttribute('data-dsh-claude-style-plus'), undefined, { timeout: timeoutMs })
 }
 
 /**

@@ -32,18 +32,18 @@
       sendEcho.innerHTML = '<div style="width:220px;height:44px;background:rgb(240,240,240);border-radius:18px;padding:8px 12px;font-size:15px;line-height:24px">hello world</div>'
       sendFlow.appendChild(sendEcho)
       await sleep(90)
-      var sendGhost = document.querySelector('[data-dsh-claude-send-ghost]')
+      var sendGhost = document.querySelector('[data-dsh-claude-style-plus-send-ghost]')
       r.send.flying = {
         ghost: sendGhost !== null,
         clone: sendGhost !== null && sendGhost.querySelector('[data-composer-card]') !== null,
-        hidden: sendEcho.hasAttribute('data-dsh-claude-send-flight'),
+        hidden: sendEcho.hasAttribute('data-dsh-claude-style-plus-send-flight'),
         visibility: getComputedStyle(sendEcho).visibility,
         animations: sendGhost === null ? 0 : sendGhost.getAnimations({ subtree: true }).length,
       }
       await sleep(700)
       r.send.landed = {
-        ghost: document.querySelector('[data-dsh-claude-send-ghost]') !== null,
-        hidden: sendEcho.hasAttribute('data-dsh-claude-send-flight'),
+        ghost: document.querySelector('[data-dsh-claude-style-plus-send-ghost]') !== null,
+        hidden: sendEcho.hasAttribute('data-dsh-claude-style-plus-send-flight'),
         visibility: getComputedStyle(sendEcho).visibility,
       }
       sendEcho.remove()
@@ -66,7 +66,7 @@
       var plateStarted = Date.now()
       while (Date.now() - plateStarted < 400) {
         await sleep(16)
-        var plateGhost = document.querySelector('[data-dsh-claude-send-ghost]')
+        var plateGhost = document.querySelector('[data-dsh-claude-style-plus-send-ghost]')
         if (plateGhost === null) continue
         var plateNodes = plateGhost.querySelectorAll('div')
         var plateShell = null
@@ -106,7 +106,7 @@
       await sleep(16)
       holdEcho.remove()
       await sleep(520)
-      var holdGhost = document.querySelector('[data-dsh-claude-send-ghost]')
+      var holdGhost = document.querySelector('[data-dsh-claude-style-plus-send-ghost]')
       r.send.hold = { ghost: holdGhost !== null, opacity: holdGhost === null ? 0 : Number(getComputedStyle(holdGhost).opacity) }
       var holdRow = document.createElement('div')
       holdRow.setAttribute('data-chat-flow-kind', 'user')
@@ -114,8 +114,8 @@
       sendFlow.appendChild(holdRow)
       await sleep(300)
       r.send.handed = {
-        ghost: document.querySelector('[data-dsh-claude-send-ghost]') !== null,
-        hidden: holdRow.hasAttribute('data-dsh-claude-send-flight'),
+        ghost: document.querySelector('[data-dsh-claude-style-plus-send-ghost]') !== null,
+        hidden: holdRow.hasAttribute('data-dsh-claude-style-plus-send-flight'),
         visibility: getComputedStyle(holdRow).visibility,
       }
       holdRow.remove()
@@ -133,8 +133,8 @@
       sendFlow.appendChild(reducedEcho)
       await sleep(120)
       r.send.reduced = {
-        ghost: document.querySelector('[data-dsh-claude-send-ghost]') !== null,
-        hidden: reducedEcho.hasAttribute('data-dsh-claude-send-flight'),
+        ghost: document.querySelector('[data-dsh-claude-style-plus-send-ghost]') !== null,
+        hidden: reducedEcho.hasAttribute('data-dsh-claude-style-plus-send-flight'),
         visibility: getComputedStyle(reducedEcho).visibility,
       }
       reducedEcho.remove()
@@ -153,8 +153,8 @@
       sendFlow.appendChild(redrawEcho)
       await sleep(120)
       r.send.redraw = {
-        ghost: document.querySelector('[data-dsh-claude-send-ghost]') !== null,
-        hidden: redrawEcho.hasAttribute('data-dsh-claude-send-flight'),
+        ghost: document.querySelector('[data-dsh-claude-style-plus-send-ghost]') !== null,
+        hidden: redrawEcho.hasAttribute('data-dsh-claude-style-plus-send-flight'),
         visibility: getComputedStyle(redrawEcho).visibility,
       }
       redrawEcho.remove()

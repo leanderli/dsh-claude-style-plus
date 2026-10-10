@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest'
 import { mascotLevel } from './mascot-signals'
 import type { MascotReading } from './mascot-signals'
-import type { HostSessionListSnapshot } from '@dsh-claude-style/contracts/services'
+import type { HostSessionListSnapshot } from '@dsh-claude-style-plus/contracts/services'
 
 type Status = { running?: boolean, pendingInteraction?: unknown }
 

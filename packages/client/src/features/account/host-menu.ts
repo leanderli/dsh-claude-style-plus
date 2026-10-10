@@ -1,4 +1,4 @@
-import { MENU_ROLE_SELECTOR, SETTINGS_BUTTON_SELECTOR } from '@dsh-claude-style/contracts/dom'
+import { MENU_ROLE_SELECTOR, SETTINGS_BUTTON_SELECTOR } from '@dsh-claude-style-plus/contracts/dom'
 import { findFootArea } from '../../core/host'
 
 /** Rhythm and give-up point of the poll for the host's account menu after the trigger's own click. */
@@ -51,7 +51,7 @@ export function createHostAccountMenu(options: { close(): void }) {
     for (const scope of scopes) {
       if (scope === null) continue
       const el = scope.querySelector<HTMLElement>('[aria-haspopup="menu"][data-signed-out]')
-      if (el !== null && !String(el.className || '').includes('dsh-claude-')) return el
+      if (el !== null && !String(el.className || '').includes('dsh-claude-style-plus-')) return el
     }
     return null
   }
@@ -72,7 +72,7 @@ export function createHostAccountMenu(options: { close(): void }) {
    *
    * Identified through the trigger, never through the menu's text: the
    * account trigger reports `aria-expanded` while its menu is up, so the
-   * open host menu (the skin's own cards carry `dsh-claude-` classes) is
+   * open host menu (the skin's own cards carry `dsh-claude-style-plus-` classes) is
    * the account menu. Opening a menu folds the shell's other menus, so at
    * most one host menu is ever open.
    */
@@ -81,7 +81,7 @@ export function createHostAccountMenu(options: { close(): void }) {
     if (trigger === null || trigger.getAttribute('aria-expanded') !== 'true') return null
     const menus = document.querySelectorAll<HTMLElement>(MENU_ROLE_SELECTOR)
     for (let i = 0; i < menus.length; i++) {
-      if (!String(menus[i].className || '').includes('dsh-claude-')) return menus[i]
+      if (!String(menus[i].className || '').includes('dsh-claude-style-plus-')) return menus[i]
     }
     return null
   }

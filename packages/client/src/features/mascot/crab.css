@@ -14,7 +14,7 @@
 /* Claude Code's spacing on the home page's single-line card: the right claw
    8px inside the card's right edge (the grid's four spare cells), so the feet
    stand where the 18px corner starts to round. */
-body[data-dsh-claude-style] .dsh-claude-crab {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-crab {
   position: absolute;
   right: 0;
   /* Feet on the card's edge: the card draws its outline inside its own box. */
@@ -25,7 +25,7 @@ body[data-dsh-claude-style] .dsh-claude-crab {
   pointer-events: none;
 }
 
-body[data-dsh-claude-style] .dsh-claude-crab:not([data-ready]) {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-crab:not([data-ready]) {
   visibility: hidden;
 }
 
@@ -33,58 +33,58 @@ body[data-dsh-claude-style] .dsh-claude-crab:not([data-ready]) {
    the whole column, so the crab is set in from the edge of the card they
    centre, as Deepy is (features/mascot/whale.css); those panels start 6–8px
    above their card. */
-body[data-dsh-claude-style] :is([data-dsh-claude-crab-anchor="stack"], [data-dsh-claude-crab-anchor="panel"]) {
+body[data-dsh-claude-style-plus] :is([data-dsh-claude-style-plus-crab-anchor="stack"], [data-dsh-claude-style-plus-crab-anchor="panel"]) {
   position: relative;
 }
 
-body[data-dsh-claude-style] [data-dsh-claude-crab-anchor="stack"] > .dsh-claude-crab {
+body[data-dsh-claude-style-plus] [data-dsh-claude-style-plus-crab-anchor="stack"] > .dsh-claude-style-plus-crab {
   right: max(var(--dsh-composer-side-clearance, 16px), (100% - var(--dsh-composer-card-max-width, 100%)) / 2);
 }
 
-body[data-dsh-claude-style] [data-dsh-claude-crab-anchor="panel"] > .dsh-claude-crab {
+body[data-dsh-claude-style-plus] [data-dsh-claude-style-plus-crab-anchor="panel"] > .dsh-claude-style-plus-crab {
   right: max(var(--dsh-composer-side-clearance, 16px) + 16px, (100% - var(--dsh-chat-content-width, 100%)) / 2);
   bottom: calc(100% - 7px);
 }
 
-body[data-dsh-claude-style] .dsh-claude-crab-sprite {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-crab-sprite {
   position: absolute;
-  left: calc(var(--dsh-claude-crab-x, 0) * 2px);
-  top: calc(var(--dsh-claude-crab-y, 0) * 2px);
-  width: calc(var(--dsh-claude-crab-w, 0) * 2px);
-  height: calc(var(--dsh-claude-crab-h, 0) * 2px);
+  left: calc(var(--dsh-claude-style-plus-crab-x, 0) * 2px);
+  top: calc(var(--dsh-claude-style-plus-crab-y, 0) * 2px);
+  width: calc(var(--dsh-claude-style-plus-crab-w, 0) * 2px);
+  height: calc(var(--dsh-claude-style-plus-crab-h, 0) * 2px);
   overflow: hidden;
 }
 
 /* The strip carries the whole sheet and is translated frame to frame: a
    transform composites, where a background-position would repaint. Its box is
-   the sheet's own box — `--dsh-claude-crab-cell-w` is one frame cell, which
+   the sheet's own box — `--dsh-claude-style-plus-crab-cell-w` is one frame cell, which
    is the crop box because these sheets carry no margin (the art is built at
    one pixel a cell and inlined, so there is no rebuild to add one). The art
    is one pixel a cell, scaled to 2px: whole multiples, so `pixelated` keeps
    every cell square. */
-body[data-dsh-claude-style] .dsh-claude-crab-strip {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-crab-strip {
   position: relative;
   display: block;
-  width: calc(var(--dsh-claude-crab-cell-w, 0) * 16px);
-  height: calc(var(--dsh-claude-crab-strip-h, 0) * 2px);
-  background-image: var(--dsh-claude-crab-sheet, none);
+  width: calc(var(--dsh-claude-style-plus-crab-cell-w, 0) * 16px);
+  height: calc(var(--dsh-claude-style-plus-crab-strip-h, 0) * 2px);
+  background-image: var(--dsh-claude-style-plus-crab-sheet, none);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   image-rendering: pixelated;
 }
 
-body[data-dsh-claude-style] .dsh-claude-crab-strip::after {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-crab-strip::after {
   content: "";
   position: absolute;
   inset: 0;
   background: var(--dsw-alias-label-tertiary, #8f8a7e);
-  -webkit-mask: var(--dsh-claude-crab-ink, none) no-repeat 0 0 / 100% 100%;
-  mask: var(--dsh-claude-crab-ink, none) no-repeat 0 0 / 100% 100%;
+  -webkit-mask: var(--dsh-claude-style-plus-crab-ink, none) no-repeat 0 0 / 100% 100%;
+  mask: var(--dsh-claude-style-plus-crab-ink, none) no-repeat 0 0 / 100% 100%;
   image-rendering: pixelated;
 }
 
 /* The resting crab's shell, claws and legs: columns 24–47, rows 20–35. */
-body[data-dsh-claude-style] .dsh-claude-crab-hit {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-crab-hit {
   position: absolute;
   left: 48px;
   top: 40px;

@@ -146,7 +146,7 @@ export function createSessionSearch(ctx: DshContext) {
     } catch (error) {
       const failure = error as { code?: string, message?: string }
       if (failure?.code !== 'SESSION_QUERY_CORRUPT_SESSION' && failure?.code !== 'SESSION_QUERY_SESSION_NOT_FOUND') throw error
-      ctx.logger?.warn?.(`dsh-claude-style: session ${sessionId} left out of content search: ${failure.message}`)
+      ctx.logger?.warn?.(`dsh-claude-style-plus: session ${sessionId} left out of content search: ${failure.message}`)
       return []
     }
   }

@@ -1,7 +1,7 @@
 import { STREAM_GLIDE_ATTR } from '../constants'
 import { subscribeMutations } from '../core/bus'
 import { motionReduced } from '../core/prefs'
-import { CONVERSATION_SCROLL_SELECTOR, FLOW_KIND_ATTRIBUTE, FOLLOW_THRESHOLD_PX, PROCESS_BODY_SELECTOR, SUBMISSION_ECHO_SELECTOR, USER_ROW_KIND } from '@dsh-claude-style/contracts/dom'
+import { CONVERSATION_SCROLL_SELECTOR, FLOW_KIND_ATTRIBUTE, FOLLOW_THRESHOLD_PX, PROCESS_BODY_SELECTOR, SUBMISSION_ECHO_SELECTOR, USER_ROW_KIND } from '@dsh-claude-style-plus/contracts/dom'
 import { conversationScroller, findFollowTailButton } from './chat-dom'
 import { isReaderScrollIntent } from './reader-intent'
 import { SCROLL_EASE_LEAD_PX, easeScroll, isScrollEasing, scrollEasePosition, scrollEnd, stopScrollEase } from './scroll-ease'

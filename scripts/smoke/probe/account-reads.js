@@ -11,47 +11,65 @@
   var r = probe.report
 
   probe.step(async function () {
-    var drawer = document.querySelector('.dsh-claude-account-popover-body')
+    var drawer = document.querySelector('.dsh-claude-style-plus-account-popover-body')
     r.drawer = drawer ? Array.prototype.map.call(drawer.children, function (c) {
       if (c.hasAttribute('data-action-index')) return 'action'
       if (c.hasAttribute('data-embed-index')) return 'embed'
       if (c.getAttribute('data-action') === 'settings') return 'settings'
       return 'other'
     }) : null
-    var syntheticPopover = document.querySelector('.dsh-claude-account-popover')
-    r.syntheticHeader = !!(syntheticPopover && syntheticPopover.querySelector('[data-dsh-claude-ban-row]'))
+    var syntheticPopover = document.querySelector('.dsh-claude-style-plus-account-popover')
+    r.syntheticHeader = !!(syntheticPopover && syntheticPopover.querySelector('[data-dsh-claude-style-plus-profile-row]'))
     // The closed drawer's rows are built and reconciled while it is closed, so
     // the panel sits over the account row with its icons in it: visibility has
     // to take that content out of the paint and hit-test tree.
     r.syntheticVisibility = syntheticPopover ? getComputedStyle(syntheticPopover).visibility : null
-    r.syntheticRowVisibility = syntheticPopover && syntheticPopover.querySelector('.dsh-claude-popover-item')
-      ? getComputedStyle(syntheticPopover.querySelector('.dsh-claude-popover-item')).visibility
+    r.syntheticRowVisibility = syntheticPopover && syntheticPopover.querySelector('.dsh-claude-style-plus-popover-item')
+      ? getComputedStyle(syntheticPopover.querySelector('.dsh-claude-style-plus-popover-item')).visibility
       : null
     // offsetLeft/offsetWidth, not the rect: the closed drawer still carries its
     // translateY/scale transition, which would shrink a measured rect.
-    var syntheticBtn = document.querySelector('.dsh-claude-account-btn')
+    var syntheticBtn = document.querySelector('.dsh-claude-style-plus-account-btn')
     r.syntheticBox = (syntheticPopover && syntheticBtn) ? {
       popoverLeft: syntheticPopover.offsetLeft,
       popoverWidth: syntheticPopover.offsetWidth,
       buttonLeft: syntheticBtn.offsetLeft,
       buttonWidth: syntheticBtn.offsetWidth,
     } : null
-    r.syntheticInject = document.querySelectorAll('.dsh-claude-account-inject').length
-    var user = document.querySelector('.dsh-claude-account-user')
+    r.syntheticInject = document.querySelectorAll('.dsh-claude-style-plus-account-inject').length
+    var user = document.querySelector('.dsh-claude-style-plus-account-user')
     r.accountUser = user ? user.textContent : null
-    var avatar = document.querySelector('.dsh-claude-account-avatar')
+    var avatar = document.querySelector('.dsh-claude-style-plus-account-avatar')
     r.avatarAttrs = attrs(avatar)
     var photo = avatar ? avatar.querySelector('img') : null
     r.photo = photo ? { attrs: attrs(photo), referrerPolicy: photo.referrerPolicy } : null
     r.photoSrc = photo ? photo.getAttribute('src') : null
     r.photoHidden = photo ? photo.hidden : null
+    r.photoLoadState = null
+    r.photoErrorState = null
+    if (avatar && photo) {
+      avatar.setAttribute('data-dsh-claude-style-plus-photo-failed', '')
+      photo.hidden = true
+      photo.dispatchEvent(new Event('load'))
+      r.photoLoadState = { hidden: photo.hidden, failed: avatar.hasAttribute('data-dsh-claude-style-plus-photo-failed') }
+      photo.dispatchEvent(new Event('error'))
+      r.photoErrorState = { hidden: photo.hidden, failed: avatar.hasAttribute('data-dsh-claude-style-plus-photo-failed') }
+    }
+    var photoFixture = document.createElement('span')
+    photoFixture.className = 'dsh-claude-style-plus-account-avatar'
+    photoFixture.setAttribute('data-dsh-claude-style-plus-photo', '')
+    document.body.appendChild(photoFixture)
+    r.photoBackgroundWhileLoaded = getComputedStyle(photoFixture).backgroundImage
+    photoFixture.setAttribute('data-dsh-claude-style-plus-photo-failed', '')
+    r.photoBackgroundAfterFailure = getComputedStyle(photoFixture).backgroundImage
+    photoFixture.remove()
     // The launcher's own picture is a texture sheet, so the row crops the head
     // into a canvas instead of handing the sheet to the <img>. Sampled at the
     // fixture's landmarks: red face inside the inset, green hat at the box's
     // corners, nothing in the margin between them.
-    r.skinFlag = r.avatarAttrs !== null && r.avatarAttrs.indexOf('data-dsh-claude-skin') !== -1
+    r.skinFlag = r.avatarAttrs !== null && r.avatarAttrs.indexOf('data-dsh-claude-style-plus-skin') !== -1
     r.avatarRadius = avatar ? getComputedStyle(avatar).borderRadius : null
-    var skinHead = avatar ? avatar.querySelector('canvas.dsh-claude-account-skin') : null
+    var skinHead = avatar ? avatar.querySelector('canvas.dsh-claude-style-plus-account-skin') : null
     r.skinCanvas = skinHead ? { width: skinHead.width, height: skinHead.height } : null
     r.skinPixels = null
     if (skinHead) {
@@ -63,14 +81,14 @@
       r.skinPixels = { face: pixelAt(32, 32), hatTop: pixelAt(2, 2), hatBottom: pixelAt(62, 62), margin: pixelAt(62, 30) }
     }
     var mirrored = drawer ? drawer.querySelector('[data-action-index]') : null
-    r.mirroredText = mirrored ? mirrored.querySelector('.dsh-claude-popover-item-text').textContent : null
-    var badge = mirrored ? mirrored.querySelector('.dsh-claude-popover-item-badge') : null
+    r.mirroredText = mirrored ? mirrored.querySelector('.dsh-claude-style-plus-popover-item-text').textContent : null
+    var badge = mirrored ? mirrored.querySelector('.dsh-claude-style-plus-popover-item-badge') : null
     r.mirroredBadge = badge ? badge.textContent : null
-    r.stylesheet = !!document.getElementById('dsh-claude-style-style')
+    r.stylesheet = !!document.getElementById('dsh-claude-style-plus-style')
     // The skin's sheet wears this package's own module-system tags (D33): the
     // host's claim sweep reads untagged tags alone, so a tagged sheet cannot be
     // claimed by a sibling package and removed by that sibling's reload.
-    var skinStyle = document.getElementById('dsh-claude-style-style')
+    var skinStyle = document.getElementById('dsh-claude-style-plus-style')
     r.sheetPlugin = skinStyle ? skinStyle.getAttribute('data-plugin') : null
     r.sheetPluginCss = skinStyle ? skinStyle.getAttribute('data-plugin-css') : null
     r.sheetClaimable = skinStyle ? skinStyle.matches('style:not([data-plugin])') : null
@@ -95,14 +113,14 @@
     // This stand-in host never carries the Windows titlebar marker, so the
     // skin must leave the body marker off and keep its measured placement.
     r.titlebarTabs = document.body.hasAttribute('data-dsh-titlebar-tabs')
-    r.footerTakeover = document.body.hasAttribute('data-dsh-claude-footer-takeover')
-    r.homeLayoutAttr = document.body.getAttribute('data-dsh-claude-home-layout')
+    r.footerTakeover = document.body.hasAttribute('data-dsh-claude-style-plus-footer-takeover')
+    r.homeLayoutAttr = document.body.getAttribute('data-dsh-claude-style-plus-home-layout')
     r.homeLayoutExpected = window.SMOKE_CASE === 'studio' ? 'studio' : null
     // A copy, not the live list: the teardown at the end of this run hands every
     // registration back, and what this check is about is what was registered
     // while the page was up.
     r.slotRegistrations = window.__slots ? window.__slots.map(function (entry) { return Object.assign({}, entry) }) : null
-    r.composerRestyle = document.body.hasAttribute('data-dsh-claude-composer-active')
+    r.composerRestyle = document.body.hasAttribute('data-dsh-claude-style-plus-composer-active')
     // The host's model seat inside an inline card, with a menu another plugin
     // nests in it (its hashed class says "model"). Read and removed within one
     // task, so no skin pass ever sees it: the trigger rule must reach the
@@ -120,7 +138,7 @@
       trigger: getComputedStyle(modelCard.querySelector('._m_trigger_1')).display,
       nestedMenu: getComputedStyle(modelCard.querySelector('._p_providerModelMenu_1')).display,
     }
-    modelSeatRoot.setAttribute('data-dsh-claude-model-host', '')
+    modelSeatRoot.setAttribute('data-dsh-claude-style-plus-model-host', '')
     r.modelSeat.markedRoot = getComputedStyle(modelSeatRoot).display
     modelCard.remove()
   })

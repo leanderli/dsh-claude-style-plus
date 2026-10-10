@@ -4,15 +4,19 @@
 
 What each feature does is in [Features](FEATURES.en.md).
 
-The settings page appears both in the settings dialog (the "Claude Style" tab) and on the plugin page, in five tabs:
+The settings page appears both in the settings dialog (the "Claude Style Plus" tab) and on the plugin page, in five tabs:
 
 | Tab | Settings |
 |---|---|
-| General | Username, Animation, Open popovers on hover, Account-hold easter egg language |
+| General | Profile photo and crop, Username, Animation, Open popovers on hover |
 | Appearance | Brand mark, Colours, Typefaces, Mascot, Where it appears |
 | Composer | Composer restyle, Home layout, Redraw the model picker (with Quick providers under it), Peak rate meter, Redraw the permission control |
 | Sidebar | Collapse the sidebar settings area, Sidebar search, In progress / Archived view |
 | Conversation | Turn status line, Conversation navigator, Chat-area animations (Off / Enhanced / Redraw), Composer caret motion, Chat / Trajectory tabs |
+
+**Custom avatar**: General settings accepts PNG, JPEG or WebP images with a draggable, zoomable square crop. The saved image lives in this DSH Profile's separate Plus avatar directory; Remove never touches the original package's avatar.
+
+**Personal activity**: open it from the sidebar account username. All, 30d and 7d ranges show model Token cards first, followed by Workspace data cards; each section previews up to six cards with a right-aligned expand/collapse control. Workspace cards expand to input/output/cache buckets and top models. Skill activity is a call-ranked horizontal stacked-bar chart separating explicit injections from model `skill` tool calls, with session and Workspace counts. The data uses readable Session logs grouped by current Workspace registry; unreadable logs are partial, while unavailable membership is shown as unknown without suppressing global usage.
 
 Every feature that takes over part of the host's interface has its own switch; turning it off brings the host's original back at once, without a reload. The conversation area's animations — the follow, the automatic folding with its rolling door, the text fade, the file change rows and the send flight — make one three-way choice: Off hands the conversation back to the host, Enhanced plays this plugin's set, and Redraw hands the area to a second set, whose member wired so far is the send flight; the caret keeps its own three-way choice.
 

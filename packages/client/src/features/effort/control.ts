@@ -66,22 +66,22 @@ export function createEffortControl(opts: {
   onDragStart?: () => void
   onDragEnd?: (event: PointerEvent) => void
 }) {
-  const root = buildElement('div', 'dsh-claude-effort')
-  const head = buildElement('div', 'dsh-claude-effort-head')
-  const labelEl = buildElement('span', 'dsh-claude-effort-label')
-  const valueEl = buildElement('span', 'dsh-claude-effort-value')
+  const root = buildElement('div', 'dsh-claude-style-plus-effort')
+  const head = buildElement('div', 'dsh-claude-style-plus-effort-head')
+  const labelEl = buildElement('span', 'dsh-claude-style-plus-effort-label')
+  const valueEl = buildElement('span', 'dsh-claude-style-plus-effort-value')
   /* The outgoing name, absolutely positioned over the value: it takes no
      layout space and never needs removing — the out animation ends at
      opacity 0 and is re-armed on the next swap. */
-  const valueGhost = buildElement('span', 'dsh-claude-effort-value-ghost')
-  const ends = buildElement('div', 'dsh-claude-effort-ends')
-  const fasterEl = buildElement('span', 'dsh-claude-effort-end')
-  const smarterEl = buildElement('span', 'dsh-claude-effort-end')
-  const track = buildElement('div', 'dsh-claude-effort-track')
-  const fill = buildElement('div', 'dsh-claude-effort-fill')
-  const ticks = buildElement('div', 'dsh-claude-effort-ticks')
-  const matrix = buildElement('div', 'dsh-claude-effort-matrix')
-  const knob = buildElement('div', 'dsh-claude-effort-knob')
+  const valueGhost = buildElement('span', 'dsh-claude-style-plus-effort-value-ghost')
+  const ends = buildElement('div', 'dsh-claude-style-plus-effort-ends')
+  const fasterEl = buildElement('span', 'dsh-claude-style-plus-effort-end')
+  const smarterEl = buildElement('span', 'dsh-claude-style-plus-effort-end')
+  const track = buildElement('div', 'dsh-claude-style-plus-effort-track')
+  const fill = buildElement('div', 'dsh-claude-style-plus-effort-fill')
+  const ticks = buildElement('div', 'dsh-claude-style-plus-effort-ticks')
+  const matrix = buildElement('div', 'dsh-claude-style-plus-effort-matrix')
+  const knob = buildElement('div', 'dsh-claude-style-plus-effort-knob')
 
   head.appendChild(labelEl)
   head.appendChild(valueEl)
@@ -322,7 +322,7 @@ export function createEffortControl(opts: {
     while (ticks.firstChild) ticks.removeChild(ticks.firstChild)
     const box = geometry()
     for (let i = 0; i < steps.length; i++) {
-      const dot = buildElement('span', 'dsh-claude-effort-tick')
+      const dot = buildElement('span', 'dsh-claude-style-plus-effort-tick')
       dot.style.left = `${Math.round(positionFor(i) + box.size / 2)}px`
       ticks.appendChild(dot)
     }

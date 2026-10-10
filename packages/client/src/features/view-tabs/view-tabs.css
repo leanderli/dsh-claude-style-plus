@@ -6,7 +6,7 @@
    conversation header — so the settings page's own tabs keep their look. The
    stamp stands in for `header:has(tabs) tabs`, which made every DOM change
    re-match the whole document. */
-body[data-dsh-claude-style] [data-dsh-view-tabs] {
+body[data-dsh-claude-style-plus] [data-dsh-view-tabs] {
   display: inline-flex;
   /* Hug the tabs. The host's strip is a full-width flex row, so without this the
      pill shell stretches across the whole header: the "groove" reads as one long
@@ -20,7 +20,7 @@ body[data-dsh-claude-style] [data-dsh-view-tabs] {
   gap: 2px;
   padding: 2px;
   border-radius: 7px;
-  background: var(--dsh-claude-hover-bg, rgba(0, 0, 0, 0.06));
+  background: var(--dsh-claude-style-plus-hover-bg, rgba(0, 0, 0, 0.06));
   /* Horizontally centred in the header (the strip already spans grid-column 1/-1,
      so justify-self alone does it). The vertical shift is MEASURED, not fixed: the
      title's row also carries the header actions, so whether the strip can rise onto
@@ -41,13 +41,13 @@ body[data-dsh-claude-style] [data-dsh-view-tabs] {
 /* `centerCol` is the pane holding the header AND the transcript, so hovering the
    strip itself keeps it up, while the right sidebar — which sits outside it —
    does not bring it back. */
-body[data-dsh-claude-style] [class*="centerCol"]:hover [data-dsh-view-tabs] {
+body[data-dsh-claude-style-plus] [class*="centerCol"]:hover [data-dsh-view-tabs] {
   opacity: 1;
 }
-body[data-dsh-claude-style][data-ds-dark-theme] [data-dsh-view-tabs] {
+body[data-dsh-claude-style-plus][data-ds-dark-theme] [data-dsh-view-tabs] {
   background: rgba(255, 255, 255, 0.08);
 }
-body[data-dsh-claude-style] [data-dsh-view-tabs] > [class*="_tab"] {
+body[data-dsh-claude-style-plus] [data-dsh-view-tabs] > [class*="_tab"] {
   appearance: none;
   border: none !important;
   background: transparent;
@@ -64,42 +64,42 @@ body[data-dsh-claude-style] [data-dsh-view-tabs] > [class*="_tab"] {
   -webkit-user-select: none;
   transition: color 0.2s ease;
 }
-body[data-dsh-claude-style] [data-dsh-view-tabs] > [class*="_tab"]:hover {
+body[data-dsh-claude-style-plus] [data-dsh-view-tabs] > [class*="_tab"]:hover {
   color: var(--dsw-alias-label-primary, #141413);
 }
-body[data-dsh-claude-style] [data-dsh-view-tabs] > [class*="_tab"][aria-selected="true"],
-body[data-dsh-claude-style] [data-dsh-view-tabs] > [class*="_tab"][class*="Active"] {
+body[data-dsh-claude-style-plus] [data-dsh-view-tabs] > [class*="_tab"][aria-selected="true"],
+body[data-dsh-claude-style-plus] [data-dsh-view-tabs] > [class*="_tab"][class*="Active"] {
   background: var(--dsw-alias-bg-overlay, #ffffff);
   color: var(--dsw-alias-label-primary, #141413);
   box-shadow: 0 1px 2px rgba(20, 20, 19, 0.10);
 }
-body[data-dsh-claude-style][data-ds-dark-theme] [data-dsh-view-tabs] > [class*="_tab"][aria-selected="true"],
-body[data-dsh-claude-style][data-ds-dark-theme] [data-dsh-view-tabs] > [class*="_tab"][class*="Active"] {
+body[data-dsh-claude-style-plus][data-ds-dark-theme] [data-dsh-view-tabs] > [class*="_tab"][aria-selected="true"],
+body[data-dsh-claude-style-plus][data-ds-dark-theme] [data-dsh-view-tabs] > [class*="_tab"][class*="Active"] {
   background: rgba(255, 255, 255, 0.14);
-  color: var(--dsh-claude-ink-strong);
+  color: var(--dsh-claude-style-plus-ink-strong);
   box-shadow: none;
 }
 /* The strip's sliding pill (shared/sliding-pill.css places and moves it):
    the raised box the active tab wore above, which the tab gives up while the
    pill is there. */
-body[data-dsh-claude-style] [data-dsh-view-tabs][data-dsh-claude-pill]::before {
+body[data-dsh-claude-style-plus] [data-dsh-view-tabs][data-dsh-claude-style-plus-pill]::before {
   top: 2px;
   bottom: 2px;
   border-radius: 5px;
   background: var(--dsw-alias-bg-overlay, #ffffff);
   box-shadow: 0 1px 2px rgba(20, 20, 19, 0.10);
 }
-body[data-dsh-claude-style][data-ds-dark-theme] [data-dsh-view-tabs][data-dsh-claude-pill]::before {
+body[data-dsh-claude-style-plus][data-ds-dark-theme] [data-dsh-view-tabs][data-dsh-claude-style-plus-pill]::before {
   background: rgba(255, 255, 255, 0.14);
   box-shadow: none;
 }
-body[data-dsh-claude-style] [data-dsh-view-tabs][data-dsh-claude-pill] > [class*="_tab"][aria-selected="true"],
-body[data-dsh-claude-style] [data-dsh-view-tabs][data-dsh-claude-pill] > [class*="_tab"][class*="Active"] {
+body[data-dsh-claude-style-plus] [data-dsh-view-tabs][data-dsh-claude-style-plus-pill] > [class*="_tab"][aria-selected="true"],
+body[data-dsh-claude-style-plus] [data-dsh-view-tabs][data-dsh-claude-style-plus-pill] > [class*="_tab"][class*="Active"] {
   background: transparent;
   box-shadow: none;
 }
 /* The shipped active-tab underline has no place in a pill. */
-body[data-dsh-claude-style] [data-dsh-view-tabs] > [class*="_tab"]::after {
+body[data-dsh-claude-style-plus] [data-dsh-view-tabs] > [class*="_tab"]::after {
   display: none;
 }
 
@@ -114,7 +114,7 @@ body[data-dsh-claude-style] [data-dsh-view-tabs] > [class*="_tab"]::after {
    macOS has no such block: its shell leaves the frame unpadded, so the
    conversation header draws its first row inside the strip and the measured
    shift seats the tabs on the row beneath it (view-tabs.ts). */
-body[data-dsh-claude-style][data-dsh-titlebar-tabs] [data-dsh-view-tabs] {
+body[data-dsh-claude-style-plus][data-dsh-titlebar-tabs] [data-dsh-view-tabs] {
   position: fixed !important;
   top: calc(var(--dsh-windows-titlebar-height, 40px) / 2) !important;
   left: 50% !important;
@@ -133,20 +133,20 @@ body[data-dsh-claude-style][data-dsh-titlebar-tabs] [data-dsh-view-tabs] {
   opacity: 0 !important;
   transition: opacity 0.3s ease !important;
 }
-body[data-dsh-claude-style][data-dsh-titlebar-tabs] [data-dsh-view-tabs]:hover {
+body[data-dsh-claude-style-plus][data-dsh-titlebar-tabs] [data-dsh-view-tabs]:hover {
   opacity: 1 !important;
 }
 /* The pane-hover reveal above cannot outweigh this mode's own resting opacity,
    which is stated with `!important` because the strip is fixed over the caption
    row; without this the strip only answers the pointer once it is already in
    that row. */
-body[data-dsh-claude-style][data-dsh-titlebar-tabs] [class*="centerCol"]:hover [data-dsh-view-tabs] {
+body[data-dsh-claude-style-plus][data-dsh-titlebar-tabs] [class*="centerCol"]:hover [data-dsh-view-tabs] {
   opacity: 1 !important;
 }
 /* The strip's row is gone from the flow, so the header takes the shape it has
    when it owns no tab strip: no min-height, and the bottom padding the host
    gives that shape. */
-body[data-dsh-claude-style][data-dsh-titlebar-tabs] [class*="_header"]:has([class*="_tabs"]) {
+body[data-dsh-claude-style-plus][data-dsh-titlebar-tabs] [class*="_header"]:has([class*="_tabs"]) {
   min-height: 0 !important;
   padding-bottom: 10px !important;
 }

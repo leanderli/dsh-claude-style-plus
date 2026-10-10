@@ -5,11 +5,11 @@
    Sizing: an 18px cap height to match the shipped brandName box, the wordmark's
    width read from that height through the artwork's aspect ratio (its viewBox,
    512.22 × 121.54, packages/assets/src/brand/claude-word.svg). */
-body[data-dsh-claude-style][data-dsh-claude-brand="claude"] :is([class*="brandMark"], [class*="railMark"]) > * {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-brand="claude"] :is([class*="brandMark"], [class*="railMark"]) > * {
   display: none !important;
 }
 
-body[data-dsh-claude-style][data-dsh-claude-brand="claude"] :is([class*="brandMark"], [class*="railMark"])::before {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-brand="claude"] :is([class*="brandMark"], [class*="railMark"])::before {
   content: "";
   display: block;
   flex: none;
@@ -20,18 +20,18 @@ body[data-dsh-claude-style][data-dsh-claude-brand="claude"] :is([class*="brandMa
 }
 
 /* Claude (default): starburst mark + the Claude wordmark. */
-body[data-dsh-claude-style][data-dsh-claude-brand="claude"] :is([class*="brandMark"], [class*="railMark"])::before {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-brand="claude"] :is([class*="brandMark"], [class*="railMark"])::before {
   width: 18px;
   height: 18px;
-  -webkit-mask: var(--dsh-claude-image-claude-mark) center / contain no-repeat;
-  mask: var(--dsh-claude-image-claude-mark) center / contain no-repeat;
+  -webkit-mask: var(--dsh-claude-style-plus-image-claude-mark) center / contain no-repeat;
+  mask: var(--dsh-claude-style-plus-image-claude-mark) center / contain no-repeat;
 }
 
-body[data-dsh-claude-style][data-dsh-claude-brand="claude"] [class*="brandIdentity"] > [class*="brandName"] > * {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-brand="claude"] [class*="brandIdentity"] > [class*="brandName"] > * {
   display: none !important;
 }
 
-body[data-dsh-claude-style][data-dsh-claude-brand="claude"] [class*="brandIdentity"] > [class*="brandName"]::before {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-brand="claude"] [class*="brandIdentity"] > [class*="brandName"]::before {
   content: "";
   display: block;
   flex: none;
@@ -41,20 +41,20 @@ body[data-dsh-claude-style][data-dsh-claude-brand="claude"] [class*="brandIdenti
   background-size: contain;
 }
 
-body[data-dsh-claude-style][data-dsh-claude-brand="claude"] [class*="brandIdentity"] > [class*="brandName"]::before {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-brand="claude"] [class*="brandIdentity"] > [class*="brandName"]::before {
   width: calc(18px * 512.22 / 121.54);
   max-width: 100%;
   height: 18px;
-  -webkit-mask: var(--dsh-claude-image-claude-word) center / contain no-repeat;
-  mask: var(--dsh-claude-image-claude-word) center / contain no-repeat;
+  -webkit-mask: var(--dsh-claude-style-plus-image-claude-word) center / contain no-repeat;
+  mask: var(--dsh-claude-style-plus-image-claude-word) center / contain no-repeat;
 }
 
 /* DeepSeek: the host's own whale and wordmark in DeepSeek's brand blue. The
    expanded brand is a button on most platforms and a plain row on macOS, and the
    collapsed rail's whale sits in the sidebar toggle, so the art is inked where it
    sits. */
-body[data-dsh-claude-style][data-dsh-claude-brand="deepseek"] :is([class*="brandIdentity"], [class*="railMark"]) {
-  color: var(--dsh-claude-logo-ink);
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-brand="deepseek"] :is([class*="brandIdentity"], [class*="railMark"]) {
+  color: var(--dsh-claude-style-plus-logo-ink);
 }
 
 /* ---------- Claude Code layout: new session button ---------- */
@@ -64,7 +64,7 @@ body[data-dsh-claude-style][data-dsh-claude-brand="deepseek"] :is([class*="brand
    span the titlebar. The expanded state is read down from the app frame, which
    carries the collapsed marker and holds the sidebar column as a direct child —
    `body:not(:has(collapsed))` made every DOM change re-match the document. */
-body[data-dsh-claude-style] [class*="_frame"]:not([data-sidebar-collapsed]) > [class*="_sidebarCol"] button[class*="newSession"] {
+body[data-dsh-claude-style-plus] [class*="_frame"]:not([data-sidebar-collapsed]) > [class*="_sidebarCol"] button[class*="newSession"] {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -89,32 +89,35 @@ body[data-dsh-claude-style] [class*="_frame"]:not([data-sidebar-collapsed]) > [c
   box-shadow: none;
   transition: background-color 0.12s ease;
 }
-body[data-dsh-claude-style] [class*="_frame"]:not([data-sidebar-collapsed]) > [class*="_sidebarCol"] button[class*="newSession"]:hover {
-  background: var(--dsh-claude-hover-bg, rgba(0, 0, 0, 0.08));
+body[data-dsh-claude-style-plus] [class*="_frame"]:not([data-sidebar-collapsed]) > [class*="_sidebarCol"] button[class*="newSession"]:hover {
+  background: var(--dsh-claude-style-plus-hover-bg, rgba(0, 0, 0, 0.08));
 }
-body[data-dsh-claude-style][data-ds-dark-theme] [class*="_frame"]:not([data-sidebar-collapsed]) > [class*="_sidebarCol"] button[class*="newSession"] {
-  color: var(--dsh-claude-ink-strong);
+body[data-dsh-claude-style-plus][data-ds-dark-theme] [class*="_frame"]:not([data-sidebar-collapsed]) > [class*="_sidebarCol"] button[class*="newSession"] {
+  color: var(--dsh-claude-style-plus-ink-strong);
 }
-body[data-dsh-claude-style][data-ds-dark-theme] [class*="_frame"]:not([data-sidebar-collapsed]) > [class*="_sidebarCol"] button[class*="newSession"]:hover {
+body[data-dsh-claude-style-plus][data-ds-dark-theme] [class*="_frame"]:not([data-sidebar-collapsed]) > [class*="_sidebarCol"] button[class*="newSession"]:hover {
   background: rgba(255, 255, 255, 0.08) !important;
 }
 /* Collapsed rail and titlebar: the host draws its own plate for its icon control,
    and in the titlebar one reads as a stray rectangle. */
-body[data-dsh-claude-style] [data-sidebar-collapsed] button[class*="newSession"]:hover {
+body[data-dsh-claude-style-plus] [data-sidebar-collapsed] button[class*="newSession"]:hover {
   background: transparent !important;
 }
-body[data-dsh-claude-style] button[class*="newSession"] svg {
+body[data-dsh-claude-style-plus] [data-sidebar-collapsed] button[class*="newSession"] [class*="newSessionLabelMask"] {
+  display: none !important;
+}
+body[data-dsh-claude-style-plus] button[class*="newSession"] svg {
   display: none;
 }
 /* The expanded row centers its label inside a flex-1 mask and parks the shortcut
    at the far right; Claude's row reads left to right from the chip. */
-body[data-dsh-claude-style] button[class*="newSession"] [class*="newSessionContent"] {
+body[data-dsh-claude-style-plus] button[class*="newSession"] [class*="newSessionContent"] {
   justify-content: flex-start;
 }
 /* The chip paints BOTH the circular fill and the plus. A mask cannot: it clips the
    element to the glyph and takes the fill with it, so the plus is a background
    image, which costs the currentColor adaptivity and buys a theme pair below. */
-body[data-dsh-claude-style] button[class*="newSession"]::before {
+body[data-dsh-claude-style-plus] button[class*="newSession"]::before {
   content: "";
   display: inline-block;
   width: 20px;
@@ -134,7 +137,7 @@ body[data-dsh-claude-style] button[class*="newSession"]::before {
   -webkit-mask: none;
   mask: none;
 }
-body[data-dsh-claude-style][data-ds-dark-theme] button[class*="newSession"]::before {
+body[data-dsh-claude-style-plus][data-ds-dark-theme] button[class*="newSession"]::before {
   background-color: rgba(255, 255, 255, 0.14);
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23faf9f5' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><line x1='12' y1='6' x2='12' y2='18'></line><line x1='6' y1='12' x2='18' y2='12'></line></svg>");
 }
@@ -144,10 +147,10 @@ body[data-dsh-claude-style][data-ds-dark-theme] button[class*="newSession"]::bef
    margin, so the rows' 6px margin is the only spacing, and each row takes the
    new-session metrics — including the 20px icon box, so both labels start at the
    same x. */
-body[data-dsh-claude-style] nav[class*="panelList"] {
+body[data-dsh-claude-style-plus] nav[class*="panelList"] {
   gap: 0;
 }
-body[data-dsh-claude-style] button[class*="panelRow"] {
+body[data-dsh-claude-style-plus] button[class*="panelRow"] {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -173,17 +176,17 @@ body[data-dsh-claude-style] button[class*="panelRow"] {
   box-shadow: none;
   transition: background-color 0.12s ease;
 }
-body[data-dsh-claude-style] button[class*="panelRow"]:hover {
-  background: var(--dsh-claude-hover-bg, rgba(0, 0, 0, 0.08));
+body[data-dsh-claude-style-plus] button[class*="panelRow"]:hover {
+  background: var(--dsh-claude-style-plus-hover-bg, rgba(0, 0, 0, 0.08));
 }
-body[data-dsh-claude-style][data-ds-dark-theme] button[class*="panelRow"] {
-  color: var(--dsh-claude-ink-strong);
+body[data-dsh-claude-style-plus][data-ds-dark-theme] button[class*="panelRow"] {
+  color: var(--dsh-claude-style-plus-ink-strong);
 }
-body[data-dsh-claude-style][data-ds-dark-theme] button[class*="panelRow"]:hover {
+body[data-dsh-claude-style-plus][data-ds-dark-theme] button[class*="panelRow"]:hover {
   background: rgba(255, 255, 255, 0.08) !important;
 }
 /* A 13px glyph in a 20px box: the box the new-session chip occupies. */
-body[data-dsh-claude-style] button[class*="panelRow"] svg {
+body[data-dsh-claude-style-plus] button[class*="panelRow"] svg {
   width: 13px;
   height: 13px;
   margin: 0 3.5px;
@@ -193,80 +196,80 @@ body[data-dsh-claude-style] button[class*="panelRow"] svg {
 /* ---------- sidebar rows: the icon turns a quarter on hover ---------- */
 /* Both glyphs are four-fold symmetric, so the turn ends where it started and the
    transition turns it back when the pointer leaves. */
-body[data-dsh-claude-style] button[class*="newSession"]::before,
-body[data-dsh-claude-style] button[class*="panelRow"] svg {
+body[data-dsh-claude-style-plus] button[class*="newSession"]::before,
+body[data-dsh-claude-style-plus] button[class*="panelRow"] svg {
   transition: transform 0.25s ease;
   transform-origin: center;
 }
-body[data-dsh-claude-style] button[class*="newSession"]:hover::before,
-body[data-dsh-claude-style] button[class*="panelRow"]:hover svg {
+body[data-dsh-claude-style-plus] button[class*="newSession"]:hover::before,
+body[data-dsh-claude-style-plus] button[class*="panelRow"]:hover svg {
   transform: rotate(90deg);
 }
 
 /* ---------- Claude Code layout: workspace & session sidebar ---------- */
 /* Typography: Anthropic Sans and compact sizes */
-body[data-dsh-claude-style] :is([data-pane="sidebar"], [class*="sidebarCol"], [class*="treeBody"], [role="tree"]) :is([class*="title"], [class*="projectText"], [class*="sectionLabel"], [class*="sessionRow"], [class*="projectRow"], [class*="_time"]) {
+body[data-dsh-claude-style-plus] :is([data-pane="sidebar"], [class*="sidebarCol"], [class*="treeBody"], [role="tree"]) :is([class*="title"], [class*="projectText"], [class*="sectionLabel"], [class*="sessionRow"], [class*="projectRow"], [class*="_time"]) {
   font-family: var(--dsw-font-family);
 }
-body[data-dsh-claude-style] [class*="projectRow"] [class*="title"] {
+body[data-dsh-claude-style-plus] [class*="projectRow"] [class*="title"] {
   font-size: 13px;
   line-height: 18px;
   letter-spacing: normal;
 }
-body[data-dsh-claude-style] [class*="sessionRow"] [class*="title"] {
+body[data-dsh-claude-style-plus] [class*="sessionRow"] [class*="title"] {
   font-size: 13px;
   line-height: 18px;
   letter-spacing: normal;
   color: var(--dsw-alias-label-secondary, #787672);
   transition: color 0.12s ease;
 }
-body[data-dsh-claude-style][data-ds-dark-theme] [class*="sessionRow"] [class*="title"] {
-  color: var(--dsh-claude-session-ink);
+body[data-dsh-claude-style-plus][data-ds-dark-theme] [class*="sessionRow"] [class*="title"] {
+  color: var(--dsh-claude-style-plus-session-ink);
 }
-body[data-dsh-claude-style] [class*="sessionRow"]:is(:hover, [class*="_selected"], [class*="_active"], [class*="menuOpen"], [aria-selected="true"], [data-selected="true"]) [class*="title"] {
+body[data-dsh-claude-style-plus] [class*="sessionRow"]:is(:hover, [class*="_selected"], [class*="_active"], [class*="menuOpen"], [aria-selected="true"], [data-selected="true"]) [class*="title"] {
   color: var(--dsw-alias-label-primary, #141413);
 }
-body[data-dsh-claude-style][data-ds-dark-theme] [class*="sessionRow"]:is(:hover, [class*="_selected"], [class*="_active"], [class*="menuOpen"], [aria-selected="true"], [data-selected="true"]) [class*="title"] {
-  color: var(--dsh-claude-ink-strong);
+body[data-dsh-claude-style-plus][data-ds-dark-theme] [class*="sessionRow"]:is(:hover, [class*="_selected"], [class*="_active"], [class*="menuOpen"], [aria-selected="true"], [data-selected="true"]) [class*="title"] {
+  color: var(--dsh-claude-style-plus-ink-strong);
 }
-body[data-dsh-claude-style] [class*="sessionRow"] [class*="_time"] {
+body[data-dsh-claude-style-plus] [class*="sessionRow"] [class*="_time"] {
   font-size: 11px;
   line-height: 16px;
 }
-body[data-dsh-claude-style] [class*="sectionLabel"] {
+body[data-dsh-claude-style-plus] [class*="sectionLabel"] {
   font-size: 12px;
   line-height: 16px;
 }
 
 /* Compact scale: shrunken heights, margins and paddings */
-body[data-dsh-claude-style] [class*="projectRow"] {
+body[data-dsh-claude-style-plus] [class*="projectRow"] {
   height: 28px;
   min-height: 28px;
   padding: 0 6px;
   gap: 4px;
   border-radius: 6px;
 }
-body[data-dsh-claude-style] [class*="sessionRow"] {
+body[data-dsh-claude-style-plus] [class*="sessionRow"] {
   height: 28px;
   min-height: 28px;
   padding: 0 6px;
   gap: 0;
   border-radius: 6px;
 }
-body[data-dsh-claude-style] [class*="sessionRow"] [class*="title"] {
+body[data-dsh-claude-style-plus] [class*="sessionRow"] [class*="title"] {
   margin: 0 4px;
 }
-body[data-dsh-claude-style] [class*="groupSection"] > * + * {
+body[data-dsh-claude-style-plus] [class*="groupSection"] > * + * {
   margin-top: 1px;
 }
-body[data-dsh-claude-style] [class*="groupSection"] + [class*="groupSection"] {
+body[data-dsh-claude-style-plus] [class*="groupSection"] + [class*="groupSection"] {
   margin-top: 6px !important;
 }
-body[data-dsh-claude-style] [class*="projectRow"] [class*="rowActions"],
-body[data-dsh-claude-style] [class*="sessionRow"] [class*="rowActions"] {
+body[data-dsh-claude-style-plus] [class*="projectRow"] [class*="rowActions"],
+body[data-dsh-claude-style-plus] [class*="sessionRow"] [class*="rowActions"] {
   gap: 6px;
 }
-body[data-dsh-claude-style] :is([class*="projectRow"], [class*="sessionRow"]) [class*="iconButton"] {
+body[data-dsh-claude-style-plus] :is([class*="projectRow"], [class*="sessionRow"]) [class*="iconButton"] {
   width: 16px;
   height: 16px;
 }
@@ -274,39 +277,39 @@ body[data-dsh-claude-style] :is([class*="projectRow"], [class*="sessionRow"]) [c
 /* Hover and active plates belong to session rows alone: a folder row is a heading,
    so its cue is the label darkening below. This also cancels the shipped
    .projectRow:hover background. */
-body[data-dsh-claude-style] [class*="sessionRow"]:hover,
-body[data-dsh-claude-style] [class*="sessionRow"][class*="_selected"],
-body[data-dsh-claude-style] [class*="sessionRow"][class*="menuOpen"] {
-  background: var(--dsh-claude-hover-bg, rgba(0, 0, 0, 0.08));
+body[data-dsh-claude-style-plus] [class*="sessionRow"]:hover,
+body[data-dsh-claude-style-plus] [class*="sessionRow"][class*="_selected"],
+body[data-dsh-claude-style-plus] [class*="sessionRow"][class*="menuOpen"] {
+  background: var(--dsh-claude-style-plus-hover-bg, rgba(0, 0, 0, 0.08));
 }
 
-body[data-dsh-claude-style] [class*="projectRow"],
-body[data-dsh-claude-style] [class*="projectRow"]:hover,
-body[data-dsh-claude-style] [class*="projectRow"][class*="menuOpen"],
-body[data-dsh-claude-style] [class*="projectRow"][class*="_selected"] {
+body[data-dsh-claude-style-plus] [class*="projectRow"],
+body[data-dsh-claude-style-plus] [class*="projectRow"]:hover,
+body[data-dsh-claude-style-plus] [class*="projectRow"][class*="menuOpen"],
+body[data-dsh-claude-style-plus] [class*="projectRow"][class*="_selected"] {
   background: transparent;
 }
 
 /* Folder header: muted label, no folder icon, dropdown arrow instead */
-body[data-dsh-claude-style] [class*="projectRow"] [class*="title"] {
+body[data-dsh-claude-style-plus] [class*="projectRow"] [class*="title"] {
   color: var(--dsw-alias-label-secondary, #787672);
   font-weight: 500;
 }
-body[data-dsh-claude-style] [class*="projectRow"]:hover [class*="title"] {
+body[data-dsh-claude-style-plus] [class*="projectRow"]:hover [class*="title"] {
   color: var(--dsw-alias-label-primary, #141413);
 }
-body[data-dsh-claude-style] [class*="projectRow"] [class*="folderActive"] {
+body[data-dsh-claude-style-plus] [class*="projectRow"] [class*="folderActive"] {
   color: inherit;
 }
-body[data-dsh-claude-style] [class*="projectRow"] [class*="_folder"] {
+body[data-dsh-claude-style-plus] [class*="projectRow"] [class*="_folder"] {
   display: none;
 }
 /* Title left, dropdown arrow beside it */
-body[data-dsh-claude-style] [class*="projectRow"] {
+body[data-dsh-claude-style-plus] [class*="projectRow"] {
   display: flex;
   align-items: center;
 }
-body[data-dsh-claude-style] [class*="projectRow"] [class*="projectText"] {
+body[data-dsh-claude-style-plus] [class*="projectRow"] [class*="projectText"] {
   order: 1;
   flex: 0 0 auto;
   margin-right: 2px;
@@ -316,7 +319,7 @@ body[data-dsh-claude-style] [class*="projectRow"] [class*="projectText"] {
    the folder's conversation list, so the trigger is the whole group section —
    keyed on the section's own :hover rather than `:has(row:hover)`, which made
    every DOM change re-match the document. */
-body[data-dsh-claude-style] [class*="projectRow"] [class*="_chevron"] {
+body[data-dsh-claude-style-plus] [class*="projectRow"] [class*="_chevron"] {
   order: 2;
   display: none;
   width: 14px;
@@ -325,18 +328,18 @@ body[data-dsh-claude-style] [class*="projectRow"] [class*="_chevron"] {
   justify-content: center;
   color: var(--dsw-alias-label-secondary, #787672);
 }
-body[data-dsh-claude-style] [class*="groupSection"]:hover [class*="projectRow"] [class*="_chevron"] {
+body[data-dsh-claude-style-plus] [class*="groupSection"]:hover [class*="projectRow"] [class*="_chevron"] {
   display: inline-flex !important;
 }
-body[data-dsh-claude-style] [class*="projectRow"] [class*="rowActions"] {
+body[data-dsh-claude-style-plus] [class*="projectRow"] [class*="rowActions"] {
   order: 3;
   margin-left: auto;
 }
 /* The shipped solid triangle gives way to a chevron */
-body[data-dsh-claude-style] [class*="projectRow"] [class*="_chevron"] svg {
+body[data-dsh-claude-style-plus] [class*="projectRow"] [class*="_chevron"] svg {
   display: none;
 }
-body[data-dsh-claude-style] [class*="projectRow"] [class*="_chevron"]::after {
+body[data-dsh-claude-style-plus] [class*="projectRow"] [class*="_chevron"]::after {
   content: "";
   display: inline-block;
   width: 12px;
@@ -346,7 +349,7 @@ body[data-dsh-claude-style] [class*="projectRow"] [class*="_chevron"]::after {
   mask: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27 fill=%27none%27 stroke=%27black%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M4 6l4 4 4-4%27/%3E%3C/svg%3E") center / contain no-repeat;
   transition: transform 0.15s var(--ds-ease-in-out, ease);
 }
-body[data-dsh-claude-style] [class*="projectRow"][aria-expanded="false"] [class*="_chevron"]::after {
+body[data-dsh-claude-style-plus] [class*="projectRow"][aria-expanded="false"] [class*="_chevron"]::after {
   transform: rotate(-90deg);
 }
 /* Session status circle. The host renders the leading seat through a slot outlet
@@ -354,15 +357,15 @@ body[data-dsh-claude-style] [class*="projectRow"][aria-expanded="false"] [class*
    when nothing is registered, so an idle row's seat is never :empty and the circle
    hangs on the empty anchor as well; a seat carrying dots or another plugin's
    content keeps its own paint. */
-body[data-dsh-claude-style] [class*="sessionRow"] [class*="_slot"] {
+body[data-dsh-claude-style-plus] [class*="sessionRow"] [class*="_slot"] {
   width: 14px;
   height: 16px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
-body[data-dsh-claude-style] [class*="sessionRow"] [class*="_slot"]:empty::after,
-body[data-dsh-claude-style] [class*="sessionRow"] [class*="_slot"] > [data-slot]:empty::after {
+body[data-dsh-claude-style-plus] [class*="sessionRow"] [class*="_slot"]:empty::after,
+body[data-dsh-claude-style-plus] [class*="sessionRow"] [class*="_slot"] > [data-slot]:empty::after {
   content: "";
   display: inline-block;
   width: 5px;
@@ -376,7 +379,7 @@ body[data-dsh-claude-style] [class*="sessionRow"] [class*="_slot"] > [data-slot]
 /* Session status ongoing indicator: a circular progress ring. The ring's
    geometry needs no weight of its own: these selectors already outrank the
    host's class rules, and only the border has to beat a host `!important`. */
-body[data-dsh-claude-style] svg[data-state="ongoing"] {
+body[data-dsh-claude-style-plus] svg[data-state="ongoing"] {
   width: 10px;
   height: 10px;
   box-sizing: border-box;
@@ -384,7 +387,7 @@ body[data-dsh-claude-style] svg[data-state="ongoing"] {
   corner-shape: round;
   border: 1.5px solid rgba(255, 255, 255, 0.18) !important;
   border-top-color: var(--dsw-alias-label-primary) !important;
-  animation: 0.85s linear infinite dsh-claude-win11-spin;
+  animation: 0.85s linear infinite dsh-claude-style-plus-win11-spin;
   transform-origin: center center;
   display: inline-block;
   flex: none;
@@ -392,14 +395,14 @@ body[data-dsh-claude-style] svg[data-state="ongoing"] {
   fill: none;
   background: transparent;
 }
-body[data-dsh-claude-style]:not([data-ds-dark-theme]) svg[data-state="ongoing"] {
+body[data-dsh-claude-style-plus]:not([data-ds-dark-theme]) svg[data-state="ongoing"] {
   border-color: rgba(20, 20, 19, 0.12) !important;
   border-top-color: var(--dsw-alias-label-secondary) !important;
 }
-body[data-dsh-claude-style] svg[data-state="ongoing"] * {
+body[data-dsh-claude-style-plus] svg[data-state="ongoing"] * {
   display: none;
 }
-@keyframes dsh-claude-win11-spin {
+@keyframes dsh-claude-style-plus-win11-spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
@@ -408,8 +411,8 @@ body[data-dsh-claude-style] svg[data-state="ongoing"] * {
    rather than as calm. Neither the system setting (D26) nor the settings page's
    own choice governs it. */
 @media (prefers-reduced-motion: reduce) {
-  body[data-dsh-claude-style] svg[data-state="ongoing"] {
-    animation: 0.85s linear infinite dsh-claude-win11-spin !important;
+  body[data-dsh-claude-style-plus] svg[data-state="ongoing"] {
+    animation: 0.85s linear infinite dsh-claude-style-plus-win11-spin !important;
     animation-play-state: running !important;
   }
 }

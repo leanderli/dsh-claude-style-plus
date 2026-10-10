@@ -1,5 +1,5 @@
 import { COMPOSER_ATTR, COMPOSER_HIDDEN_ATTR, HOME_LAYOUT_STUDIO } from '../../constants'
-import { DIALOG_TRIGGER_SELECTOR, PHASE_ATTRIBUTE } from '@dsh-claude-style/contracts/dom'
+import { DIALOG_TRIGGER_SELECTOR, PHASE_ATTRIBUTE } from '@dsh-claude-style-plus/contracts/dom'
 import { COMPOSER_STACK, closestComposerCard, findAccessTrigger, findComposerCards, findComposerPlaceholder, findComposerSeat, findConversationScroller } from '../../core/host'
 import { composerRestyleRetired, readPrefs } from '../../core/prefs'
 import type { HostContext } from '../../core/host'
@@ -93,7 +93,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
    * every DOM change.
    */
   const ATTACHMENT_TILES = `${ATTACHMENT_RAIL} :is([class*="_imageItem"], [class*="_thumbnail"], [class*="_item"]:has(img), [class*="_card"]:has(img))`
-  const ATTACHMENT_TILE_ATTR = 'data-dsh-claude-attachment'
+  const ATTACHMENT_TILE_ATTR = 'data-dsh-claude-style-plus-attachment'
 
   /** Mark the cards that carry attachments, and the tiles inside them. */
   function syncAttachments(cards: NodeListOf<HTMLElement>) {
@@ -113,11 +113,11 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     for (const tile of tiles) tile.toggleAttribute(ATTACHMENT_TILE_ATTR, true)
   }
 
-  const CONTROL_ATTR = 'data-dsh-claude-control'
+  const CONTROL_ATTR = 'data-dsh-claude-style-plus-control'
 
   /**
    * Mark each host control on the composer with what it is, so the
-   * stylesheets key on `data-dsh-claude-control` instead of the host's
+   * stylesheets key on `data-dsh-claude-style-plus-control` instead of the host's
    * button text — text that changes with the shell language and with each
    * host release. Read from the host's structure (InputBar):
    *   commands — the tools row's `+`, the one button that opens a listbox;
@@ -138,7 +138,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     if (access !== null) setAttributeIfChanged(access, CONTROL_ATTR, 'access')
   }
 
-  const DRAFT_EMPTY_ATTR = 'data-dsh-claude-draft-empty'
+  const DRAFT_EMPTY_ATTR = 'data-dsh-claude-style-plus-draft-empty'
 
   /**
    * Mark the cards whose draft is empty. The host's editor shows its
@@ -192,7 +192,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
    * it out crashed React's unmount (Node.removeChild). The stylesheet lays
    * the dock over the toolbar row and puts the meter at the row's right end,
    * after the model and effort triggers; the trailing cluster keeps that
-   * room free through --dsh-claude-meter-room — the meter's width plus the
+   * room free through --dsh-claude-style-plus-meter-room — the meter's width plus the
    * cluster's own 8px gap.
    *
    * The meter is re-resolved only when the cached node left the tree, and
@@ -218,7 +218,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     else if (meter === null) meter = dockedContextMeter(composerDock(card))
     let room = ''
     if (meter !== null) {
-      meter.toggleAttribute('data-dsh-claude-context-meter', true)
+      meter.toggleAttribute('data-dsh-claude-style-plus-context-meter', true)
       const reading = meter.textContent || ''
       // Re-measure when the reading moved or the restyle scope flipped:
       // either can change what the room should be.
@@ -235,14 +235,14 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
       if (active) room = meterWidth > 0 ? `${meterWidth + 8}px` : meterRoom
     }
     meterNode = meter
-    const written = document.body.style.getPropertyValue('--dsh-claude-meter-room')
+    const written = document.body.style.getPropertyValue('--dsh-claude-style-plus-meter-room')
     if (room === written) {
       meterRoom = room
       return
     }
     meterRoom = room
-    if (room === '') document.body.style.removeProperty('--dsh-claude-meter-room')
-    else document.body.style.setProperty('--dsh-claude-meter-room', room)
+    if (room === '') document.body.style.removeProperty('--dsh-claude-style-plus-meter-room')
+    else document.body.style.setProperty('--dsh-claude-style-plus-meter-room', room)
   }
 
   /**
@@ -330,13 +330,13 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     heroCard = null
     document.body.removeAttribute(COMPOSER_ATTR)
     document.body.removeAttribute(COMPOSER_HIDDEN_ATTR)
-    const marks = ['data-composer-variant', 'data-has-attachments', ATTACHMENT_TILE_ATTR, DRAFT_EMPTY_ATTR, CONTROL_ATTR, 'data-dsh-claude-context-meter']
+    const marks = ['data-composer-variant', 'data-has-attachments', ATTACHMENT_TILE_ATTR, DRAFT_EMPTY_ATTR, CONTROL_ATTR, 'data-dsh-claude-style-plus-context-meter']
     for (const mark of marks) {
       for (const marked of document.querySelectorAll(`[${mark}]`)) marked.removeAttribute(mark)
     }
     if (meterRoom !== '') {
       meterRoom = ''
-      document.body.style.removeProperty('--dsh-claude-meter-room')
+      document.body.style.removeProperty('--dsh-claude-style-plus-meter-room')
     }
     meterNode = null
     meterReading = ''

@@ -1,4 +1,4 @@
-import { COMPOSER_STAT_SELECTOR, DIALOG_TRIGGER_SELECTOR } from '@dsh-claude-style/contracts/dom'
+import { COMPOSER_STAT_SELECTOR, DIALOG_TRIGGER_SELECTOR } from '@dsh-claude-style-plus/contracts/dom'
 import { removeStrayNodes } from '../../shared/popover'
 
 /**
@@ -9,11 +9,11 @@ import { removeStrayNodes } from '../../shared/popover'
  */
 
 /** The mark on the block this feature appends to the host's panel. */
-export const CONTEXT_STATS_ATTR = 'data-dsh-claude-context-stats'
+export const CONTEXT_STATS_ATTR = 'data-dsh-claude-style-plus-context-stats'
 /** The mark on the host's panel itself, which is what takes the entrance. */
-export const CONTEXT_PANEL_ATTR = 'data-dsh-claude-context-panel'
+export const CONTEXT_PANEL_ATTR = 'data-dsh-claude-style-plus-context-panel'
 /** The mark that turns that reading on; written with the property, never without it. */
-export const CONTEXT_PANEL_ALIGNED_ATTR = 'data-dsh-claude-context-aligned'
+export const CONTEXT_PANEL_ALIGNED_ATTR = 'data-dsh-claude-style-plus-context-aligned'
 
 /**
  * The host's own marks on its three statistics dialogs — the two session
@@ -28,7 +28,7 @@ const HOST_STATS_DIALOGS = '[data-session-stats-details], [data-session-stats-us
  * composer restyle covers the page.
  */
 export function findContextMeter() {
-  return document.querySelector<HTMLElement>('[data-dsh-claude-context-meter]')
+  return document.querySelector<HTMLElement>('[data-dsh-claude-style-plus-context-meter]')
 }
 
 /**

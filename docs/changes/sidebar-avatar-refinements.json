@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-09",
+  "group": "improvements",
+  "order": 0,
+  "external": false,
+  "zh": "补齐此前未进入 Plus bundle 的侧栏与头像优化：网页侧栏搜索行下方留 16px 间距；侧栏收起时隐藏 Workspace 切换条和新会话文字遮罩；账号 Profile 行使用居中、全宽的 flex 布局；头像成功加载时移除品牌背景，图片失败时恢复品牌标记。",
+  "en": "Restore the omitted sidebar and avatar refinements in the Plus bundle: keep a 16px gap below the browser search row; hide Workspace segments and the new-session text mask when the sidebar is collapsed; use a centered full-width flex layout for the account Profile row; suppress the brand background only while a custom avatar loads, restoring the mark on failure."
+}

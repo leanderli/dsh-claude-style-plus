@@ -1,10 +1,10 @@
-import { CHAT_TURN_ATTRIBUTE, FLOW_KIND_ATTRIBUTE } from '@dsh-claude-style/contracts/dom'
+import { CHAT_TURN_ATTRIBUTE, FLOW_KIND_ATTRIBUTE } from '@dsh-claude-style-plus/contracts/dom'
 import { closestConversationSession, conversationSessionId, findChatFlows, findChatTarget, findTurnProcess, readTurnActivity } from '../../core/host'
 import { copyLabel } from '../../core/i18n'
 import { setAttributeIfChanged } from '../../shared/dom'
 import { formatCompactTokens, pad2 } from '../../shared/format'
 import type { HostContext, HostText, HostValue } from '../../core/host'
-import type { HostChatSnapshot, HostTurn } from '@dsh-claude-style/contracts/services'
+import type { HostChatSnapshot, HostTurn } from '@dsh-claude-style-plus/contracts/services'
 import type { FeatureUi } from '../../core/feature'
 import type manifest from './turn-status.manifest'
 
@@ -37,11 +37,11 @@ type OrderMarks = Map<HTMLElement, number>
  */
 export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
   /** On the moved control: `live`, `stopped` or `failed`. */
-  const STATE_ATTR = 'data-dsh-claude-turn-state'
+  const STATE_ATTR = 'data-dsh-claude-style-plus-turn-state'
   /** On the moved control: the status line's text. */
-  const STATUS_ATTR = 'data-dsh-claude-turn-status'
+  const STATUS_ATTR = 'data-dsh-claude-style-plus-turn-status'
   /** Inline on the column's rows from the first moved control on: their flex order. */
-  const ORDER_PROP = '--dsh-claude-turn-order'
+  const ORDER_PROP = '--dsh-claude-style-plus-turn-order'
   const SEPARATOR = ' · '
   /** Element → (attribute → value) this feature wrote. */
   let attrMarks: AttrMarks = new Map()

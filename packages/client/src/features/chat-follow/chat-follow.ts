@@ -3,7 +3,7 @@ import { observeSize, subscribeMutations } from '../../core/bus'
 import { requestFrame } from '../../core/frame'
 import { motionReduced } from '../../core/prefs'
 import { createChatProcessFollow } from './process-follow'
-import { CHAT_CALL_SELECTOR, COMPOSER_CARD_SELECTOR, COMPOSER_SELECTOR, CONVERSATION_SCROLL_SELECTOR, FLOW_BLOCK_SELECTOR, FOLLOWING_TAIL_ATTRIBUTE, RUNNING_STATE, SHIMMER_SELECTOR, STREAMING_SELECTOR, THINK_ROW_SELECTOR } from '@dsh-claude-style/contracts/dom'
+import { CHAT_CALL_SELECTOR, COMPOSER_CARD_SELECTOR, COMPOSER_SELECTOR, CONVERSATION_SCROLL_SELECTOR, FLOW_BLOCK_SELECTOR, FOLLOWING_TAIL_ATTRIBUTE, RUNNING_STATE, SHIMMER_SELECTOR, STREAMING_SELECTOR, THINK_ROW_SELECTOR } from '@dsh-claude-style-plus/contracts/dom'
 import { conversationColumn, conversationScroller, findFollowTailButton } from '../../shared/chat-dom'
 import { createStamp } from '../../shared/dom'
 import { SCROLL_EASE_LEAD_PX, easeScrollToEndFor, handBackFollow, holdFollowButton, joinScrollOwner, readerHolds, releaseFollowButton, stopScrollFor, submissionHolds, takeBackHostPin } from '../../shared/scroll-owner'
@@ -39,12 +39,12 @@ export const FOLLOW_ACTIVITY_GRACE_MS = 2000
 export const FOLLOW_FOLD_WAIT_MS = 150
 export const FOLLOW_FOLD_WAIT_ATTEMPTS = 4
 /** The host's own back-to-end button, marked for the stylesheet that places it. */
-export const FOLLOW_TAIL_ATTR = 'data-dsh-claude-follow-tail'
+export const FOLLOW_TAIL_ATTR = 'data-dsh-claude-style-plus-follow-tail'
 /** How far above the composer's top edge that button floats. */
 export const FOLLOW_TAIL_AIR_PX = 12
 /** The button's fixed placement, written as numbers because the column moves under it. */
-const FOLLOW_TAIL_LEFT = '--dsh-claude-follow-tail-left'
-const FOLLOW_TAIL_BOTTOM = '--dsh-claude-follow-tail-bottom'
+const FOLLOW_TAIL_LEFT = '--dsh-claude-style-plus-follow-tail-left'
+const FOLLOW_TAIL_BOTTOM = '--dsh-claude-style-plus-follow-tail-bottom'
 
 /**
  * The conversation's own composer card: the lowest of the cards on the page,

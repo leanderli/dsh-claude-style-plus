@@ -2,7 +2,7 @@ import * as primitives from '@deepseek-ai/dsh-client-ui-primitives'
 import * as React from 'react'
 import { CHAT_DIFF_MAX_LINES, CHAT_FILE_ADD_CLASS, CHAT_FILE_BODY_CLASS, CHAT_FILE_CHEVRON_CLASS, CHAT_FILE_DEL_CLASS, CHAT_FILE_DIFF_CLASS, CHAT_FILE_HIDDEN_CLASS, CHAT_FILE_INSPECT_CLASS, CHAT_FILE_IO_CLASS, CHAT_FILE_IO_DIVIDER_CLASS, CHAT_FILE_IO_LABEL_CLASS, CHAT_FILE_IO_SECTION_CLASS, CHAT_FILE_IO_TEXT_CLASS, CHAT_FILE_LEADING_CLASS, CHAT_FILE_LINK_CLASS, CHAT_FILE_ROW_CLASS, CHAT_FILE_ROW_LINE_CLASS, CHAT_FILE_SEAT, CHAT_FILE_SEP_CLASS, CHAT_FILE_STAT_CLASS, CHAT_FILE_SUFFIX_CLASS, CHAT_FILE_TITLE_CLASS, chatFileCallHead, chatFileDiffBlockLabels, chatFileDiffHunks, chatFileParseArgs, chatFileRowModel, chatFileStateLabel, chatFileSummaryClassName } from './file-row-model'
 import type { HostContext, HostFiber, HostText } from '../../core/host'
-import type { HostChatBlock } from '@dsh-claude-style/contracts/services'
+import type { HostChatBlock } from '@dsh-claude-style-plus/contracts/services'
 import type { FeatureUi } from '../../core/feature'
 import type manifest from './chat-files.manifest'
 
@@ -167,7 +167,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
           releaseSeats()
           if (typeof stopSeat === 'function') stopSeat()
         }
-      }, 'dsh-claude-style: file change row')
+      }, 'dsh-claude-style-plus: file change row')
     })
   }
   return () => {

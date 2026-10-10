@@ -37,7 +37,7 @@
         document.querySelectorAll('[class*="footerActions"] [data-slot] > *'),
         function (entry) {
           return {
-            hidden: entry.hasAttribute('data-dsh-claude-footer-hidden'),
+            hidden: entry.hasAttribute('data-dsh-claude-style-plus-footer-hidden'),
             display: getComputedStyle(entry).display,
           }
         })
@@ -54,12 +54,12 @@
       var hostRow = document.getElementById('host-account')
       r.hostRowDisplay = hostRow ? getComputedStyle(hostRow).display : null
       r.hostRowVisible = !!(hostRow && hostRow.getBoundingClientRect().width > 0)
-      r.syntheticBtn = !!document.querySelector('.dsh-claude-account-btn')
+      r.syntheticBtn = !!document.querySelector('.dsh-claude-style-plus-account-btn')
       var triggerRow = document.querySelector('[class*="footArea"] [class*="triggerRow"]')
       r.triggerRowDisplay = triggerRow ? getComputedStyle(triggerRow).display : null
       r.hostRowText = hostRow ? (hostRow.textContent || '').trim() : null
       r.hostRowWidth = hostRow ? hostRow.getBoundingClientRect().width : null
-      r.accountWidthVar = document.body.style.getPropertyValue('--dsh-claude-account-width').trim()
+      r.accountWidthVar = document.body.style.getPropertyValue('--dsh-claude-style-plus-account-width').trim()
       // The hover preference is on in this stand-in: a pointer dwelling on the
       // host's account row opens the host menu, and leaving it dismisses the
       // menu the host had mounted.
@@ -71,11 +71,11 @@
       r.hoverClosedMenu = !accountMenuOpen()
       // Read through the CSSOM: the sheet's text is minified, and the parsed
       // rules are what the page applies.
-      var styleEl = document.getElementById('dsh-claude-style-style')
+      var styleEl = document.getElementById('dsh-claude-style-plus-style')
       var sheetRules = styleEl && styleEl.sheet ? Array.prototype.slice.call(styleEl.sheet.cssRules) : []
-      r.menuEntryKeyframes = sheetRules.some(function (rule) { return rule instanceof CSSKeyframesRule && rule.name === 'dsh-claude-account-menu-in' })
+      r.menuEntryKeyframes = sheetRules.some(function (rule) { return rule instanceof CSSKeyframesRule && rule.name === 'dsh-claude-style-plus-account-menu-in' })
       r.menuEntryAnimation = sheetRules.some(function (rule) {
-        return rule instanceof CSSStyleRule && rule.style.animationName === 'dsh-claude-account-menu-in' &&
+        return rule instanceof CSSStyleRule && rule.style.animationName === 'dsh-claude-style-plus-account-menu-in' &&
           rule.style.animationDuration === '0.15s' && rule.style.animationTimingFunction === 'ease'
       })
       // Open the host's own menu: the card mounts with the host's rows, the skin
@@ -88,9 +88,9 @@
         await frame()
         var card = document.querySelector('body > [role="menu"]')
         if (card === null) continue
-        var cardRows = card.querySelector('.dsh-claude-account-inject')
+        var cardRows = card.querySelector('.dsh-claude-style-plus-account-inject')
         cardFrames.push({
-          ready: card.hasAttribute('data-dsh-claude-account-ready'),
+          ready: card.hasAttribute('data-dsh-claude-style-plus-account-ready'),
           rows: cardRows !== null && cardRows.childElementCount > 0,
           top: card.style.top,
           painted: getComputedStyle(card).visibility !== 'hidden',
@@ -111,22 +111,22 @@
       }
       await sleep(400)
       var viewport = document.querySelector('body > [role="menu"] [role="presentation"]')
-      var inject = document.querySelector('.dsh-claude-account-inject')
+      var inject = document.querySelector('.dsh-claude-style-plus-account-inject')
       // The marker the stylesheet hangs the skin's card on. It sits on the
       // host's own role=menu card, derived from the list it injected into so a
       // hidden menu portal elsewhere in the page cannot answer for it.
       var accountMenu = viewport ? viewport.closest('[role="menu"]') : null
-      r.accountMenuMarked = !!(accountMenu && accountMenu.hasAttribute('data-dsh-claude-account-menu'))
+      r.accountMenuMarked = !!(accountMenu && accountMenu.hasAttribute('data-dsh-claude-style-plus-account-menu'))
       r.menuCardWidth = accountMenu ? accountMenu.getBoundingClientRect().width : null
       r.injectInViewport = !!(viewport && inject && inject.parentElement === viewport)
       r.injectFirst = !!(viewport && viewport.firstElementChild === inject)
       r.injectRows = inject ? Array.prototype.map.call(inject.children, function (c) {
-        if (c.hasAttribute('data-dsh-claude-ban-row')) return 'header'
+        if (c.querySelector('[data-dsh-claude-style-plus-profile-row]')) return 'header'
         if (c.hasAttribute('data-action-index')) return 'action'
         if (c.hasAttribute('data-embed-index')) return 'embed'
         return 'other'
       }) : null
-      var injectName = inject ? inject.querySelector('.dsh-claude-account-popover-name') : null
+      var injectName = inject ? inject.querySelector('.dsh-claude-style-plus-account-popover-name') : null
       r.injectName = injectName ? injectName.textContent : null
       var htmlBefore = inject ? inject.innerHTML : null
       // React re-renders the list: the host empties the viewport and puts its own
@@ -134,40 +134,84 @@
       window.__rerenderHostMenu()
       await sleep(400)
       var viewport2 = document.querySelector('body > [role="menu"] [role="presentation"]')
-      var inject2 = document.querySelector('.dsh-claude-account-inject')
+      var inject2 = document.querySelector('.dsh-claude-style-plus-account-inject')
       r.injectHealedFirst = !!(viewport2 && inject2 && viewport2.firstElementChild === inject2)
       r.injectHealedSame = !!(inject2 && inject2.innerHTML === htmlBefore)
+      var profileRowLayout = inject2 ? inject2.querySelector('[data-dsh-claude-style-plus-profile-row]') : null
+      var profileRowStyle = profileRowLayout ? getComputedStyle(profileRowLayout) : null
+      r.profileRowLayout = profileRowStyle ? {
+        display: profileRowStyle.display,
+        alignItems: profileRowStyle.alignItems,
+        width: profileRowStyle.width,
+        boxSizing: profileRowStyle.boxSizing,
+        marginTop: profileRowStyle.marginTop,
+        marginBottom: profileRowStyle.marginBottom,
+      } : null
       // The host's keyboard walk reaches our injected button.
       document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, cancelable: true }))
       await sleep(80)
       var focused = document.activeElement
       r.focusInInjected = !!(focused && inject2 && inject2.contains(focused) && focused.tagName === 'BUTTON')
-      // The hold screen entered from the header: the overlay takes the pointer,
-      // so the row and the card it covered report a leave without the pointer
-      // moving, and with the hover preference on those leaves must neither
-      // dismiss the host menu behind the page nor — through the footer's
-      // synthetic Escape to that menu — the page itself.
-      var banEntry = document.querySelector('.dsh-claude-account-inject [data-dsh-claude-ban-row]')
-      if (banEntry) {
-        banEntry.click()
+      // The account username opens the real Profile overlay. Closing the host
+      // menu must happen before the root slot's React component is presented.
+      var profileEntry = document.querySelector('.dsh-claude-style-plus-account-inject [data-dsh-claude-style-plus-profile-row]')
+      var profileId = 'dsh-claude-style-plus-profile'
+      var profileComponent = (window.__slotComponents || {})[profileId]
+      r.profileOverlayRegistered = Array.prototype.some.call(window.__slots || [], function (entry) {
+        return entry.key === 'shell.overlay' && entry.id === profileId && entry.component === 'function'
+      })
+      r.profileMenuClosed = false
+      r.profileDialogRendered = false
+      r.profileTitleHasText = false
+      r.profileEscapeCloses = false
+      r.profileFocusRestored = false
+      if (profileEntry && typeof profileComponent === 'function') {
+        profileEntry.click()
         await sleep(80)
-        r.banOpened = document.querySelectorAll('[data-dsh-ban]').length
-        if (hostRow) hostRow.dispatchEvent(new MouseEvent('mouseleave'))
-        var coveredMenu = document.querySelector('body > [role="menu"]')
-        if (coveredMenu) coveredMenu.dispatchEvent(new MouseEvent('mouseleave'))
-        await sleep(300)
-        r.banSurvivesLeave = document.querySelectorAll('[data-dsh-ban]').length
-        r.menuBehindBan = accountMenuOpen()
-        var banDismiss = document.querySelector('.dsh-claude-ban [data-dsh-ban-dismiss]')
-        if (banDismiss) banDismiss.click()
-        await sleep(80)
-        r.banAfterDismiss = document.querySelectorAll('[data-dsh-ban]').length
+        r.profileMenuClosed = !accountMenuOpen() && document.querySelectorAll('.dsh-claude-style-plus-account-inject').length === 0
+        var react = window.__react
+        var renderProfile = function () {
+          var wasRendering = react.rendering
+          var oldStates = react.states
+          react.rendering = true
+          react.states = null
+          try { return profileComponent({}) }
+          finally { react.rendering = wasRendering; react.states = oldStates }
+        }
+        var findTreeNode = function (node, match) {
+          if (Array.isArray(node)) {
+            for (var ni = 0; ni < node.length; ni++) { var found = findTreeNode(node[ni], match); if (found) return found }
+            return null
+          }
+          if (node === null || typeof node !== 'object') return null
+          if (match(node)) return node
+          return findTreeNode(node.props && node.props.children, match)
+        }
+        var treeText = function (node) {
+          if (typeof node === 'string' || typeof node === 'number') return String(node)
+          if (Array.isArray(node)) return node.map(treeText).join('')
+          if (node === null || typeof node !== 'object') return ''
+          return treeText(node.props && node.props.children)
+        }
+        var profileTree = renderProfile()
+        var dialogNode = findTreeNode(profileTree, function (node) { return node.type === 'div' && node.props && node.props.role === 'dialog' })
+        r.profileDialogRendered = !!(dialogNode && String(dialogNode.props['aria-modal']) === 'true' &&
+          String(dialogNode.props.className).indexOf('dsh-claude-style-plus-profile-page') !== -1)
+        var titleNode = findTreeNode(profileTree, function (node) { return node.type === 'h1' })
+        r.profileTitleHasText = !!(titleNode && treeText(titleNode).trim() !== '')
+        if (dialogNode && typeof dialogNode.props.onKeyDown === 'function') {
+          var escapePrevented = false
+          dialogNode.props.onKeyDown({ key: 'Escape', preventDefault() { escapePrevented = true }, stopPropagation() {} })
+          await sleep(100)
+          r.profileEscapeCloses = escapePrevented && renderProfile() === null
+          r.profileFocusRestored = document.activeElement === hostRow
+        }
       }
       // Closing the host's menu (its own Escape) leaves no container behind.
       document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }))
       await sleep(400)
-      r.injectAfterClose = document.querySelectorAll('.dsh-claude-account-inject').length
-      r.accountMenuMarkAfterClose = document.querySelectorAll('[data-dsh-claude-account-menu]').length
+      r.injectAfterClose = document.querySelectorAll('.dsh-claude-style-plus-account-inject').length
+      r.accountMenuMarkAfterClose = document.querySelectorAll('[data-dsh-claude-style-plus-account-menu]').length
       // The account menu is counted by content (its Sign out row): a role=menu
       // portal exists only while its menu is open, ours included.
       r.hostMenuAfterClose = Array.prototype.filter.call(document.querySelectorAll('body > [role="menu"]'), function (m) {

@@ -1,4 +1,4 @@
-# Claude Code Desktop theme bundle patch: inserts its dsh.client row into the web roster.
+# Claude Code Style Plus bundle patch: inserts its dsh.client row into the web roster.
 - insert:
-    - id: ui-skin-claude-style
-      name: 'dsh-claude-style'
+    - id: ui-skin-claude-style-plus
+      name: 'dsh-claude-style-plus'

@@ -1,6 +1,6 @@
 import { expect, test, beforeEach } from 'vitest'
 import { currentRate, forgetRates, formatCountdown } from './schedule'
-import type { RateProfile, RateSchedule } from '@dsh-claude-style/contracts/peakrate'
+import type { RateProfile, RateSchedule } from '@dsh-claude-style-plus/contracts/peakrate'
 
 /**
  * The billing clock's judgement: the boundaries the meter is judged by

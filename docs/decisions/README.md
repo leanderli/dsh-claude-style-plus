@@ -34,6 +34,8 @@
 | [D33](D33-stylesheet-ownership.md) | 皮肤样式表带上本包自己的归属标记，兄弟包的样式表不认领 | 已实施 |
 | [D43](D43-overlay-and-upstream.md) | 覆盖层定位与等待扩展点 | 已实施 |
 | [D44](D44-contract-module.md) | 宿主契约模块与契约测试 | 已实施 |
+| [D58](D58-profile-avatar-storage.md) | 自定义头像按 DSH Profile 隔离保存 | 已实施 |
+| [D59](D59-private-route-fence.md) | 私有插件路由在缺少 Host fence 时只接受直连 loopback 同源请求 | 已实施 |
 
 ## 运行时
 
@@ -47,6 +49,7 @@
 | [D41](D41-scroll-owner.md) | 聊天区的滚动位置只有一个写入者 | 已实施 |
 | [D42](D42-feature-manifest.md) | 功能清单 | 已实施 |
 | [D53](D53-usage-merge.md) | 用量两个来源按日期合并 | 已实施 |
+| [D57](D57-workspace-skill-usage.md) | Workspace 与 Skill 统计由 Session 日志归属 | 已实施 |
 
 ## 功能
 
@@ -69,6 +72,8 @@
 | [D50](D50-brand.md) | 品牌两档：配色切换只靠令牌 | 已实施 |
 | [D52](D52-header-band.md) | 会话标题与顶栏控件抬进桌面端标题栏，放不下就留在原行 | 已实施 |
 | [D54](D54-peakrate-meter.md) | 峰谷电表：作息表是数据源的快照，判定在浏览器按真实时刻做 | 已实施 |
+| [D56](D56-profile-activity-page.md) | 账号行打开真实的 Profile 活动页 | 已实施 |
+| [D60](D60-fixed-sidebar-search.md) | Sidebar Search 固定在 New Session 下方 | 已实施 |
 
 ## 分发与流程
 
@@ -77,7 +82,8 @@
 | [D7](D7-one-package.md) | 行为层与皮肤对外是一个插件 | 已实施 |
 | [D45](D45-testing.md) | 三层测试与持续集成 | 已实施 |
 | [D48](D48-documentation.md) | 文档流程 | 已实施 |
+| [D55](D55-independent-plus-namespace.md) | Plus fork 使用完整独立命名空间 | 已实施 |
 
 ## 作废的编号
 
-D1（由 D36 取代）、D2（由 D43 取代）、D6（由 D40 取代）、D8（由 D46 取代）、D13（由 D42 取代）、D18（由 D46 取代）、D37（由 D51 取代）。
+D1（由 D36 取代）、D2（由 D43 取代）、D6（由 D40 取代）、D8（由 D46 取代）、D13（由 D42 取代）、D18（由 D46 取代）、D22（由 D60 取代）、D25（由 D56 取代）、D37（由 D51 取代）。

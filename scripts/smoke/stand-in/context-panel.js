@@ -42,8 +42,8 @@
     foreignPopover.id = 'foreign-popover'
     foreignPopover.setAttribute('role', 'dialog')
     foreignPopover.setAttribute('aria-label', '节点详情')
-    foreignPopover.setAttribute('data-dsh-claude-context-panel', '')
-    foreignPopover.setAttribute('data-dsh-claude-context-aligned', '')
+    foreignPopover.setAttribute('data-dsh-claude-style-plus-context-panel', '')
+    foreignPopover.setAttribute('data-dsh-claude-style-plus-context-aligned', '')
     foreignPopover.style.position = 'fixed'
     foreignPopover.style.left = '8px'
     foreignPopover.style.top = '8px'
@@ -52,8 +52,8 @@
     foreignCard.innerHTML = '<dl><dt>状态</dt><dd>运行中</dd></dl>'
     var strayBlock = document.createElement('div')
     strayBlock.id = 'stray-context-block'
-    strayBlock.className = 'dsh-claude-context-stats'
-    strayBlock.setAttribute('data-dsh-claude-context-stats', '')
+    strayBlock.className = 'dsh-claude-style-plus-context-stats'
+    strayBlock.setAttribute('data-dsh-claude-style-plus-context-stats', '')
     foreignCard.appendChild(strayBlock)
     foreignPopover.appendChild(foreignCard)
     document.body.appendChild(foreignPopover)

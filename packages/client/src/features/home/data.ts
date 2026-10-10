@@ -1,10 +1,11 @@
 import { USAGE_ROUTE } from '../../constants'
+import { homeDateInRange, homeTimestampInRange } from './date-window'
 import { activeLocale, copyLabel } from '../../core/i18n'
 import { pad2 } from '../../shared/format'
 import { notifyAll } from '../../shared/notify'
 import type { HostContext } from '../../core/host'
-import type { HostRemoteListAnswer, HostSessionRow } from '@dsh-claude-style/contracts/services'
-import type { UsageAnswer, UsageDay, UsageModel, UsageReport, UsageTotals } from '@dsh-claude-style/contracts/usage'
+import type { HostRemoteListAnswer, HostSessionRow } from '@dsh-claude-style-plus/contracts/services'
+import type { UsageAnswer, UsageDay, UsageModel, UsageReport, UsageTotals } from '@dsh-claude-style-plus/contracts/usage'
 
 /**
  * The roll-up store's snapshot: the route's last answer (the host half's
@@ -364,8 +365,8 @@ export function createHomeUsage(ctx: HostContext) {
   }
 
   /** Read the session list once; a host without the remote service keeps the route's answer. */
-  function loadSessionSummary() {
-    if (disposed || listLoading || listSummary !== null) return
+  function loadSessionSummary(force?: boolean) {
+    if (disposed || listLoading || (!force && listSummary !== null)) return
     const sessions = ctx.get('remote.session')
     if (sessions === undefined || sessions === null || typeof sessions.list !== 'function') return
     listLoading = true
@@ -495,10 +496,11 @@ export function homeModelDays(value: UsageReport | null, windowDays: number) {
   const span = windowDays > 0 && windowDays < HOME_CHART_DAYS ? windowDays : HOME_CHART_DAYS
   // The span is at least a day, so the window has a first day.
   const start = homeRangeStart(span)!
+  const today = homeDayKey(new Date())
   const columns: { date: string, models: Record<string, number> }[] = []
   for (let i = 0; i < value.days.length; i++) {
     const day = value.days[i]
-    if (day.date < start || day.models === undefined || day.models === null) continue
+    if (!homeDateInRange(day.date, start, today) || day.models === undefined || day.models === null) continue
     columns.push({ date: day.date, models: day.models })
   }
   if (columns.length === 0) return null
@@ -525,8 +527,10 @@ export function homePanelData(state: HomeUsageState, listed: ListSummary | null,
     if (HOME_RANGES[r].id === range) windowDays = HOME_RANGES[r].days
   }
   const start = homeRangeStart(windowDays)
+  const today = homeDayKey(new Date())
   const startMs = start === null ? null : new Date(`${start}T00:00:00`).getTime()
-  const inRange = (date: string) => start === null || date >= start
+  const endMs = new Date(`${today}T23:59:59.999`).getTime()
+  const inRange = (date: string) => homeDateInRange(date, start, today)
   let tokens = 0
   let calls: number | null = null
   let sessions: number | null = null
@@ -570,7 +574,7 @@ export function homePanelData(state: HomeUsageState, listed: ListSummary | null,
     activeDays = 0
     for (let e = 0; e < listed.entries.length; e++) {
       const item = listed.entries[e]
-      if (startMs !== null && item.at < startMs) continue
+      if (!homeTimestampInRange(item.at, startMs, endMs)) continue
       tokens += item.tokens
       sessions += 1
     }
@@ -609,7 +613,7 @@ export function homePanelData(state: HomeUsageState, listed: ListSummary | null,
       let bestSessions = 0
       for (let m = 0; m < listed.models.length; m++) {
         const windowed = listed.models[m]
-        if (windowed.lastAt < startMs || windowed.sessions <= bestSessions) continue
+        if (!homeTimestampInRange(windowed.lastAt, startMs, endMs) || windowed.sessions <= bestSessions) continue
         bestSessions = windowed.sessions
         model = windowed.id
       }

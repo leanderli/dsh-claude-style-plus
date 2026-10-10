@@ -1,18 +1,18 @@
 /* ---------- home layout: the studio (dashboard) form and its usage panel ---------- */
 /* The hero's own markup is the host's either way; this file only rearranges it and
    draws the panel the dock slot carries. Both are keyed on the attributes
-   packages/client/src/features/home/home-layout.ts writes — the layout, and `data-dsh-claude-home-hero`
+   packages/client/src/features/home/home-layout.ts writes — the layout, and `data-dsh-claude-style-plus-home-hero`
    while the studio layout owns the new-conversation page — so the classic
    layout is untouched.
    The two tab bodies live in home-overview.css and home-models.css. */
 
 /* The scroll body centres the hero stack; the studio form starts at the top and
    lets the seat take the rest of the column, so the card lands on the bottom edge. */
-body[data-dsh-claude-style][data-dsh-claude-home-hero] [class*="_scrollBody"] {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-home-hero] [class*="_scrollBody"] {
   justify-content: flex-start;
 }
 
-body[data-dsh-claude-style][data-dsh-claude-home-hero] [class*="_composerSeat"] {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-home-hero] [class*="_composerSeat"] {
   flex: 1 1 auto;
   min-height: 0;
 }
@@ -22,7 +22,7 @@ body[data-dsh-claude-style][data-dsh-claude-home-hero] [class*="_composerSeat"] 
    and fills the seat, so the context row and the card rest on the bottom edge.
    The composer keeps the 720px column, while the greeting and the dashboard
    card read as a 480px block against its left edge. */
-body[data-dsh-claude-style][data-dsh-claude-home-hero] [class*="_composerStack"][class*="_composerHero"] {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-home-hero] [class*="_composerStack"][class*="_composerHero"] {
   /* The conversation form's own rule pins this stack to its content height; the
      studio column has to fill the seat for the card to reach the bottom edge.
      Naming the stack by both its classes matches that gated rule's weight, and
@@ -40,7 +40,7 @@ body[data-dsh-claude-style][data-dsh-claude-home-hero] [class*="_composerStack"]
 
 /* Order is written on the boxes the host's `display: contents` slot anchors
    expose, because an anchor with `display: contents` generates no box to sort. */
-body[data-dsh-claude-style][data-dsh-claude-home-layout="studio"] [class*="_composerHero"] > :has([class*="_headline"]) {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-home-layout="studio"] [class*="_composerHero"] > :has([class*="_headline"]) {
   order: 0;
   height: auto;
   justify-content: flex-start;
@@ -51,11 +51,11 @@ body[data-dsh-claude-style][data-dsh-claude-home-layout="studio"] [class*="_comp
 
 /* The skin's own seat on the cold start screen, where the host renders no dock
    (packages/client/src/features/home/home-layout.ts); like the host's anchor it generates no box. */
-body[data-dsh-claude-style] .dsh-claude-home-seat {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-home-seat {
   display: contents;
 }
 
-body[data-dsh-claude-style][data-dsh-claude-home-layout="studio"] [class*="_composerHero"] > :is([data-slot="conversation.input.dock"], .dsh-claude-home-seat) > * {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-home-layout="studio"] [class*="_composerHero"] > :is([data-slot="conversation.input.dock"], .dsh-claude-style-plus-home-seat) > * {
   order: 1;
   /* A window too short for the whole panel shrinks the panel instead of the
      page: the greeting stays on the top edge, the context row and the card on
@@ -71,7 +71,7 @@ body[data-dsh-claude-style][data-dsh-claude-home-layout="studio"] [class*="_comp
   margin-right: auto;
 }
 
-body[data-dsh-claude-style][data-dsh-claude-home-layout="studio"] [class*="_composerHero"] > [class*="_heroWorkspaceRow"] {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-home-layout="studio"] [class*="_composerHero"] > [class*="_heroWorkspaceRow"] {
   order: 2;
   /* Everything below the panel drops to the bottom edge: the auto margin eats
      the free column and carries the context row and the card down with it. */
@@ -82,7 +82,7 @@ body[data-dsh-claude-style][data-dsh-claude-home-layout="studio"] [class*="_comp
 /* The context row's triggers wear Claude's chip: a hairline box on the canvas
    rather than a bare label. The target list is the composer card's own for these
    triggers, so the chip carries the same weight and, coming later, wins. */
-body[data-dsh-claude-style][data-dsh-claude-home-hero] [class*="_heroWorkspaceRow"] :is(button, [role="button"]) {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-home-hero] [class*="_heroWorkspaceRow"] :is(button, [role="button"]) {
   box-sizing: border-box;
   height: 28px;
   padding: 0 10px;
@@ -91,11 +91,11 @@ body[data-dsh-claude-style][data-dsh-claude-home-hero] [class*="_heroWorkspaceRo
   background: transparent;
 }
 
-body[data-dsh-claude-style][data-dsh-claude-home-hero] [class*="_heroWorkspaceRow"] :is(button, [role="button"]):hover:not(:disabled) {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-home-hero] [class*="_heroWorkspaceRow"] :is(button, [role="button"]):hover:not(:disabled) {
   background: color-mix(in srgb, var(--dsw-alias-label-primary, #141413) 5%, transparent);
 }
 
-body[data-dsh-claude-style][data-dsh-claude-home-layout="studio"] [class*="_composerHero"] > [data-slot="conversation.composer.bar"] > * {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-home-layout="studio"] [class*="_composerHero"] > [data-slot="conversation.composer.bar"] > * {
   order: 3;
 }
 
@@ -104,9 +104,9 @@ body[data-dsh-claude-style][data-dsh-claude-home-layout="studio"] [class*="_comp
    titleGroup inside it — the class name contains "title" — so both elements
    have to leave it behind, and the two extra body attributes plus the root
    qualifier carry past the hero's own 44.2px size as well. */
-body[data-dsh-claude-style][data-dsh-claude-home-hero] [class*="_headline"],
-body[data-dsh-claude-style][data-dsh-claude-home-hero] [class*="_headline"] [class*="titleGroup"],
-body[data-dsh-claude-style][data-dsh-claude-home-hero] [class*="_headline"] [class*="titleGroup"] > span {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-home-hero] [class*="_headline"],
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-home-hero] [class*="_headline"] [class*="titleGroup"],
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-home-hero] [class*="_headline"] [class*="titleGroup"] > span {
   justify-content: flex-start;
   font-family: var(--dsw-font-family);
   font-size: 20px;
@@ -115,13 +115,13 @@ body[data-dsh-claude-style][data-dsh-claude-home-hero] [class*="_headline"] [cla
   color: var(--dsw-alias-label-primary, #141413);
 }
 
-body[data-dsh-claude-style][data-dsh-claude-home-hero] [class*="_headline"] {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-home-hero] [class*="_headline"] {
   gap: 8px;
 }
 
 /* The mark shrinks with the line: Claude's home asterisk stands a hair taller
    than the greeting's own cap height, not twice it. */
-body[data-dsh-claude-style][data-dsh-claude-home-hero] [class*="fishHitbox"]::before {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-home-hero] [class*="fishHitbox"]::before {
   width: 21px;
   height: 21px;
 }
@@ -132,15 +132,15 @@ body[data-dsh-claude-style][data-dsh-claude-home-hero] [class*="fishHitbox"]::be
    the component steps away only on the skin's next pass; keyed here, the panel
    leaves in the same frame, instead of spending that gap at the conversation's
    full width with its square heat cells blown up to fill the window. */
-body[data-dsh-claude-style] .dsh-claude-home-panel {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-home-panel {
   display: none;
 }
 
-body[data-dsh-claude-style][data-dsh-claude-home-layout="studio"] [class*="_composerHero"] > :is([data-slot="conversation.input.dock"], .dsh-claude-home-seat) > .dsh-claude-home-panel {
+body[data-dsh-claude-style-plus][data-dsh-claude-style-plus-home-layout="studio"] [class*="_composerHero"] > :is([data-slot="conversation.input.dock"], .dsh-claude-style-plus-home-seat) > .dsh-claude-style-plus-home-panel {
   display: flex;
 }
 
-body[data-dsh-claude-style] .dsh-claude-home-panel {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-home-panel {
   flex-direction: column;
   gap: 12px;
   box-sizing: border-box;
@@ -166,32 +166,32 @@ body[data-dsh-claude-style] .dsh-claude-home-panel {
   mask-repeat: no-repeat;
   -webkit-mask-size: 100% calc(100% + 32px);
   mask-size: 100% calc(100% + 32px);
-  animation: dsh-claude-home-panel-fade linear both;
+  animation: dsh-claude-style-plus-home-panel-fade linear both;
   animation-timeline: scroll(self);
   animation-range: calc(100% - 32px) 100%;
 }
 
-@keyframes dsh-claude-home-panel-fade {
+@keyframes dsh-claude-style-plus-home-panel-fade {
   from { -webkit-mask-size: 100% 100%; mask-size: 100% 100%; }
   to { -webkit-mask-size: 100% calc(100% + 32px); mask-size: 100% calc(100% + 32px); }
 }
 
-body[data-dsh-claude-style] .dsh-claude-home-panel-head {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-home-panel-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
 }
 
-body[data-dsh-claude-style] .dsh-claude-home-tabs,
-body[data-dsh-claude-style] .dsh-claude-home-ranges {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-home-tabs,
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-home-ranges {
   display: flex;
   align-items: center;
   gap: 2px;
 }
 
-body[data-dsh-claude-style] .dsh-claude-home-tab,
-body[data-dsh-claude-style] .dsh-claude-home-range {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-home-tab,
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-home-range {
   appearance: none;
   margin: 0;
   padding: 1px 8px;
@@ -207,21 +207,21 @@ body[data-dsh-claude-style] .dsh-claude-home-range {
   cursor: pointer;
 }
 
-body[data-dsh-claude-style] .dsh-claude-home-tab:hover:not([data-active]),
-body[data-dsh-claude-style] .dsh-claude-home-range:hover:not([data-active]) {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-home-tab:hover:not([data-active]),
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-home-range:hover:not([data-active]) {
   background: color-mix(in srgb, var(--dsw-alias-label-primary, #141413) 5%, transparent);
   color: var(--dsw-alias-label-primary, #141413);
 }
 
 /* The active pill is a gray chip one step below the panel's own wash — Claude's
    Overview reads as gray ground under black text, not a lifted white card. */
-body[data-dsh-claude-style] .dsh-claude-home-tab[data-active],
-body[data-dsh-claude-style] .dsh-claude-home-range[data-active] {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-home-tab[data-active],
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-home-range[data-active] {
   background: color-mix(in srgb, var(--dsw-alias-label-primary, #141413) 10%, var(--dsw-alias-bg-layer-2, #fbfbf9));
   color: var(--dsw-alias-label-primary, #141413);
 }
 
-body[data-dsh-claude-style] .dsh-claude-home-panel-side {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-home-panel-side {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -230,13 +230,13 @@ body[data-dsh-claude-style] .dsh-claude-home-panel-side {
 
 /* While the host half is still folding, every skeleton surface breathes together:
    the tiles' stand-in figures, the heat grid, and the models tab's stand-in rows. */
-body[data-dsh-claude-style] .dsh-claude-home-panel[data-computing] .dsh-claude-home-stat[data-skeleton] .dsh-claude-home-stat-value,
-body[data-dsh-claude-style] .dsh-claude-home-panel[data-computing] .dsh-claude-home-models[data-skeleton] .dsh-claude-home-model-swatch,
-body[data-dsh-claude-style] .dsh-claude-home-heat[data-skeleton] .dsh-claude-home-heat-cell {
-  animation: dsh-claude-home-pulse 1.6s ease-in-out infinite;
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-home-panel[data-computing] .dsh-claude-style-plus-home-stat[data-skeleton] .dsh-claude-style-plus-home-stat-value,
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-home-panel[data-computing] .dsh-claude-style-plus-home-models[data-skeleton] .dsh-claude-style-plus-home-model-swatch,
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-home-heat[data-skeleton] .dsh-claude-style-plus-home-heat-cell {
+  animation: dsh-claude-style-plus-home-pulse 1.6s ease-in-out infinite;
 }
 
-@keyframes dsh-claude-home-pulse {
+@keyframes dsh-claude-style-plus-home-pulse {
   0%, 100% { opacity: 0.55; }
   50% { opacity: 1; }
 }

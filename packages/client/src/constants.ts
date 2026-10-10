@@ -7,9 +7,9 @@
  * a name the browser half writes. The identity constants and the host half's
  * route re-exports live here too.
  */
-import { PREFS_DEFAULT } from '@dsh-claude-style/contracts/prefs'
+import { PREFS_DEFAULT } from '@dsh-claude-style-plus/contracts/prefs'
 
-export const STYLE_ID = 'dsh-claude-style-style'
+export const STYLE_ID = 'dsh-claude-style-plus-style'
 
 /**
  * Settings identity.
@@ -23,8 +23,8 @@ export const STYLE_ID = 'dsh-claude-style-style'
  * configuration is a `plugins.bundle.config` entry keyed by the bundle's
  * package name, which is what makes it render on this plugin's page.
  */
-export const SETTINGS_ENTRY_FALLBACK = 'ui-skin-claude-style'
-export const PACKAGE_NAME = 'dsh-claude-style'
+export const SETTINGS_ENTRY_FALLBACK = 'ui-skin-claude-style-plus'
+export const PACKAGE_NAME = 'dsh-claude-style-plus'
 /**
  * The skin stylesheet's own key in the client module system's bookkeeping:
  * the sheet is mounted tagged `data-plugin="<PACKAGE_NAME>"` and
@@ -41,6 +41,8 @@ export const STYLE_PLUGIN_CSS = `${PACKAGE_NAME}/client.css`
 export const FOREIGN_SHEET_TAG = `${PACKAGE_NAME}/foreign-sheet`
 export const BUNDLE_CONFIG_SLOT = 'plugins.bundle.config'
 export const SETTINGS_SECTION_SLOT = 'settings.section'
+export const SETTINGS_SECTION_ID = 'claude-style-plus'
+export const HOME_USAGE_SLOT_ID = 'claude-style-plus-usage'
 
 /**
  * Preferences, persisted in the profile entry's settings namespace (the
@@ -63,7 +65,7 @@ export const BRAND_DEEPSEEK = 'deepseek'
 /** What earlier builds stored for the DeepSeek choice, when it was labelled "Off". */
 export const BRAND_DEEPSEEK_LEGACY = 'off'
 /** The document attribute the stylesheet switches on. */
-export const BRAND_ATTR = 'data-dsh-claude-brand'
+export const BRAND_ATTR = 'data-dsh-claude-style-plus-brand'
 
 /**
  * The animation choice, and the document attribute it resolves onto.
@@ -79,7 +81,7 @@ export const MOTION_SYSTEM = 'system'
 export const MOTION_REDUCED = 'reduced'
 export const MOTION_FULL = 'full'
 export const MOTION_MODES = [MOTION_SYSTEM, MOTION_REDUCED, MOTION_FULL]
-export const MOTION_ATTR = 'data-dsh-claude-motion'
+export const MOTION_ATTR = 'data-dsh-claude-style-plus-motion'
 
 /**
  * The composer caret's motion (packages/client/src/features/caret/caret.ts): `typing`
@@ -102,11 +104,11 @@ export const CARET_MOTIONS = [CARET_MOTION_OFF, CARET_MOTION_MOVE, CARET_MOTION_
 export const PALETTE_CLAUDE = 'claude'
 export const PALETTE_HOST = 'host'
 export const PALETTES = [PALETTE_CLAUDE, PALETTE_HOST]
-export const PALETTE_ATTR = 'data-dsh-claude-palette'
+export const PALETTE_ATTR = 'data-dsh-claude-style-plus-palette'
 export const TYPEFACE_CLAUDE = 'claude'
 export const TYPEFACE_HOST = 'host'
 export const TYPEFACES = [TYPEFACE_CLAUDE, TYPEFACE_HOST]
-export const TYPEFACE_ATTR = 'data-dsh-claude-typeface'
+export const TYPEFACE_ATTR = 'data-dsh-claude-style-plus-typeface'
 
 /**
  * The mascot on the composer, chosen apart from the brand. `brand` follows
@@ -122,7 +124,7 @@ export const MASCOT_CRAB = 'crab'
 export const MASCOT_DEEPY = 'deepy'
 export const MASCOT_OFF = 'off'
 export const MASCOTS = [MASCOT_BRAND, MASCOT_CRAB, MASCOT_DEEPY, MASCOT_OFF]
-export const MASCOT_ATTR = 'data-dsh-claude-mascot'
+export const MASCOT_ATTR = 'data-dsh-claude-style-plus-mascot'
 export const MASCOT_SCOPE_HOME = 'home'
 export const MASCOT_SCOPE_ALL = 'all'
 export const MASCOT_SCOPES = [MASCOT_SCOPE_HOME, MASCOT_SCOPE_ALL]
@@ -174,7 +176,7 @@ export const FEATURE_PREF_DEFAULTS = {
  * distance the host's own smooth scroll does. Switched off, the chat area
  * is handed back untouched.
  */
-export const CHAT_FOLLOW_ATTR = 'data-dsh-claude-chat-follow'
+export const CHAT_FOLLOW_ATTR = 'data-dsh-claude-style-plus-chat-follow'
 /**
  * On the host's own "back to the end" button while the stream glide
  * (packages/client/src/features/chat-follow/chat-follow.ts) is following on the conversation
@@ -183,7 +185,7 @@ export const CHAT_FOLLOW_ATTR = 'data-dsh-claude-chat-follow'
  * it is being followed. The stylesheet keeps it out of sight until the glide
  * lets go; the host's own state is not touched.
  */
-export const STREAM_GLIDE_ATTR = 'data-dsh-claude-stream-glide'
+export const STREAM_GLIDE_ATTR = 'data-dsh-claude-style-plus-stream-glide'
 /**
  * On the flow column while the stream glide
  * (packages/client/src/features/chat-follow/chat-follow.ts) holds the position
@@ -193,66 +195,56 @@ export const STREAM_GLIDE_ATTR = 'data-dsh-claude-stream-glide'
  * (packages/client/src/features/turn-status/turn-status.css). This mark stands
  * for that gate while the glide is the one moving the position.
  */
-export const FOLLOW_HOLD_ATTR = 'data-dsh-claude-follow-hold'
+export const FOLLOW_HOLD_ATTR = 'data-dsh-claude-style-plus-follow-hold'
 /**
  * Present while the ported token reveal is installed
  * (packages/client/src/features/chat-reveal/): its step rules (reveal-rules.css) hang off it,
  * and switching the feature off leaves the page with no trace of it.
  */
-export const CHAT_REVEAL_ATTR = 'data-dsh-claude-chat-reveal'
+export const CHAT_REVEAL_ATTR = 'data-dsh-claude-style-plus-chat-reveal'
 /**
  * On the real message row while the send bubble's stand-in is flying
  * (packages/client/src/features/chat-send/): the stylesheet hides that row, keeping its layout
  * box so the stand-in can measure the destination from it every frame.
  */
-export const CHAT_FLYING_ATTR = 'data-dsh-claude-send-flight'
+export const CHAT_FLYING_ATTR = 'data-dsh-claude-style-plus-send-flight'
 /**
  * On a node the skin owns purely for its own bookkeeping — the caret
  * motion's probe container and the caret it draws. The shared scheduler
  * ignores mutations against such a node (D40), so measuring or redrawing
  * never wakes a pass that no feature needs.
  */
-export const QUIET_ATTR = 'data-dsh-claude-quiet'
+export const QUIET_ATTR = 'data-dsh-claude-style-plus-quiet'
 /**
  * On the element the fold glide is pressing right now (packages/client/src/features/chat-fold/
  * fold-glide.ts): while it stands, the elements inside lay out at their
  * natural height instead of being squeezed by flex (fold-motion.css).
  */
-export const CHAT_ROLLING_ATTR = 'data-dsh-claude-rolling'
+export const CHAT_ROLLING_ATTR = 'data-dsh-claude-style-plus-rolling'
 /** On an editable surface once the caret motion has taken it over (packages/client/src/features/caret/). */
-export const CARET_ATTR = 'data-dsh-claude-caret'
+export const CARET_ATTR = 'data-dsh-claude-style-plus-caret'
 /** The drawn caret itself. */
-export const CARET_LAYER_ATTR = 'data-dsh-claude-caret-layer'
+export const CARET_LAYER_ATTR = 'data-dsh-claude-style-plus-caret-layer'
 /** The drawn caret is visible right now. */
-export const CARET_VISIBLE_ATTR = 'data-dsh-claude-caret-visible'
+export const CARET_VISIBLE_ATTR = 'data-dsh-claude-style-plus-caret-visible'
 /** On a parent lent the positioning context the drawn caret is placed against. */
-export const CARET_HOST_ATTR = 'data-dsh-claude-caret-host'
+export const CARET_HOST_ATTR = 'data-dsh-claude-style-plus-caret-host'
 /**
  * Present while the ported automatic folding is installed
  * (packages/client/src/features/chat-fold/): the stylesheet's live-detail rules hang off it,
  * and switching the feature off hands the chat area back whole.
  */
-export const CHAT_FOLD_ATTR = 'data-dsh-claude-chat-fold'
+export const CHAT_FOLD_ATTR = 'data-dsh-claude-style-plus-chat-fold'
 /** Present while the skin takes over the sidebar footer (settings area + account row). */
-export const FOOTER_ATTR = 'data-dsh-claude-footer-takeover'
-/**
- * The language the account-hold easter egg (packages/client/src/features/ban-screen/ban-screen.ts) is
- * written in. It is its own preference rather than "follow the shell",
- * because the page reproduces a real Claude screen: the point is to read it
- * in the language Claude actually used, whatever the shell is set to. The
- * default is English for that reason.
- */
-export const BAN_LOCALE_EN = 'en'
-export const BAN_LOCALE_ZH = 'zh'
-export const BAN_LOCALES = [BAN_LOCALE_EN, BAN_LOCALE_ZH]
+export const FOOTER_ATTR = 'data-dsh-claude-style-plus-footer-takeover'
 /** Present while the composer restyle applies to the page currently shown. */
-export const COMPOSER_ATTR = 'data-dsh-claude-composer-active'
+export const COMPOSER_ATTR = 'data-dsh-claude-style-plus-composer-active'
 /**
  * Present while the composer restyle applies and a conversation tab other
  * than the chat is up: the composer is chat-view-only, so the stylesheet
  * drops the whole bottom area (packages/client/src/features/composer/composer.ts).
  */
-export const COMPOSER_HIDDEN_ATTR = 'data-dsh-claude-composer-hidden'
+export const COMPOSER_HIDDEN_ATTR = 'data-dsh-claude-style-plus-composer-hidden'
 /**
  * Present while the permission control is installed. The composer restyle
  * hides the host's access-mode button because this feature replaces it,
@@ -260,14 +252,14 @@ export const COMPOSER_HIDDEN_ATTR = 'data-dsh-claude-composer-hidden'
  * switched off hands the button back while the rest of the composer
  * restyle keeps running.
  */
-export const PERMISSIONS_ATTR = 'data-dsh-claude-permissions'
+export const PERMISSIONS_ATTR = 'data-dsh-claude-style-plus-permissions'
 /**
  * Present while the context statistics are installed
  * (packages/client/src/features/context-stats/context-stats.ts). The host's two stat
  * dialogs are hidden only under it: their numbers are read into the
  * context popover instead, and switched off the feature hands them back.
  */
-export const SESSION_STATS_ATTR = 'data-dsh-claude-session-stats'
+export const SESSION_STATS_ATTR = 'data-dsh-claude-style-plus-session-stats'
 /**
  * Stamped on the host's own account menu card while it is open (Desktop
  * 0.1.7+). That card is the host's shared Menu portal and its class names
@@ -275,7 +267,7 @@ export const SESSION_STATS_ATTR = 'data-dsh-claude-session-stats'
  * features/account/account-footer.css repaints the card, its rows and its
  * separators with the skin's popover language.
  */
-export const ACCOUNT_MENU_ATTR = 'data-dsh-claude-account-menu'
+export const ACCOUNT_MENU_ATTR = 'data-dsh-claude-style-plus-account-menu'
 /**
  * Set on <body> from the moment the account row is hovered or pressed until
  * its menu closes. The card's own marker needs the menu's rows to identify
@@ -285,7 +277,7 @@ export const ACCOUNT_MENU_ATTR = 'data-dsh-claude-account-menu'
  * before the host mounts the card, so the animation runs from its first
  * frame.
  */
-export const ACCOUNT_ARMED_ATTR = 'data-dsh-claude-account-armed'
+export const ACCOUNT_ARMED_ATTR = 'data-dsh-claude-style-plus-account-armed'
 /**
  * Stamped on the host's account card by packages/client/src/features/account/surface.ts once
  * the card carries the skin's rows and the host has finished placing it.
@@ -298,7 +290,7 @@ export const ACCOUNT_ARMED_ATTR = 'data-dsh-claude-account-armed'
  * inside the armed window until this marker lands, and the entry animation
  * hangs on this marker.
  */
-export const ACCOUNT_READY_ATTR = 'data-dsh-claude-account-ready'
+export const ACCOUNT_READY_ATTR = 'data-dsh-claude-style-plus-account-ready'
 /**
  * Stamped on the host's shared menu card while it is the hero row's picker
  * (the workspace chip or the agent-preset seat opened it). The host portals
@@ -306,7 +298,7 @@ export const ACCOUNT_READY_ATTR = 'data-dsh-claude-account-ready'
  * tell it from the host's other menus; packages/client/src/features/hero-menu/hero-menu.ts stamps it
  * and features/hero-menu/hero-menu.css switches on this attribute.
  */
-export const HERO_MENU_ATTR = 'data-dsh-claude-hero-menu'
+export const HERO_MENU_ATTR = 'data-dsh-claude-style-plus-hero-menu'
 /**
  * Present while the browser window does NOT hold focus.
  *
@@ -323,7 +315,7 @@ export const WINDOW_BLUR_ATTR = 'data-dsh-window-blur'
  * as one of its looks has to know the page can come back, and a build from
  * before D49 does not stamp it.
  */
-export const HANDOFF_ATTR = 'data-dsh-claude-style-handoff'
+export const HANDOFF_ATTR = 'data-dsh-claude-style-plus-handoff'
 /**
  * The document attribute the skin center stamps while a skin is painting
  * (D49). It is read at boot and watched afterwards: the value is the skin
@@ -335,20 +327,20 @@ export const SKIN_STAMP_ATTR = 'data-dsh-skin'
  * mounted (packages/client/src/features/settings/settings.ts): the stylesheet keeps the
  * scrollbar's room there, so switching tabs never shifts the layout.
  */
-export const SETTINGS_SCROLLER_ATTR = 'data-dsh-claude-settings-scroller'
+export const SETTINGS_SCROLLER_ATTR = 'data-dsh-claude-style-plus-settings-scroller'
 /**
  * Which home layout is in force. The stylesheet branches on it, and the two
  * layouts differ only in arrangement — the hero's own markup is the host's
  * either way, so the switch is one attribute plus the panel registration.
  */
-export const HOME_LAYOUT_ATTR = 'data-dsh-claude-home-layout'
+export const HOME_LAYOUT_ATTR = 'data-dsh-claude-style-plus-home-layout'
 /**
  * Present while the studio layout owns the page shown: the studio layout is
  * in force and the page is the new-conversation hero. Every studio rule keys
  * on it, so the host's hero-phase marker is read once per pass in JS rather
  * than repeated across the stylesheet.
  */
-export const HOME_HERO_ATTR = 'data-dsh-claude-home-hero'
+export const HOME_HERO_ATTR = 'data-dsh-claude-style-plus-home-hero'
 
 /**
  * The host half's private routes, under this half's own names. The paths are
@@ -363,7 +355,7 @@ export {
   SESSION_SEARCH_PATH as SESSION_SEARCH_ROUTE,
   USAGE_PATH as USAGE_ROUTE,
   USERNAME_PATH as USERNAME_ROUTE,
-} from '@dsh-claude-style/contracts/routes'
+} from '@dsh-claude-style-plus/contracts/routes'
 /**
  * Home-page layouts. `classic` is the centered hero the skin has always
  * drawn; `studio` is the dashboard form: the greeting sits at the top left,
@@ -401,7 +393,6 @@ export interface Prefs {
   peakrate: boolean
   quickProviders: string[]
   username: string
-  banLocale: string
   homeLayout: string
   palette: string
   typeface: string
@@ -425,7 +416,6 @@ export const PREF_DEFAULTS: Prefs = PREFS_DEFAULT
 export const PREF_CHOICES: Partial<Record<keyof Prefs, string[]>> = {
   motion: MOTION_MODES,
   composerScope: COMPOSER_SCOPES,
-  banLocale: BAN_LOCALES,
   homeLayout: HOME_LAYOUTS,
   palette: PALETTES,
   typeface: TYPEFACES,

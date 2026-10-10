@@ -151,7 +151,7 @@ module.exports = {
       collapsed.texts.includes('app.js') && collapsed.texts.includes('+1') && collapsed.texts.includes('-1'),
       JSON.stringify(collapsed.texts))
     check('the settled row\'s summary carries the file link',
-      typeof collapsed.summary === 'string' && collapsed.summary.includes('dsh-claude-file-link'),
+      typeof collapsed.summary === 'string' && collapsed.summary.includes('dsh-claude-style-plus-file-link'),
       JSON.stringify(collapsed.summary))
     check('the row\'s title comes from the seat copy',
       (collapsed.disclosure || {}).title === 't:tool.title.edit', JSON.stringify(collapsed.disclosure))
@@ -161,19 +161,19 @@ module.exports = {
     check('expanded, the hunks the result metadata reported go into the diff card',
       ((expanded.diff || {}).diffs || []).length === 1, JSON.stringify(expanded.diff))
     check('the diff card is capped at the chat line count and carries the skin\'s class',
-      (expanded.diff || {}).maxLines === 9 && (expanded.diff || {}).className === 'dsh-claude-file-diff',
+      (expanded.diff || {}).maxLines === 9 && (expanded.diff || {}).className === 'dsh-claude-style-plus-file-diff',
       JSON.stringify(expanded.diff))
     check('the expanded row carries the inspect label', expanded.texts.includes('t:row.inspect'), JSON.stringify(expanded.texts))
     check('a failed call reads as an error row', (failed.root || {}).state === 'error', JSON.stringify(failed.root))
     check('a failed call draws no diff', failed.diff === null, JSON.stringify(failed.diff))
     check('the failed call\'s verdict colours the summary and hides the failed label',
-      typeof failed.summary === 'string' && failed.summary.includes('dsh-claude-file-error') &&
+      typeof failed.summary === 'string' && failed.summary.includes('dsh-claude-style-plus-file-error') &&
         failed.hiddenText === 't:row.failed',
       JSON.stringify({ summary: failed.summary, hidden: failed.hiddenText }))
     check('the failed call shows the tool\'s own error',
       failed.texts.includes('ToolError: permission_denied'), JSON.stringify(failed.texts))
     check('a write that is still running shows the change its arguments describe',
-      (running.diff || {}).className === 'dsh-claude-file-diff', JSON.stringify(running.diff))
+      (running.diff || {}).className === 'dsh-claude-style-plus-file-diff', JSON.stringify(running.diff))
     check('the running write announces the running state', running.hiddenText === 't:row.running', JSON.stringify(running.hiddenText))
     check('a call whose change cannot be derived draws no diff card', escalated.diff === null, JSON.stringify(escalated.diff))
     check('it keeps the host\'s IN/OUT card, with no output row',

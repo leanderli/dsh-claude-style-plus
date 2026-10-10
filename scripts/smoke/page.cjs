@@ -275,7 +275,7 @@ function page(name, tier, cases) {
       '})();</script>'
     : ''
   return `<!doctype html>
-<html><head><meta charset="utf-8"><title>dsh-claude-style smoke: ${name}</title></head>
+<html><head><meta charset="utf-8"><title>dsh-claude-style-plus smoke: ${name}</title></head>
 <body>
 ${boot}
 ${skinOwner}

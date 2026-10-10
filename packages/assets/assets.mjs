@@ -40,7 +40,7 @@ import { brotliCompressSync } from 'node:zlib'
 /** The largest file that rides the bundle rather than the route. */
 export const INLINE_LIMIT_BYTES = 16 * 1024
 /** Where the host half serves the routed assets. */
-export const ASSETS_ROUTE = '/dsh-claude-style/assets/'
+export const ASSETS_ROUTE = '/dsh-claude-style-plus/assets/'
 /** The manifest the host half reads to decide what it may serve. */
 export const ASSETS_MANIFEST = 'manifest.json'
 /** The fonts under packages/assets/src/, delivered by buildFonts rather than by the manifest. */

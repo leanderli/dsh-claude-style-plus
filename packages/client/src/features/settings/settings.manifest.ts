@@ -8,7 +8,10 @@ export default {
   reads: ['quickProviders'],
   contracts: [],
   ungated: '设置页本身',
-  stylesheets: [{ file: 'settings.css', rank: 310 }],
+  stylesheets: [
+    { file: 'settings.css', rank: 310 },
+    { file: 'avatar-setting.css', rank: 311 },
+  ],
   cases: ['settings', 'late-forms', 'skin-center-handoff', 'skin-center-arrival'],
   description: {
     zh: {

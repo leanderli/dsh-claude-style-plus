@@ -1,9 +1,10 @@
 import { HDSL_ROUTE, HDSL_SKIN_ROUTE, USERNAME_MAX, USERNAME_ROUTE } from '../constants'
-import { CHAT_FLOW_SELECTOR, COMPOSER_CARD_SELECTOR, COMPOSER_INPUT_SELECTOR, COMPOSER_PLACEHOLDER_SELECTOR, COMPOSER_SELECTOR, COMPOSER_STACK_SELECTOR, COMPOSER_STATS_SELECTOR, COMPOSER_STAT_SELECTOR, COMPOSER_VARIANT_ATTRIBUTE, CONVERSATION_SCROLL_SELECTOR, CONVERSATION_SESSION_ATTRIBUTE, CONVERSATION_SESSION_SELECTOR, FOOT_AREA_SELECTOR, PERMISSION_TRIGGER_SELECTOR, TURN_PROCESS_SELECTOR } from '@dsh-claude-style/contracts/dom'
-import type { HostAssistantStep, HostChatSnapshot, HostChatTarget, HostSession, HostSessionsService, HostTurn, HostUiConversationService, HostUiSessionService } from '@dsh-claude-style/contracts/services'
+import { CHAT_FLOW_SELECTOR, COMPOSER_CARD_SELECTOR, COMPOSER_INPUT_SELECTOR, COMPOSER_PLACEHOLDER_SELECTOR, COMPOSER_SELECTOR, COMPOSER_STACK_SELECTOR, COMPOSER_STATS_SELECTOR, COMPOSER_STAT_SELECTOR, COMPOSER_VARIANT_ATTRIBUTE, CONVERSATION_SCROLL_SELECTOR, CONVERSATION_SESSION_ATTRIBUTE, CONVERSATION_SESSION_SELECTOR, FOOT_AREA_SELECTOR, PERMISSION_TRIGGER_SELECTOR, TURN_PROCESS_SELECTOR } from '@dsh-claude-style-plus/contracts/dom'
+import type { HostAssistantStep, HostChatSnapshot, HostChatTarget, HostSession, HostSessionsService, HostTurn, HostUiConversationService, HostUiSessionService } from '@dsh-claude-style-plus/contracts/services'
 import { readPrefs } from './prefs'
 import { closestFrom } from '../shared/dom'
 import { createHostResource } from '../shared/resource'
+import { getServerAvatarUrl, refreshServerAvatar, removeServerAvatar, subscribeServerAvatar, uploadServerAvatar } from '../shared/avatar-client'
 
 /**
  * The host's client context (cordis), handed to `apply` and to every feature.
@@ -29,7 +30,7 @@ export interface HostContext {
 export type HostValue = any
 
 /** A host locale namespace's translate seat (`locale.bind(namespace)`): a key and its parameters to text. */
-export type { HostText } from '@dsh-claude-style/contracts/services'
+export type { HostText } from '@dsh-claude-style-plus/contracts/services'
 
 /** The scope `inject` opened: disposing it runs the effects registered in it. */
 export interface HostFiber {
@@ -222,6 +223,27 @@ export function currentPreset(session: HostSession): string | null {
 export let accountName = ''
 export let accountAvatar = ''
 
+export function getCustomAvatarUrl() {
+  return getServerAvatarUrl()
+}
+
+export function refreshCustomAvatar() {
+  return refreshServerAvatar()
+}
+
+/** Subscribe to profile-avatar writes so the settings preview and account row stay in sync. */
+export function onCustomAvatarChanged(listener: () => void) {
+  return subscribeServerAvatar(listener)
+}
+
+export function uploadCustomAvatar(blob: Blob) {
+  return uploadServerAvatar(blob)
+}
+
+export function removeCustomAvatar() {
+  return removeServerAvatar()
+}
+
 /** The account profile's contribution; called when its read answers. */
 export function setAccountIdentity(name: unknown, avatar: unknown) {
   accountName = typeof name === 'string' ? name.trim() : ''
@@ -236,7 +258,7 @@ export function setAccountIdentity(name: unknown, avatar: unknown) {
 let usernameFromHost = ''
 
 /** Last OS-user probe this browser saw; the cache that outlives the page. */
-const PROBED_USERNAME_KEY = 'dsh-claude-style.probed-username'
+const PROBED_USERNAME_KEY = 'dsh-claude-style-plus.probed-username'
 let probedUsername = readStoredProbeUsername()
 
 function readStoredProbeUsername() {
@@ -307,6 +329,8 @@ export function getUsername() {
 
 /** The picture every skin surface shows, or '' to let the brand mark show. */
 export function resolveAvatarUrl() {
+  const customAvatarUrl = getCustomAvatarUrl()
+  if (customAvatarUrl) return customAvatarUrl
   if (accountAvatar) return accountAvatar
   if (hdslContract && hdslAvatar) return HDSL_SKIN_ROUTE
   return ''

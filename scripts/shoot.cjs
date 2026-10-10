@@ -96,10 +96,10 @@ async function captureOnce(conn, options, scheme, outFile) {
   await send('Page.navigate', { url: startUrl })
   await sleep(12000)
 
-  if (!(await evalJs(`!!document.body.hasAttribute('data-dsh-claude-style')`))) {
+  if (!(await evalJs(`!!document.body.hasAttribute('data-dsh-claude-style-plus')`))) {
     throw new Error('theme not applied — is the plugin active in this profile?')
   }
-  const pageBrand = await evalJs(`document.body.getAttribute('data-dsh-claude-brand')`)
+  const pageBrand = await evalJs(`document.body.getAttribute('data-dsh-claude-style-plus-brand')`)
   if (pageBrand !== brand) throw new Error(`the page carries brand "${pageBrand}", expected "${brand}" — switch the Brand mark in settings`)
 
   if (scene === 'conversation') {

@@ -112,15 +112,26 @@ module.exports = {
     check('Enter on an open composer menu reaches the host', same(r.keys, ['host picked the menu item']), JSON.stringify(r.keys))
     commonChecks(r)
   },
-  // The sidebar's search box: placed in the brand row, resting hidden, opening
-  // the host's modal through a root of the skin's own.
+  // The fixed sidebar Search button follows New Session and opens the host modal.
   search(r) {
     basicChecks(r)
     const search = r.search || {}
-    check('the search box goes in the brand row beside the brand, and rests hidden until the sidebar is hovered',
-      search.placed === true && search.rowMarked === true && search.resting === 'hidden', JSON.stringify(search))
-    check('pressing the search box renders the host modal through a root of the skin\'s own', search.modalRendered === true, JSON.stringify(search))
-    check('teardown takes the search box, its row mark and its root away',
+    check('the Search button stays below New Session while the brand remains visible',
+      search.placedBelowNewSession === true && search.inSidebar === true && search.resting === 'visible' && search.opacity === '1' && search.brandVisible === true,
+      JSON.stringify(search))
+    check('Search matches New Session row geometry and uses a borderless transparent surface',
+      search.rowStyleMatchesNewSession === true, JSON.stringify(search))
+    check('the Search magnifier is 14px inside its 20px icon badge',
+      search.iconSize === '14px', JSON.stringify(search.iconSize))
+    check('Search presents a left icon and the Search sessions label without keycaps',
+      search.buttonParts === 2 && search.shortcutKeycaps === 0 &&
+        (search.labelText === '搜索会话' || search.labelText === 'Search sessions') && search.ariaLabel === search.labelText,
+      JSON.stringify(search))
+    check('pressing the fixed Search button renders the host modal through a root of the skin\'s own', search.modalRendered === true, JSON.stringify(search))
+    check('a collapsed sidebar hides Workspace switches and the new-session text mask',
+      search.collapsedWorkspaceDisplay === 'none' && search.collapsedNewSessionLabelDisplay === 'none',
+      JSON.stringify({ workspace: search.collapsedWorkspaceDisplay, newSession: search.collapsedNewSessionLabelDisplay }))
+    check('teardown removes the fixed Search button and its palette root',
       search.left === 0 && search.rootUnmounted === true, JSON.stringify(search))
     commonChecks(r)
   },
@@ -134,6 +145,13 @@ module.exports = {
     check('synthetic path injects nothing into a host menu', r.syntheticInject === 0, `${r.syntheticInject} containers`)
     check('a custom nickname outranks the signed-in profile', r.accountUser === 'Tester', JSON.stringify(r.accountUser))
     check('avatar is an <img> sent without a referrer', r.photo !== null && r.photo.referrerPolicy === 'no-referrer', JSON.stringify(r.photo))
+    check('a loaded custom photo suppresses the brand background while a failed photo reveals it again',
+      r.photoBackgroundWhileLoaded === 'none' && r.photoBackgroundAfterFailure !== 'none',
+      JSON.stringify({ loaded: r.photoBackgroundWhileLoaded, failed: r.photoBackgroundAfterFailure }))
+    check('avatar load clears the failure marker and avatar error restores the fallback state',
+      !!r.photoLoadState && r.photoLoadState.hidden === false && r.photoLoadState.failed === false &&
+        !!r.photoErrorState && r.photoErrorState.hidden === true && r.photoErrorState.failed === true,
+      JSON.stringify({ loaded: r.photoLoadState, failed: r.photoErrorState }))
     check('the self-built drawer matches the account row box',
       r.syntheticBox !== null && r.syntheticBox.popoverLeft === r.syntheticBox.buttonLeft &&
         r.syntheticBox.popoverWidth === r.syntheticBox.buttonWidth,
@@ -226,14 +244,14 @@ module.exports = {
     check('the usage panel registers into the dock list seat with an id',
       Array.isArray(r.slotRegistrations) && r.slotRegistrations.length === 1 &&
         r.slotRegistrations[0].key === 'conversation.input.dock' &&
-        r.slotRegistrations[0].id === 'claude-style-usage' &&
+        r.slotRegistrations[0].id === 'claude-style-plus-usage' &&
         r.slotRegistrations[0].component === 'function',
       JSON.stringify(r.slotRegistrations))
     const renders = r.panelRenders || {}
     const drew = (tab, className) => renders[tab] !== undefined && renders[tab].error === null &&
       renders[tab].classes.includes(className)
     check('the usage panel renders its Overview tab: stat cells and heat grid',
-      drew('overview', 'dsh-claude-home-stat') && drew('overview', 'dsh-claude-home-heat'),
+      drew('overview', 'dsh-claude-style-plus-home-stat') && drew('overview', 'dsh-claude-style-plus-home-heat'),
       JSON.stringify(renders.overview))
     const said = (tab, pattern) => renders[tab] !== undefined && renders[tab].texts.some((text) => pattern.test(text))
     check('all time: the peak hour and the book line read the whole history (500k steps down to The Brothers Karamazov)',
@@ -243,10 +261,10 @@ module.exports = {
       said('overview-7d', /^3 PM$/) && said('overview-7d', /^You've used ~1× the tokens in Dracula\.$/),
       JSON.stringify(renders['overview-7d'] && renders['overview-7d'].texts))
     check('the usage panel renders its Models tab: stacked chart and ranked list',
-      drew('models', 'dsh-claude-home-chart-seg') && drew('models', 'dsh-claude-home-model'),
+      drew('models', 'dsh-claude-style-plus-home-chart-seg') && drew('models', 'dsh-claude-style-plus-home-model'),
       JSON.stringify(renders.models))
     const rows = (tab) => (renders[tab] === undefined ? 0
-      : renders[tab].classes.filter((name) => name === 'dsh-claude-home-model').length)
+      : renders[tab].classes.filter((name) => name === 'dsh-claude-style-plus-home-model').length)
     check('the folded model list shows six rows and a "Show 2 more" row',
       rows('models') === 6 && said('models', /^Show 2 more$/),
       JSON.stringify({ rows: rows('models'), texts: renders.models && renders.models.texts.slice(-3) }))
@@ -346,7 +364,7 @@ module.exports = {
     const settings = r.settings || {}
     check('the settings section registers with the settings dialog', settings.registered === true, JSON.stringify(settings.registered))
     const expected = {
-      general: ['username', 'motion', 'autoPopover', 'banLocale'],
+      general: ['avatar', 'username', 'motion', 'autoPopover'],
       appearance: ['brand', 'palette', 'typeface', 'mascot', 'mascotScope'],
       composer: ['composerScope', 'homeLayout', 'modelPicker', 'quickProviders', 'peakrate', 'permissionsControl'],
       sidebar: ['collapseFooter', 'sidebarSearch', 'workspaceView'],

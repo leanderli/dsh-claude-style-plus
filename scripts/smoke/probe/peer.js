@@ -18,7 +18,7 @@
         var registry = window.CSS && window.CSS.highlights
         if (!registry) return 0
         var count = 0
-        for (var step = 0; step < 24; step++) if (registry.has('dsh-claude-tok-' + step)) count += 1
+        for (var step = 0; step < 24; step++) if (registry.has('dsh-claude-style-plus-tok-' + step)) count += 1
         return count
       }
       // A chat area and a focused composer: live features would mark, fold or
@@ -37,11 +37,11 @@
       await sleep(300)
       r.peer = {
         marks: {
-          follow: document.body.hasAttribute('data-dsh-claude-chat-follow'),
-          fold: document.body.hasAttribute('data-dsh-claude-chat-fold'),
-          reveal: document.body.hasAttribute('data-dsh-claude-chat-reveal'),
-          caretLayer: document.querySelector('[data-dsh-claude-caret-layer]') !== null,
-          caretMark: peerEditor !== null && peerEditor.hasAttribute('data-dsh-claude-caret'),
+          follow: document.body.hasAttribute('data-dsh-claude-style-plus-chat-follow'),
+          fold: document.body.hasAttribute('data-dsh-claude-style-plus-chat-fold'),
+          reveal: document.body.hasAttribute('data-dsh-claude-style-plus-chat-reveal'),
+          caretLayer: document.querySelector('[data-dsh-claude-style-plus-caret-layer]') !== null,
+          caretMark: peerEditor !== null && peerEditor.hasAttribute('data-dsh-claude-style-plus-caret'),
         },
         seats: (window.__slots || []).filter(function (entry) { return entry.key === 'tool.call.toolview' }).length,
         highlights: peerHighlights(),
@@ -51,7 +51,7 @@
       // The settings page, through the same React-tree walk the settings case
       // uses: the Conversation tab's rows, which of them refuse input, which
       // carry the line naming the owner, and what answer each control shows.
-      var PeerSection = (window.__slotComponents || {})['claude-style']
+      var PeerSection = (window.__slotComponents || {})['claude-style-plus']
       var peerWalk = function (node, visit) {
         if (node === null || node === undefined || typeof node !== 'object') return
         if (Array.isArray(node)) { node.forEach(function (child) { peerWalk(child, visit) }); return }
@@ -73,7 +73,7 @@
         var found = false
         peerWalk(node, function (child) {
           var className = (child.props || {}).className
-          if (typeof className === 'string' && className.split(' ').indexOf('dsh-claude-settings-row-managed') >= 0) found = true
+          if (typeof className === 'string' && className.split(' ').indexOf('dsh-claude-style-plus-settings-row-managed') >= 0) found = true
         })
         return found
       }
@@ -84,7 +84,7 @@
         peerWalk(node, function (child) {
           var props = child.props || {}
           if (props['data-on'] === '') answer.on = true
-          if (typeof props.className === 'string' && props.className.split(' ').indexOf('dsh-claude-segment') !== -1) answer.options.push(props.key)
+          if (typeof props.className === 'string' && props.className.split(' ').indexOf('dsh-claude-style-plus-segment') !== -1) answer.options.push(props.key)
           if (props['aria-pressed'] === 'true') answer.option = props.key
         })
         return answer
@@ -99,7 +99,7 @@
         peerReact.states = null
         peerWalk(peerTree, function (node) {
           var props = node.props || {}
-          if (typeof props.className === 'string' && /(^| )dsh-claude-settings-row( |$)/.test(props.className)) {
+          if (typeof props.className === 'string' && /(^| )dsh-claude-style-plus-settings-row( |$)/.test(props.className)) {
             r.peer.settings.rows.push(props.key)
             if (peerDisabled(props.children)) r.peer.settings.refusing.push(props.key)
             if (peerManages(props.children)) r.peer.settings.managed.push(props.key)
@@ -118,27 +118,27 @@
       // on a later turn than apply() returns.
       await sleep(400)
       var owner = {
-        sheet: document.getElementById('dsh-claude-style-style') !== null,
-        live: document.body.hasAttribute('data-dsh-claude-style'),
-        handoff: document.body.hasAttribute('data-dsh-claude-style-handoff'),
+        sheet: document.getElementById('dsh-claude-style-plus-style') !== null,
+        live: document.body.hasAttribute('data-dsh-claude-style-plus'),
+        handoff: document.body.hasAttribute('data-dsh-claude-style-plus-handoff'),
         bodyAttrs: attrs(document.body),
-        settingsRegistered: typeof (window.__slotComponents || {})['claude-style'] !== 'undefined',
+        settingsRegistered: typeof (window.__slotComponents || {})['claude-style-plus'] !== 'undefined',
         uncaught: window.__uncaught.length,
       }
       // The owner leaves: the theme takes the page back in one observer turn.
       document.documentElement.removeAttribute('data-dsh-skin')
       await sleep(300)
       owner.afterRelease = {
-        sheet: document.getElementById('dsh-claude-style-style') !== null,
-        live: document.body.hasAttribute('data-dsh-claude-style'),
-        handoff: document.body.hasAttribute('data-dsh-claude-style-handoff'),
+        sheet: document.getElementById('dsh-claude-style-plus-style') !== null,
+        live: document.body.hasAttribute('data-dsh-claude-style-plus'),
+        handoff: document.body.hasAttribute('data-dsh-claude-style-plus-handoff'),
       }
       // And it returns: the theme gives the page back without a reload.
       document.documentElement.setAttribute('data-dsh-skin', 'blue-fantasy')
       await sleep(300)
       owner.afterReturn = {
-        sheet: document.getElementById('dsh-claude-style-style') !== null,
-        live: document.body.hasAttribute('data-dsh-claude-style'),
+        sheet: document.getElementById('dsh-claude-style-plus-style') !== null,
+        live: document.body.hasAttribute('data-dsh-claude-style-plus'),
       }
       r.owner = owner
     })
@@ -148,23 +148,23 @@
       await sleep(400)
       var arrival = {
         before: {
-          sheet: document.getElementById('dsh-claude-style-style') !== null,
-          live: document.body.hasAttribute('data-dsh-claude-style'),
+          sheet: document.getElementById('dsh-claude-style-plus-style') !== null,
+          live: document.body.hasAttribute('data-dsh-claude-style-plus'),
         },
       }
       document.documentElement.setAttribute('data-dsh-skin', 'blue-fantasy')
       await sleep(300)
       arrival.yielded = {
-        sheet: document.getElementById('dsh-claude-style-style') !== null,
-        live: document.body.hasAttribute('data-dsh-claude-style'),
-        handoff: document.body.hasAttribute('data-dsh-claude-style-handoff'),
-        settingsRegistered: typeof (window.__slotComponents || {})['claude-style'] !== 'undefined',
+        sheet: document.getElementById('dsh-claude-style-plus-style') !== null,
+        live: document.body.hasAttribute('data-dsh-claude-style-plus'),
+        handoff: document.body.hasAttribute('data-dsh-claude-style-plus-handoff'),
+        settingsRegistered: typeof (window.__slotComponents || {})['claude-style-plus'] !== 'undefined',
       }
       document.documentElement.removeAttribute('data-dsh-skin')
       await sleep(300)
       arrival.back = {
-        sheet: document.getElementById('dsh-claude-style-style') !== null,
-        live: document.body.hasAttribute('data-dsh-claude-style'),
+        sheet: document.getElementById('dsh-claude-style-plus-style') !== null,
+        live: document.body.hasAttribute('data-dsh-claude-style-plus'),
       }
       r.arrival = arrival
     })

@@ -70,18 +70,18 @@ export function createHomeModels() {
     const ticks = [1, 0.75, 0.5, 0.25, 0]
     return React.createElement(
       'div',
-      { className: 'dsh-claude-home-chart', 'data-skeleton': skeleton ? '' : undefined },
+      { className: 'dsh-claude-style-plus-home-chart', 'data-skeleton': skeleton ? '' : undefined },
       React.createElement(
         'div',
-        { className: 'dsh-claude-home-chart-plot' },
+        { className: 'dsh-claude-style-plus-home-chart-plot' },
         ticks.map(at => React.createElement(
           'span',
-          { key: at, className: 'dsh-claude-home-chart-tick', style: { bottom: `${at * 100}%` } },
+          { key: at, className: 'dsh-claude-style-plus-home-chart-tick', style: { bottom: `${at * 100}%` } },
           skeleton || top === 0 ? '' : formatCompactTokens(top * at),
         )),
         React.createElement(
           'div',
-          { className: 'dsh-claude-home-chart-bars' },
+          { className: 'dsh-claude-style-plus-home-chart-bars' },
           list.map(column => {
             let dayTotal = 0
             const stack: { id: string, tokens: number, rank: number }[] = []
@@ -101,13 +101,13 @@ export function createHomeModels() {
               'span',
               {
                 key: column.date,
-                className: 'dsh-claude-home-chart-col',
+                className: 'dsh-claude-style-plus-home-chart-col',
                 title: `${homeShortDate(format, column.date)} · ${formatCompactTokens(dayTotal)}`,
                 style: { height: `${top > 0 ? dayTotal / top * 100 : 0}%` },
               },
               stack.map(slice => React.createElement('span', {
                 key: slice.id,
-                className: 'dsh-claude-home-chart-seg',
+                className: 'dsh-claude-style-plus-home-chart-seg',
                 'data-rank': Math.min(slice.rank, RANK_LAST),
                 style: { height: `${dayTotal > 0 ? slice.tokens / dayTotal * 100 : 0}%` },
               })),
@@ -117,11 +117,11 @@ export function createHomeModels() {
       ),
       React.createElement(
         'div',
-        { className: 'dsh-claude-home-chart-axis' },
+        { className: 'dsh-claude-style-plus-home-chart-axis' },
         list.map((column, index) => {
           // Every third column from the first, Claude Code's own cadence.
           const labelled = index % 3 === 0
-          return React.createElement('span', { key: column.date, className: 'dsh-claude-home-chart-label' }, labelled ? homeShortDate(format, column.date) : '')
+          return React.createElement('span', { key: column.date, className: 'dsh-claude-style-plus-home-chart-label' }, labelled ? homeShortDate(format, column.date) : '')
         }),
       ),
     )
@@ -137,7 +137,7 @@ export function createHomeModels() {
     const skeleton = !data.known
     if (models === null || models.length === 0) {
       if (data.listed !== null || !skeleton) {
-        return React.createElement('div', { className: 'dsh-claude-home-models-empty' }, copyLabel('homeModelsEmpty', 'No model data yet'))
+        return React.createElement('div', { className: 'dsh-claude-style-plus-home-models-empty' }, copyLabel('homeModelsEmpty', 'No model data yet'))
       }
       return React.createElement(
         React.Fragment,
@@ -147,14 +147,14 @@ export function createHomeModels() {
         chart(null, {}, true),
         React.createElement(
           'div',
-          { className: 'dsh-claude-home-models', 'data-skeleton': '' },
+          { className: 'dsh-claude-style-plus-home-models', 'data-skeleton': '' },
           [0, 1, 2].map(index => React.createElement(
             'div',
-            { key: index, className: 'dsh-claude-home-model' },
-            React.createElement('span', { className: 'dsh-claude-home-model-swatch' }),
-            React.createElement('span', { className: 'dsh-claude-home-model-name' }, ''),
-            React.createElement('span', { className: 'dsh-claude-home-model-split' }, ''),
-            React.createElement('span', { className: 'dsh-claude-home-model-share' }, ''),
+            { key: index, className: 'dsh-claude-style-plus-home-model' },
+            React.createElement('span', { className: 'dsh-claude-style-plus-home-model-swatch' }),
+            React.createElement('span', { className: 'dsh-claude-style-plus-home-model-name' }, ''),
+            React.createElement('span', { className: 'dsh-claude-style-plus-home-model-split' }, ''),
+            React.createElement('span', { className: 'dsh-claude-style-plus-home-model-share' }, ''),
           )),
         ),
       )
@@ -173,28 +173,28 @@ export function createHomeModels() {
       columns === null && !skeleton ? null : chart(columns, rankOf, skeleton),
       React.createElement(
         'div',
-        { className: 'dsh-claude-home-models' },
+        { className: 'dsh-claude-style-plus-home-models' },
         shown.map((entry, rank) => {
           const parts = sides(entry)
           return React.createElement(
             'div',
             {
               key: entry.id,
-              className: 'dsh-claude-home-model',
+              className: 'dsh-claude-style-plus-home-model',
               title: entry.sessions === undefined
                 ? entry.id
                 : `${entry.id} · ${copyLabel('homeModelSessions', '{count} sessions', { count: formatHomeCount(entry.sessions) })}`,
             },
-            React.createElement('span', { className: 'dsh-claude-home-model-swatch', 'data-rank': Math.min(rank, RANK_LAST) }),
-            React.createElement('span', { className: 'dsh-claude-home-model-name' }, entry.id),
+            React.createElement('span', { className: 'dsh-claude-style-plus-home-model-swatch', 'data-rank': Math.min(rank, RANK_LAST) }),
+            React.createElement('span', { className: 'dsh-claude-style-plus-home-model-name' }, entry.id),
             React.createElement(
               'span',
-              { className: 'dsh-claude-home-model-split' },
+              { className: 'dsh-claude-style-plus-home-model-split' },
               hasSplit(entry)
                 ? `${formatCompactTokens(parts.input)} in · ${formatCompactTokens(parts.output)} out`
                 : formatCompactTokens(entry.tokens),
             ),
-            React.createElement('span', { className: 'dsh-claude-home-model-share' }, share(entry.tokens, total)),
+            React.createElement('span', { className: 'dsh-claude-style-plus-home-model-share' }, share(entry.tokens, total)),
           )
         }),
         // The fold row turns into its own undo once the list is open.
@@ -202,7 +202,7 @@ export function createHomeModels() {
           'button',
           {
             type: 'button',
-            className: 'dsh-claude-home-models-more',
+            className: 'dsh-claude-style-plus-home-models-more',
             'aria-expanded': expanded,
             onClick() { setExpanded(!expanded) },
           },

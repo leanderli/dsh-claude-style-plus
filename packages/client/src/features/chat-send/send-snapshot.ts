@@ -1,4 +1,4 @@
-import { COMPOSER_SCROLL_SELECTOR } from '@dsh-claude-style/contracts/dom'
+import { COMPOSER_SCROLL_SELECTOR } from '@dsh-claude-style-plus/contracts/dom'
 
 /**
  * The send flight's capture, ported from dsh-chat-ux: everything taken off the
@@ -10,7 +10,7 @@ import { COMPOSER_SCROLL_SELECTOR } from '@dsh-claude-style/contracts/dom'
  * layout the browser has already resolved, plus one cloneNode.
  */
 /** Marks the stand-in while it is on the page. A handle for looking things up; no rule hangs off it. */
-export const CHAT_SEND_GHOST_ATTR = 'data-dsh-claude-send-ghost'
+export const CHAT_SEND_GHOST_ATTR = 'data-dsh-claude-style-plus-send-ghost'
 // The mark put on the real row while the stand-in flies is constants.ts's
 // CHAT_FLYING_ATTR; the stylesheet hides it (send-flight.css). The composer
 // card, its scroll area and the echo bubble are the host's own attributes,
@@ -68,7 +68,7 @@ export const CHAT_INHERITED_PROPERTIES = [
  * in-page anchors for everyone.
  */
 export const CHAT_IDENTITY_ATTRIBUTES = [
-  'id', 'contenteditable', 'data-lexical-editor', 'data-dsh-claude-caret', 'tabindex', 'autofocus',
+  'id', 'contenteditable', 'data-lexical-editor', 'data-dsh-claude-style-plus-caret', 'tabindex', 'autofocus',
 ]
 
 /**
@@ -184,7 +184,7 @@ export function chatSendScrub(root: Element) {
   for (const element of all) {
     for (const name of CHAT_IDENTITY_ATTRIBUTES) element.removeAttribute(name)
   }
-  for (const layer of root.querySelectorAll('[data-dsh-claude-caret-layer]')) layer.remove()
+  for (const layer of root.querySelectorAll('[data-dsh-claude-style-plus-caret-layer]')) layer.remove()
 }
 
 /**

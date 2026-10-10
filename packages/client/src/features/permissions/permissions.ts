@@ -1,4 +1,4 @@
-import { COMPOSER_CARD_SELECTOR } from '@dsh-claude-style/contracts/dom'
+import { COMPOSER_CARD_SELECTOR } from '@dsh-claude-style-plus/contracts/dom'
 import { AUTO_POPOVER_ALL, PERMISSIONS_ATTR } from '../../constants'
 import { PERMISSION_CURRENT_LABELS, PERMISSION_ORDER, PERMISSION_PRESETS, PERMISSION_SEGMENTS, PERMISSION_SHIPPED_PRESETS, SEGMENTS_CLASS, SEGMENT_CLASS } from './permission-copy'
 import { currentPreset, currentSession, findAccessTrigger } from '../../core/host'
@@ -7,7 +7,7 @@ import { buildElement, closestFrom, setAttributeIfChanged } from '../../shared/d
 import { POPOVER_CLOSE_DELAY, POPOVER_OPEN_DELAY, buildPopoverItem, closeOtherPopovers, createHoverIntent, positionAnchoredPopover, registerPopover, removeStrayNodes, setMenuPopoverOpen, unregisterPopover } from '../../shared/popover'
 import { createSlidingPill } from '../../shared/sliding-pill'
 import type { HostContext, HostFiber } from '../../core/host'
-import type { HostPermissionCatalogAnswer, HostPermissionOption } from '@dsh-claude-style/contracts/services'
+import type { HostPermissionCatalogAnswer, HostPermissionOption } from '@dsh-claude-style-plus/contracts/services'
 import type { FeatureUi } from '../../core/feature'
 import type manifest from './permissions.manifest'
 
@@ -205,7 +205,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
         scope.effect(() => {
           probeAutoPreset()
           return () => {}
-        }, 'dsh-claude-style: permission catalog')
+        }, 'dsh-claude-style-plus: permission catalog')
       })
     } else {
       probeAutoPreset()
@@ -317,19 +317,19 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
 
   function buildPermTriggerAndPopover(onPick: (preset: string) => void) {
     permPick = onPick
-    const container = buildElement('div', 'dsh-claude-perm-container')
+    const container = buildElement('div', 'dsh-claude-style-plus-perm-container')
 
     const btn = document.createElement('button')
     btn.type = 'button'
-    btn.className = 'dsh-claude-perm-btn'
+    btn.className = 'dsh-claude-style-plus-perm-btn'
     btn.setAttribute('aria-haspopup', 'menu')
     btn.setAttribute('aria-expanded', 'false')
 
-    const label = buildElement('span', 'dsh-claude-perm-label', 'Accept edits')
+    const label = buildElement('span', 'dsh-claude-style-plus-perm-label', 'Accept edits')
 
     btn.appendChild(label)
 
-    const popover = buildElement('div', 'dsh-claude-popover-card dsh-claude-perm-popover')
+    const popover = buildElement('div', 'dsh-claude-style-plus-popover-card dsh-claude-style-plus-perm-popover')
     setMenuPopoverOpen(popover, false)
 
     function openPerm() {
@@ -388,7 +388,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     // One popover per generation: a rebuild whose container a host
     // re-render dropped strands the previous popover in the document, so
     // installing this one sweeps every popover already there.
-    removeStrayNodes(document, '.dsh-claude-perm-popover', [])
+    removeStrayNodes(document, '.dsh-claude-style-plus-perm-popover', [])
     document.body.appendChild(popover)
 
     return {
@@ -417,7 +417,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     for (let j = 0; j < items.length; j++) {
       const it = items[j]
       const isCurrent = it.getAttribute('data-preset') === preset
-      const check = it.querySelector<HTMLElement>('.dsh-claude-popover-check')
+      const check = it.querySelector<HTMLElement>('.dsh-claude-style-plus-popover-check')
       if (check) check.hidden = !isCurrent
       it.toggleAttribute('data-active', isCurrent)
     }
@@ -477,7 +477,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     const isHero = ui.composer!.isHero()
     const composerOn = ui.composer!.isActive()
 
-    const existingPermContainers = document.querySelectorAll('.dsh-claude-perm-container')
+    const existingPermContainers = document.querySelectorAll('.dsh-claude-style-plus-perm-container')
     const existingSegments = document.querySelectorAll<HTMLElement>(`.${SEGMENTS_CLASS}[data-composer-segments]`)
 
     if (!composerOn) {
@@ -568,7 +568,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
       segments = null
       segmentPill.sync(null)
 
-      const allExisting = document.querySelectorAll<HTMLElement>('.dsh-claude-perm-container')
+      const allExisting = document.querySelectorAll<HTMLElement>('.dsh-claude-style-plus-perm-container')
       if (allExisting.length > 0) {
         const adopted = allExisting[0]
         permContainer = adopted
@@ -578,12 +578,12 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
         if (adopted.parentElement !== host) {
           host.insertBefore(adopted, host.firstChild)
         }
-        permBtn = adopted.querySelector<HTMLButtonElement>('.dsh-claude-perm-btn')
-        permLabel = adopted.querySelector<HTMLElement>('.dsh-claude-perm-label')
+        permBtn = adopted.querySelector<HTMLButtonElement>('.dsh-claude-style-plus-perm-btn')
+        permLabel = adopted.querySelector<HTMLElement>('.dsh-claude-style-plus-perm-label')
         // The container can be adopted from a generation whose disposals a
         // client reload dropped; its popover is still in the document, and
         // without it updatePermState would early-return forever.
-        if (permPopover === null) permPopover = document.querySelector<HTMLElement>('.dsh-claude-perm-popover')
+        if (permPopover === null) permPopover = document.querySelector<HTMLElement>('.dsh-claude-style-plus-perm-popover')
       } else {
         const res = buildPermTriggerAndPopover(pick)
         permContainer = res.container
@@ -648,7 +648,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
       permResizeListener = null
     }
     segmentPill.release()
-    removeStrayNodes(document, `.${SEGMENTS_CLASS}[data-composer-segments], .dsh-claude-perm-container, .dsh-claude-perm-popover`, [])
+    removeStrayNodes(document, `.${SEGMENTS_CLASS}[data-composer-segments], .dsh-claude-style-plus-perm-container, .dsh-claude-style-plus-perm-popover`, [])
     segments = null
     permPopover = null
     permBtn = null

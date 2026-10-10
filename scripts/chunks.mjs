@@ -7,7 +7,7 @@
  * is taken. A module the bundle carries is never copied into a chunk — a second
  * copy of a module with state would split that state — so every import of one
  * stays an import, resolved at run time against the bundle's own instance
- * through the table `virtual:dsh-claude-style/chunk-modules`. A module two
+ * through the table `virtual:dsh-claude-style-plus/chunk-modules`. A module two
  * chunks would both carry moves into the bundle for the same reason.
  */
 import { createHash } from 'node:crypto'
@@ -18,7 +18,7 @@ import esbuild from 'esbuild'
 const ROOT = path.resolve(import.meta.dirname, '..')
 const SRC = path.join(ROOT, 'packages', 'client', 'src')
 /** The path every module a build plugin generates is resolved under (D36). */
-const VIRTUAL_PREFIX = 'virtual:dsh-claude-style/'
+const VIRTUAL_PREFIX = 'virtual:dsh-claude-style-plus/'
 
 /** A module's id in the shared table: its path from the repository root, as esbuild's metafile keys it. */
 const moduleId = (file) => path.relative(ROOT, file).split(path.sep).join('/')
@@ -73,7 +73,7 @@ function sharedModules(shared) {
  * loader through its own script element, and the factory's `require` resolves
  * the shared modules and the host packages.
  */
-const chunkOpen = (id) => `/* dsh-claude-style feature chunk "${id}". GENERATED FILE — do not edit; \`npm run build\` writes it from packages/client/src/. */
+const chunkOpen = (id) => `/* dsh-claude-style-plus feature chunk "${id}". GENERATED FILE — do not edit; \`npm run build\` writes it from packages/client/src/. */
 document.currentScript.__dshChunk = (require) => {
   var module = { exports: {} }
   var exports = module.exports`

@@ -2,7 +2,7 @@ import { subscribeMutations } from '../../core/bus'
 import { requestFrame } from '../../core/frame'
 import { beginChatFoldToggle, endChatFoldToggle, isChatFoldToggle } from './fold-toggle'
 import { writeScroll } from '../../shared/scroll-owner'
-import { CONVERSATION_SCROLL_SELECTOR, FOLLOW_THRESHOLD_PX, PROCESS_BODY_SELECTOR, PROCESS_EXPANDED_MODE_ATTRIBUTE, PROCESS_GROUP_SELECTOR, RUNNING_STATE, SHIMMER_ATTRIBUTE, SHIMMER_LEGACY_ATTRIBUTE, SHIMMER_SELECTOR } from '@dsh-claude-style/contracts/dom'
+import { CONVERSATION_SCROLL_SELECTOR, FOLLOW_THRESHOLD_PX, PROCESS_BODY_SELECTOR, PROCESS_EXPANDED_MODE_ATTRIBUTE, PROCESS_GROUP_SELECTOR, RUNNING_STATE, SHIMMER_ATTRIBUTE, SHIMMER_LEGACY_ATTRIBUTE, SHIMMER_SELECTOR } from '@dsh-claude-style-plus/contracts/dom'
 
 /**
  * A running process group opens by default and folds back once the piece of
@@ -34,17 +34,17 @@ export const PROCESS_HEADER_SELECTOR = 'button[data-process-activity]'
 /** The separator the host joins the header label and the live detail with (message.turnProcess.separator). */
 export const PROCESS_DETAIL_SEPARATOR = ' · '
 /** On a group root: this group's header carries a live detail right now (standard or detailed tier, process still running). */
-export const PROCESS_LIVE_DETAIL_ATTR = 'data-dsh-claude-live-detail'
+export const PROCESS_LIVE_DETAIL_ATTR = 'data-dsh-claude-style-plus-live-detail'
 /** On a group root: this group's body is open right now. */
-export const PROCESS_OPEN_ATTR = 'data-dsh-claude-open'
+export const PROCESS_OPEN_ATTR = 'data-dsh-claude-style-plus-open'
 /** On the header control: the label half of its title, for the stylesheet to stand in with while the body is open. */
-export const PROCESS_LABEL_ATTR = 'data-dsh-claude-label'
+export const PROCESS_LABEL_ATTR = 'data-dsh-claude-style-plus-label'
 /**
  * On the header control: the stand-in label's gradient half width. The
  * host's TextShimmer inlines the same measure as characters times 8px, and
  * the stylesheet spreads the stand-in text's sweep to match.
  */
-export const PROCESS_LABEL_SPREAD_PROPERTY = '--dsh-claude-label-spread'
+export const PROCESS_LABEL_SPREAD_PROPERTY = '--dsh-claude-style-plus-label-spread'
 /** The header control's accessible name. The stand-in text is pseudo-element content and never reaches the accessibility tree, and the original text gave way whole, so the name has to come from here. */
 export const PROCESS_LABEL_NAME_ATTRIBUTE = 'aria-label'
 /** The gradient half width the host's TextShimmer leaves per character. */

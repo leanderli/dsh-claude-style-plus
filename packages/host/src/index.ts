@@ -1,5 +1,5 @@
 /**
- * Host half of dsh-claude-style.
+ * Host half of dsh-claude-style-plus.
  *
  * The skin's effect is browser-only. This half exists for the things a
  * browser-only plugin cannot do:
@@ -15,7 +15,7 @@
  *      fonts route hands them to the browser half's @font-face and the code face
  *      works with zero system installs. The Anthropic Sans/Serif text faces
  *      are NOT in the npm package (they remain Anthropic's property), but a
- *      user who drops them into `$DSH_HOME/dsh-claude-style/fonts/` gets the
+ *      user who drops them into `$DSH_HOME/dsh-claude-style-plus/fonts/` gets the
  *      same zero-install treatment; a missing file simply 404s and the stack
  *      falls back to a system-installed copy, then to the look-alike faces
  *      this package does ship (Inter, Noto Serif — SIL OFL).
@@ -40,7 +40,7 @@ import { registerRoutes } from './routes.js'
 import type { DshContext, DshScope } from './dsh.ts'
 import { registerSettings } from './settings.js'
 
-export const name = 'dsh-claude-style'
+export const name = 'dsh-claude-style-plus'
 export { Config } from './settings.js'
 
 /**

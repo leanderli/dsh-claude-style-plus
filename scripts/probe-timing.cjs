@@ -75,7 +75,7 @@ async function measure(port) {
         }).observe({ entryTypes: ['longtask'] })
       } catch (e) {}
       window.__timing.probeLabel = function () {
-        var el = document.querySelector('.dsh-claude-model-btn-label')
+        var el = document.querySelector('.dsh-claude-style-plus-model-btn-label')
         window.__timing.label.push({ t: Math.round(performance.now()), text: el ? (el.textContent || '') : null })
       }
       setInterval(window.__timing.probeLabel, 250)
@@ -88,12 +88,12 @@ async function measure(port) {
   // Wait for the skin, then for the composer seat the picker replaces. `body` is
   // null until the parser gets there, so the first polls must not assume it.
   for (let i = 0; i < 120; i++) {
-    if (await evalJs(`!!(document.body && document.body.hasAttribute('data-dsh-claude-style'))`)) break
+    if (await evalJs(`!!(document.body && document.body.hasAttribute('data-dsh-claude-style-plus'))`)) break
     await sleep(250)
   }
   const skinAt = Date.now() - navigatedAt
   for (let i = 0; i < 120; i++) {
-    if (await evalJs(`!!document.querySelector('.dsh-claude-model-btn')`)) break
+    if (await evalJs(`!!document.querySelector('.dsh-claude-style-plus-model-btn')`)) break
     await sleep(250)
   }
   const triggerAt = Date.now() - navigatedAt
@@ -111,7 +111,7 @@ async function measure(port) {
   // timings: the copy document and the woff2 faces are the skin's only fetches.
   const resources = await evalJs(`
     performance.getEntriesByType('resource')
-      .filter(function (e) { return /dsh-claude-style|woff2|model-descriptions/.test(e.name) })
+      .filter(function (e) { return /dsh-claude-style-plus|woff2|model-descriptions/.test(e.name) })
       .map(function (e) { return { name: e.name.replace(location.origin, ''), start: Math.round(e.startTime), dur: Math.round(e.duration), size: e.transferSize || 0 } })
   `)
   console.log('  plugin resources:')
@@ -131,7 +131,7 @@ async function measure(port) {
   console.log('\n=== opening the picker ===')
   const heapBefore = await evalJs(`performance.memory ? performance.memory.usedJSHeapSize : null`)
   await evalJs(`(() => {
-    const btn = document.querySelector('.dsh-claude-model-btn')
+    const btn = document.querySelector('.dsh-claude-style-plus-model-btn')
     if (!btn) return false
     btn.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }))
     btn.click()
@@ -140,7 +140,7 @@ async function measure(port) {
   const openStart = Date.now()
   let rows = 0
   for (let i = 0; i < 200; i++) {
-    rows = await evalJs(`document.querySelectorAll('.dsh-claude-model-option').length`)
+    rows = await evalJs(`document.querySelectorAll('.dsh-claude-style-plus-model-option').length`)
     if (rows > 0) break
     await sleep(50)
   }
@@ -152,12 +152,12 @@ async function measure(port) {
   }
 
   const composition = await evalJs(`(() => {
-    const rows = document.querySelectorAll('.dsh-claude-model-option')
+    const rows = document.querySelectorAll('.dsh-claude-style-plus-model-option')
     let wordmarks = 0, faces = 0, marks = 0
     for (const row of rows) {
-      if (row.querySelector('.dsh-claude-model-wordmark')) wordmarks++
+      if (row.querySelector('.dsh-claude-style-plus-model-wordmark')) wordmarks++
       if (row.getAttribute('data-brand') === 'gemini') faces++
-      if (row.querySelector('.dsh-claude-model-brand svg, .dsh-claude-model-brand img')) marks++
+      if (row.querySelector('.dsh-claude-style-plus-model-brand svg, .dsh-claude-style-plus-model-brand img')) marks++
     }
     return { rows: rows.length, wordmarks, faces, marks }
   })()`)
@@ -166,7 +166,7 @@ async function measure(port) {
   // The wordmark markup the row builder assigns with innerHTML: a DOM stub cannot
   // measure the parse, this can. Timed on the live markup, then per row.
   const markupCost = await evalJs(`(() => {
-    const box = document.querySelector('.dsh-claude-model-wordmark')
+    const box = document.querySelector('.dsh-claude-style-plus-model-wordmark')
     if (!box) return null
     const markup = box.innerHTML
     const host = document.createElement('div')
@@ -202,12 +202,12 @@ async function measure(port) {
   const reloadAt = Date.now()
   await send('Page.navigate', { url: `${BASE}/?token=${TOKEN}` })
   for (let i = 0; i < 200; i++) {
-    if (await evalJs(`!!document.querySelector('.dsh-claude-model-btn')`)) break
+    if (await evalJs(`!!document.querySelector('.dsh-claude-style-plus-model-btn')`)) break
     await sleep(250)
   }
   const trigger2At = Date.now() - reloadAt
   await evalJs(`(() => {
-    const btn = document.querySelector('.dsh-claude-model-btn')
+    const btn = document.querySelector('.dsh-claude-style-plus-model-btn')
     if (!btn) return false
     btn.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }))
     btn.click()
@@ -216,7 +216,7 @@ async function measure(port) {
   const open2Start = Date.now()
   let rows2 = 0
   for (let i = 0; i < 300; i++) {
-    rows2 = await evalJs(`document.querySelectorAll('.dsh-claude-model-option').length`)
+    rows2 = await evalJs(`document.querySelectorAll('.dsh-claude-style-plus-model-option').length`)
     if (rows2 > 0) break
     await sleep(50)
   }

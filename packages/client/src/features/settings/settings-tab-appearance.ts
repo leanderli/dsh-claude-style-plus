@@ -24,19 +24,19 @@ export function createSettingsAppearanceTab(): SettingsTab {
     // rule in settings.css.
     return React.createElement(
       'div',
-      { className: 'dsh-claude-brand-picker', role: 'group' },
+      { className: 'dsh-claude-style-plus-brand-picker', role: 'group' },
       brandOptions.map(option => React.createElement(
         'button',
         {
           key: option.value,
           type: 'button',
-          className: 'dsh-claude-brand-card',
+          className: 'dsh-claude-style-plus-brand-card',
           'data-active': option.value === prefs.brand ? '' : undefined,
           'aria-pressed': option.value === prefs.brand ? 'true' : 'false',
           onClick: () => { if (option.value !== prefs.brand) write({ brand: option.value }) },
         },
-        React.createElement('span', { className: 'dsh-claude-brand-card-logo', 'data-brand': option.value }),
-        React.createElement('span', { className: 'dsh-claude-brand-card-name' }, option.label),
+        React.createElement('span', { className: 'dsh-claude-style-plus-brand-card-logo', 'data-brand': option.value }),
+        React.createElement('span', { className: 'dsh-claude-style-plus-brand-card-name' }, option.label),
       )),
     )
   }

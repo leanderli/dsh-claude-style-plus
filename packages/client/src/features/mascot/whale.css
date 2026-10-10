@@ -18,7 +18,7 @@
    card being stood on. Lifting the box by that 3px lands the sprite's last row
    on the card's top edge instead, which leaves the shadow resting on the card
    and nothing painted across it. */
-body[data-dsh-claude-style] .dsh-claude-deepy {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-deepy {
   position: absolute;
   right: 8px;
   bottom: calc(100% - 4px);
@@ -30,7 +30,7 @@ body[data-dsh-claude-style] .dsh-claude-deepy {
 
 /* Hidden until the first sheet has drawn a frame: a host half that predates
    the sheets leaves no empty box to click on. */
-body[data-dsh-claude-style] .dsh-claude-deepy:not([data-ready]) {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-deepy:not([data-ready]) {
   visibility: hidden;
 }
 
@@ -39,46 +39,46 @@ body[data-dsh-claude-style] .dsh-claude-deepy:not([data-ready]) {
    centre: the composer card (its max width, inside the side clearance), or
    the takeover's own card (the shared content width, 16px further in). Those
    panels start 6–8px above their card. */
-body[data-dsh-claude-style] :is([data-dsh-claude-deepy-anchor="stack"], [data-dsh-claude-deepy-anchor="panel"]) {
+body[data-dsh-claude-style-plus] :is([data-dsh-claude-style-plus-deepy-anchor="stack"], [data-dsh-claude-style-plus-deepy-anchor="panel"]) {
   position: relative;
 }
 
-body[data-dsh-claude-style] [data-dsh-claude-deepy-anchor="stack"] > .dsh-claude-deepy {
+body[data-dsh-claude-style-plus] [data-dsh-claude-style-plus-deepy-anchor="stack"] > .dsh-claude-style-plus-deepy {
   right: calc(max(var(--dsh-composer-side-clearance, 16px), (100% - var(--dsh-composer-card-max-width, 100%)) / 2) + 8px);
 }
 
-body[data-dsh-claude-style] [data-dsh-claude-deepy-anchor="panel"] > .dsh-claude-deepy {
+body[data-dsh-claude-style-plus] [data-dsh-claude-style-plus-deepy-anchor="panel"] > .dsh-claude-style-plus-deepy {
   right: calc(max(var(--dsh-composer-side-clearance, 16px) + 16px, (100% - var(--dsh-chat-content-width, 100%)) / 2) + 8px);
   bottom: calc(100% - 11px);
 }
 
-body[data-dsh-claude-style] .dsh-claude-deepy-sprite {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-deepy-sprite {
   position: absolute;
-  left: calc(var(--dsh-claude-deepy-x, 0) * 2px);
-  top: calc(var(--dsh-claude-deepy-y, 0) * 2px);
-  width: calc(var(--dsh-claude-deepy-w, 0) * 2px);
-  height: calc(var(--dsh-claude-deepy-h, 0) * 2px);
+  left: calc(var(--dsh-claude-style-plus-deepy-x, 0) * 2px);
+  top: calc(var(--dsh-claude-style-plus-deepy-y, 0) * 2px);
+  width: calc(var(--dsh-claude-style-plus-deepy-w, 0) * 2px);
+  height: calc(var(--dsh-claude-style-plus-deepy-h, 0) * 2px);
   overflow: hidden;
 }
 
 /* The strip carries the whole sheet and is translated frame to frame: a
    transform composites, where a background-position would repaint. Its box is
-   the rebuilt vector's own box, so `--dsh-claude-deepy-cell-w` is one frame
+   the rebuilt vector's own box, so `--dsh-claude-style-plus-deepy-cell-w` is one frame
    cell — the crop box plus the transparent margin each frame keeps there
    (DEEPY_GUTTER; without that margin the downscale that draws the vector
    samples the frame above's shadow along the cell's edge) — and
-   `--dsh-claude-deepy-strip-h` the stacked height of all its cell rows. */
-body[data-dsh-claude-style] .dsh-claude-deepy-strip {
+   `--dsh-claude-style-plus-deepy-strip-h` the stacked height of all its cell rows. */
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-deepy-strip {
   display: block;
-  width: calc(var(--dsh-claude-deepy-cell-w, 0) * 16px);
-  height: calc(var(--dsh-claude-deepy-strip-h, 0) * 2px);
-  background-image: var(--dsh-claude-deepy-sheet, none);
+  width: calc(var(--dsh-claude-style-plus-deepy-cell-w, 0) * 16px);
+  height: calc(var(--dsh-claude-style-plus-deepy-strip-h, 0) * 2px);
+  background-image: var(--dsh-claude-style-plus-deepy-sheet, none);
   background-repeat: no-repeat;
-  background-size: calc(var(--dsh-claude-deepy-cell-w, 0) * 16px) auto;
+  background-size: calc(var(--dsh-claude-style-plus-deepy-cell-w, 0) * 16px) auto;
 }
 
 /* The resting whale's body, head to tail: columns 12–44, rows 30–48. */
-body[data-dsh-claude-style] .dsh-claude-deepy-hit {
+body[data-dsh-claude-style-plus] .dsh-claude-style-plus-deepy-hit {
   position: absolute;
   left: 24px;
   top: 60px;

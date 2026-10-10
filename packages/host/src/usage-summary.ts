@@ -14,6 +14,7 @@
  */
 import { BUCKET_KEYS, addBuckets, emptyBuckets } from './usage-ledger.js'
 import type { Buckets, DayBuckets } from './usage-ledger.js'
+import type { WorkspaceSkillDay, WorkspaceSkillTotal, WorkspaceUsageDay, WorkspaceUsageReport, WorkspaceUsageRow } from '@dsh-claude-style-plus/contracts/usage'
 import type { CacheSession } from './usage-cache.js'
 import { dayKey } from './usage-fold.js'
 import type { SessionLog } from './usage-fold.js'
@@ -34,6 +35,7 @@ export interface UsageSummary {
   totals: Record<string, unknown>
   /** How many session logs the pass walked, against `totals.sessions` from the accounts behind them. */
   sessions?: number
+  workspaceUsage?: WorkspaceUsageReport
 }
 
 /** The four disjoint buckets of one day or one model, summed. */
@@ -153,6 +155,132 @@ export function summarize(
       activeDays: list.filter((day) => inWindow(day.date)).length,
     },
   }
+}
+
+interface WorkspaceAccount {
+  id: string
+  title: string
+  path: string
+  sessionIds: readonly string[]
+}
+
+interface SkillCountSet {
+  explicitCalls: number
+  modelCalls: number
+  sessionIds: Set<string>
+}
+
+/** Merge the per-session folds under current Workspace membership. */
+export function summarizeWorkspaces(
+  sessions: ReadonlyMap<string, CacheSession>,
+  workspaces: readonly WorkspaceAccount[],
+): WorkspaceUsageRow[] {
+  const ownerBySession = new Map<string, WorkspaceAccount>()
+  const groups = new Map<string | null, { workspace: WorkspaceAccount | null, sessions: Map<string, CacheSession> }>()
+  for (const workspace of workspaces) {
+    groups.set(workspace.id, { workspace, sessions: new Map() })
+    for (const sessionId of workspace.sessionIds) ownerBySession.set(sessionId, workspace)
+  }
+  for (const [sessionId, session] of sessions) {
+    const workspace = ownerBySession.get(sessionId) ?? null
+    const key = workspace?.id ?? null
+    let group = groups.get(key)
+    if (group === undefined) {
+      group = { workspace, sessions: new Map() }
+      groups.set(key, group)
+    }
+    group.sessions.set(sessionId, session)
+  }
+
+  const rows: WorkspaceUsageRow[] = []
+  for (const [workspaceId, group] of groups) {
+    const merged = mergeSessions(group.sessions)
+    const activeSessionIds = new Set<string>()
+    const skillDays = new Map<string, Map<string, SkillCountSet>>()
+    const skillTotals = new Map<string, SkillCountSet>()
+    for (const [sessionId, session] of group.sessions) {
+      for (const buckets of session.days.values()) {
+        if (buckets.calls > 0 || BUCKET_KEYS.some(key => buckets[key] > 0)) activeSessionIds.add(sessionId)
+      }
+      for (const [date, perSkill] of session.skillDays ?? []) {
+        let skills = skillDays.get(date)
+        if (skills === undefined) {
+          skills = new Map()
+          skillDays.set(date, skills)
+        }
+        for (const [name, counts] of perSkill) {
+          if (counts.explicitCalls <= 0 && counts.modelCalls <= 0) continue
+          activeSessionIds.add(sessionId)
+          let daily = skills.get(name)
+          if (daily === undefined) {
+            daily = { explicitCalls: 0, modelCalls: 0, sessionIds: new Set() }
+            skills.set(name, daily)
+          }
+          daily.explicitCalls += counts.explicitCalls
+          daily.modelCalls += counts.modelCalls
+          daily.sessionIds.add(sessionId)
+          let total = skillTotals.get(name)
+          if (total === undefined) {
+            total = { explicitCalls: 0, modelCalls: 0, sessionIds: new Set() }
+            skillTotals.set(name, total)
+          }
+          total.explicitCalls += counts.explicitCalls
+          total.modelCalls += counts.modelCalls
+          total.sessionIds.add(sessionId)
+        }
+      }
+    }
+
+    const summary = summarize(merged.days, activeSessionIds.size, 'session-logs', merged.days.size === 0 ? undefined : merged.hours)
+    const byDate = new Map<string, WorkspaceUsageDay>()
+    for (const day of summary.days) {
+      const date = typeof day.date === 'string' ? day.date : ''
+      if (date !== '') byDate.set(date, day as unknown as WorkspaceUsageDay)
+    }
+    for (const [date, perSkill] of skillDays) {
+      const day = byDate.get(date) ?? {
+        date,
+        input: 0,
+        output: 0,
+        cacheRead: 0,
+        cacheWrite: 0,
+        calls: 0,
+        sessions: 0,
+        sessionIds: [],
+      }
+      const ids = new Set(day.sessionIds ?? [])
+      const skills: Record<string, WorkspaceSkillDay> = {}
+      for (const [name, counts] of perSkill) {
+        const sessionIds = [...counts.sessionIds].sort()
+        for (const sessionId of sessionIds) ids.add(sessionId)
+        skills[name] = { explicitCalls: counts.explicitCalls, modelCalls: counts.modelCalls, sessionIds }
+      }
+      day.sessionIds = [...ids].sort()
+      day.sessions = ids.size
+      day.skills = skills
+      byDate.set(date, day)
+    }
+    const days = [...byDate.values()].sort((left, right) => left.date < right.date ? -1 : 1)
+    const skills: WorkspaceSkillTotal[] = [...skillTotals.entries()]
+      .map(([name, counts]) => ({ name, explicitCalls: counts.explicitCalls, modelCalls: counts.modelCalls, sessions: counts.sessionIds.size }))
+      .sort((left, right) => (right.explicitCalls + right.modelCalls) - (left.explicitCalls + left.modelCalls) || left.name.localeCompare(right.name))
+    const totals = {
+      ...(summary.totals as WorkspaceUsageRow['totals']),
+      sessions: activeSessionIds.size,
+      activeDays: days.length,
+    }
+    rows.push({
+      workspaceId,
+      title: group.workspace?.title ?? null,
+      path: group.workspace?.path ?? null,
+      registeredSessions: group.workspace?.sessionIds.length ?? group.sessions.size,
+      days,
+      totals,
+      models: summary.models as unknown as WorkspaceUsageRow['models'],
+      skills,
+    })
+  }
+  return rows
 }
 
 /** What merging the two accounts produced: the days, the sessions behind them, and whether the fold contributed a day. */

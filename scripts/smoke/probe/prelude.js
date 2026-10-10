@@ -22,10 +22,10 @@
       return a.effect && a.effect.pseudoElement === '::before'
     })
     return {
-      attr: control.hasAttribute('data-dsh-claude-pill'),
+      attr: control.hasAttribute('data-dsh-claude-style-plus-pill'),
       content: getComputedStyle(control, '::before').content,
-      x: parseFloat(control.style.getPropertyValue('--dsh-claude-pill-x')),
-      w: parseFloat(control.style.getPropertyValue('--dsh-claude-pill-w')),
+      x: parseFloat(control.style.getPropertyValue('--dsh-claude-style-plus-pill-x')),
+      w: parseFloat(control.style.getPropertyValue('--dsh-claude-style-plus-pill-w')),
       itemX: itemBox.left - box.left - control.clientLeft,
       itemW: itemBox.width,
       itemFill: getComputedStyle(item).backgroundColor,
